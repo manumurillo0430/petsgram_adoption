@@ -4,7 +4,7 @@ export default function PrivateRouteUser({ children }) {
   const { isActiveSession, user_id } = useAuthContext()
   console.log(isActiveSession, typeof user_id, 'isActiveSession')
 
-  if (typeof user_id !== 'number') {
+  if (!isActiveSession) {
     console.log(typeof user_id)
     return <Navigate to="/" replace />
   } else return children

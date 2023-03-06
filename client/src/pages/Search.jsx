@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import BasicSearchFilterCriteria from '../components/search/BasicSearchFilterCriteria'
 import AdvancedSearchFilterCriteria from '../components/search/AdvancedSearchFilterCriteria'
-import GridViewPets from '../components/search/AdvancedSearchFilterCriteria'
+import GridViewPets from '../components/pet/GridViewPets'
 import SocialMediaViewPets from '../components/pet/SocialMediaViewPets'
 import { GetReq, PostReq } from '../utils/api'
 import { useSearchContext } from '../context/SearchContext'
