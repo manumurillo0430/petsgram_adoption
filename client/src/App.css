@@ -1,0 +1,25 @@
+:root {
+  --chakra-colors-white: #fefefe
+  !important;
+  --chakra-colors-gray-700: #121212 !important;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*:focus {
+  box-shadow: none !important;
+}
+
+html, body {
+    height: 100vh;
+}
+
+h2, .small-caps {
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
