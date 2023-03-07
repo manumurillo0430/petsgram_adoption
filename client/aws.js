@@ -1,23 +1,9 @@
-const AWS = require('aws-sdk')
+import AWS from 'aws-sdk'
 
-const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ID,
-  secretAccessKey: process.env.AWS_SECRET,
+AWS.config.update({
+  region: 'eu-west-1',
+  credentials: new AWS.Credentials({
+    accessKeyId: 'AKIATR5MX4VBYAFJQ6VX',
+    secretAccessKey: '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',
+  }),
 })
-
-const uploadFile = (fileName) => {
-  const fileContent = fs.readFileSync(fileName)
-
-  const params = {
-    Bucket: 'amplify-amplify03d4080d91544-staging-131852-deployment',
-    Key: 'folder/subfolder/' + fileName,
-    Body: fileContent,
-  }
-
-  s3.upload(params, function (err, data) {
-    if (err) {
-      throw err
-    }
-    console.log(`File uploaded successfully. ${data.Location}`)
-  })
-}
