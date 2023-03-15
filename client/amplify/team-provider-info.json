@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pestagramadoption-dev-140910-authRole",
+      "UnauthRoleArn": "arn:aws:iam::244638541123:role/amplify-pestagramadoption-dev-140910-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::244638541123:role/amplify-pestagramadoption-dev-140910-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-pestagramadoption-dev-140910-deployment",
+      "UnauthRoleName": "amplify-pestagramadoption-dev-140910-unauthRole",
+      "StackName": "amplify-pestagramadoption-dev-140910",
+      "StackId": "arn:aws:cloudformation:us-east-1:244638541123:stack/amplify-pestagramadoption-dev-140910/0977dd20-c261-11ed-8748-121f2d48d631",
+      "AmplifyAppId": "d2735wt91rdu8c"
+    },
+    "categories": {
+      "function": {
+        "petstagramadoption": {
+          "deploymentBucketName": "amplify-pestagramadoption-dev-140910-deployment",
+          "s3Key": "amplify-builds/petstagramadoption-77354e6c4449634a4c44-build.zip"
+        }
+      },
+      "api": {
+        "petsgram": {}
+      }
+    }
+  }
+}

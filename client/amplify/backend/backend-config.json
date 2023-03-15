@@ -1,0 +1,43 @@
+{
+  "api": {
+    "petsgram": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "petstagramadoption"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "petstagramadoption": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_petstagramadoption_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "petstagramadoption"
+        }
+      ]
+    },
+    "AMPLIFY_function_petstagramadoption_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "petstagramadoption"
+        }
+      ]
+    }
+  }
+}
