@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8080'
+const BASE_URL =
+  'http://ec2-54-195-178-147.eu-west-1.compute.amazonaws.com:8080'
 
 export const GetReq = async (path) => {
   const rest = await axios.get(BASE_URL + path, {
