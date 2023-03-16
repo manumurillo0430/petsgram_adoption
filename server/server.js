@@ -1,5 +1,5 @@
 const express = require('express')
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 80
 const cors = require('cors')
 const usersRoute = require('./Routes/usersRoute')
 const petsRoute = require('./Routes/petsRoute')
