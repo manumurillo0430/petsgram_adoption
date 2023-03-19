@@ -10,7 +10,6 @@ import { HomeFilled, SettingFilled } from '@ant-design/icons'
 import { useAuthContext } from '../../context/AuthContext'
 import { useState } from 'react'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 import PetsIcon from '@mui/icons-material/Pets'
 import { UserOutlined } from '@ant-design/icons'
@@ -95,11 +94,11 @@ export default function MainTemplate({ children }) {
       setSelectedKeys(['1'])
     } else if (location.pathname === '/search') {
       setSelectedKeys(['2'])
-    } else if (location.pathname === '/profile/mypets/') {
-      setSelectedKeys(['3'])
-    } else if (location.pathname === '/profile/settings') {
-      setSelectedKeys(['4'])
     } else if (location.pathname === `/profile/${currentUser.user_id}`) {
+      setSelectedKeys(['3'])
+    } else if (location.pathname === '/profile/mypets/') {
+      setSelectedKeys(['4'])
+    } else if (location.pathname === '/profile/settings') {
       setSelectedKeys(['5'])
     } else if (location.pathname === '/admin/new') {
       setSelectedKeys(['6'])
@@ -143,7 +142,7 @@ export default function MainTemplate({ children }) {
       >
         {isActiveSession ? (
           <Menu
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={['2']}
             selectedKeys={selectedKeys}
             defaultOpenKeys={['sub1']}
             theme={theme === 'dark' ? 'light' : 'dark'}

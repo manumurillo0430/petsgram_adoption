@@ -27,8 +27,9 @@ export default function DashboardTemple({ data, labels }) {
   const getUsers = async () => {
     try {
       const data = await GetReq('/user')
-      console.log(data)
-      setUsers(data.users)
+      if (data.ok) {
+        setUsers(data.users)
+      }
     } catch (err) {
       console.log(err)
     }
@@ -37,9 +38,9 @@ export default function DashboardTemple({ data, labels }) {
   const getPets = async () => {
     try {
       const data = await GetReq('/pet')
-      console.log(data)
-      setPets(data)
-      console.log(pets.length)
+      if (data.ok) {
+        setPets(data.pets)
+      }
     } catch (err) {
       console.log(err)
     }

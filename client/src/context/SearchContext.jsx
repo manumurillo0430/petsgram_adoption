@@ -74,11 +74,11 @@ function SearchProvider() {
   const getAllPets = async () => {
     try {
       const res = await GetReq(`/pet`)
-      if (res) {
-        console.log(res, 'res')
+      console.log(res)
+      if (res.ok) {
         setIsLoadingPetList(false)
-        setPetsArray(res)
-        return res
+        setPetsArray(res.pets)
+        return res.pets
       }
     } catch (error) {
       console.log(error)
