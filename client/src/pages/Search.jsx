@@ -14,7 +14,6 @@ import BasicSearchFilterCriteria from '../components/search/BasicSearchFilterCri
 import AdvancedSearchFilterCriteria from '../components/search/AdvancedSearchFilterCriteria'
 import GridViewPets from '../components/pet/GridViewPets'
 import SocialMediaViewPets from '../components/pet/SocialMediaViewPets'
-import { GetReq, PostReq } from '../utils/api'
 import { useSearchContext } from '../context/SearchContext'
 import { Divider } from 'antd'
 import SearchToggle from '../components/search/SearchToggle'

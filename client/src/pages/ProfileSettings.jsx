@@ -1,6 +1,13 @@
 import React from 'react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Link } from '@chakra-ui/react'
-import { NavLink } from 'react-router-dom'
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Link,
+  Box,
+} from '@chakra-ui/react'
 import ProfileForm from '../components/profile/ProfileForm'
 import ChangePasswordForm from '../components/profile/ChangePasswordForm'
 import { Divider } from 'antd'
@@ -8,22 +15,23 @@ import { Divider } from 'antd'
 export default function ProfileSettings() {
   return (
     <>
-      <Divider style={{ border: 'none', margin: '0.5rem' }} />
-      <Tabs isFitted>
-        <TabList>
-          <Tab fontWeight="semibold">UPDATE PROFILE</Tab>
-          <Tab fontWeight="semibold">CHANGE PASSWORD</Tab>
-        </TabList>
-
-        <TabPanels>
-          <TabPanel>
-            <ProfileForm />
-          </TabPanel>
-          <TabPanel>
-            <ChangePasswordForm />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <Box width="100%">
+        <Divider style={{ border: 'none', margin: '0.5rem' }} />
+        <Tabs isFitted>
+          <TabList>
+            <Tab fontWeight="semibold">UPDATE PROFILE</Tab>
+            <Tab fontWeight="semibold">CHANGE PASSWORD</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <ProfileForm />
+            </TabPanel>
+            <TabPanel>
+              <ChangePasswordForm />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
     </>
   )
 }

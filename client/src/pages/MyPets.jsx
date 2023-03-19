@@ -33,14 +33,18 @@ export default function MyPets() {
 
   useEffect(() => {
     async function fetchPets() {
-      const allPets = await getAllPets()
-      await getCurrentUser(user_id)
-      if (allPets && petsUserFostered) {
-        const filteredPets = allPets.filter((pet) =>
-          petsUserFostered.includes(pet.pet_id),
-        )
-        console.log(filteredPets)
-        setPetsTabArray(filteredPets)
+      try {
+        const allPets = await getAllPets()
+        console.log(allPets, 'allpets')
+        await getCurrentUser(user_id)
+        if (allPets && petsUserFostered) {
+          const filteredPets = allPets.filter((pet) =>
+            petsUserFostered.includes(pet.pet_id),
+          )
+          setPetsTabArray(filteredPets)
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
     fetchPets()
@@ -51,10 +55,11 @@ export default function MyPets() {
       setTab(tabSelected)
       if (tabSelected === 'liked') {
         const allPets = await getAllPets()
+        console.log(allPets)
         setPetsTabArray(
           allPets?.filter((pet) => petsUserLiked.includes(pet.pet_id)),
         )
-        console.log(petsTabArray)
+        console.log(petsTabArray, 'hello')
       }
       if (tabSelected === 'saved') {
         const allPets = await getAllPets()
@@ -80,7 +85,7 @@ export default function MyPets() {
   }
 
   return (
-    <Box>
+    <Box width="100%">
       <Tabs isFitted>
         <Divider style={{ border: 'none', margin: '0.3rem' }} />
         <TabList>

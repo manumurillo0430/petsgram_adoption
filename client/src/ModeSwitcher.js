@@ -15,6 +15,7 @@ const ModeSwitcher = (props) => {
 
   return (
     <IconButton
+      mx={3}
       size="sd"
       fontSize="lg"
       variant="ghost"
@@ -23,6 +24,7 @@ const ModeSwitcher = (props) => {
       onClick={toggleColorMode}
       icon={<SwitchIcon color={text === 'dark' ? 'dark' : 'white'} />}
       aria-label={`Switch to ${text} mode`}
+      _hover={{ backgroundColor: 'transparent' }}
       {...props}
     />
   )
