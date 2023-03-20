@@ -13,7 +13,7 @@ async function getAllUsersModel() {
 
 async function addUserModel(newUser) {
   try {
-    const [addedUser] = await dbConnection.from('users').insert(newUser)
+    const addedUser = await dbConnection('users').insert(newUser).returning('*')
     return addedUser
   } catch (error) {
     console.log(error)
