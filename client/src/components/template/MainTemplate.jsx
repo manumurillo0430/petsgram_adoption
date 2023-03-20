@@ -18,6 +18,7 @@ import './MainTemplate.css'
 
 export default function MainTemplate({ children }) {
   const { isActiveSession, currentUser } = useAuthContext()
+  console.log(currentUser, isActiveSession, 'here')
   const [collapsed, setCollapsed] = useState(false)
   const location = useLocation()
   const [selectedKeys, setSelectedKeys] = useState(['1'])

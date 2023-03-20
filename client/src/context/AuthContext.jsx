@@ -40,7 +40,6 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const checkUserAuth = async () => {
       await verifyUser()
-      setIsActiveSession(true)
     }
     checkUserAuth()
   }, [])
