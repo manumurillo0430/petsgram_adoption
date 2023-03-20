@@ -8,7 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/israeltechchallenge/fs-pet-adoption-be-manumurillo0430.git"
+    "url": "https://github.com/manumurillo0430/petsgram_adoption.git",
+    "branch": "Backend-updates",
+    "directory": "server"
   },
   "keywords": [],
   "author": "",
