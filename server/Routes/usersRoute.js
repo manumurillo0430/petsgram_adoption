@@ -24,6 +24,7 @@ const router = express.Router()
 
 router
   .get('/', userController.getAllUsers)
+
   .post(
     '/signup',
     validateUser(newUserSchema),
@@ -32,6 +33,7 @@ router
     hashPassword,
     userController.signup,
   )
+
   .post(
     '/login',
     validateUser(userSchema),
@@ -64,7 +66,8 @@ router
   )
   .get('/:id', auth, userController.getUserById)
   .put('/like/:user_id', auth, userController.userLikedPet)
-  .put('/save/:user_id', auth, userController.userSavedPet)
+  .delete('/unlike/:user_id', auth, userController.userLikedPet)
+  .put('/save/:user_id', auth, userController.userLikedPet)
   .delete('/unsave/:user_id', auth, userController.userUnsavedPet)
   .get('/', auth, userController.getAllUsers)
 

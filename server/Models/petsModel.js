@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const dbConnection = require('../knex/knex')
-const pathUsersDB = path.resolve(__dirname, '../DataBases/petsDB.json')
+const pathUsersDB = path.resolve(__dirname, '../Database/petsDB.json')
 
 async function getAllPetsModel() {
   try {
@@ -257,7 +257,11 @@ async function returnPetModel(user_id, pet_id, adoptionStatus) {
 }
 async function deletePetModel(user_id, pet_id) {
   try {
-    await dbConnection('pets').where({ pet_id: pet_id }).first().delete()
+    await dbConnection.transaction(async (trx) => {
+      await trx('liked_pets').where({ pet_id: pet_id }).delete()
+      await trx('pets').where({ pet_id: pet_id }).delete()
+    })
+
     return
   } catch (error) {
     console.log(error)

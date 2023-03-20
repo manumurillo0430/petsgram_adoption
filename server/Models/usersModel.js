@@ -1,6 +1,6 @@
 const path = require('path')
 const dbConnection = require('../knex/knex')
-const pathUsersDB = path.resolve(__dirname, '../DataBases/usersDB.json')
+const pathUsersDB = path.resolve(__dirname, '../Database/usersDB.json')
 
 async function getAllUsersModel() {
   try {
