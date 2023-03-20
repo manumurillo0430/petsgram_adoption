@@ -7,17 +7,24 @@ const validatePassword = async (request, response, next) => {
     .from('users')
     .first()
     .where({ email: email })
+  console.log(userData)
   try {
     if (userData) {
       const hashedPassword = userData.password
       bcrypt.compare(password, hashedPassword, (err, match) => {
         if (match) {
           next()
-        } else response.status(400).send('Wrong password.')
+        } else {
+          response.status(400).send('Wrong password.')
+        }
       })
-    } else next(error)
+    } else {
+      const error = new Error('User not found')
+      error.status = 404
+      throw error
+    }
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 }
 

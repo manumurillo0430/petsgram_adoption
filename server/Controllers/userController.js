@@ -11,6 +11,8 @@ const {
   updateUserDataPlusPictureModel,
   updatePasswordModel,
   userLikedPetModel,
+  userLikePetModel,
+  userUnlikePetModel,
   userSavedPetModel,
   userUnsavedPetModel,
   getUsersLikesPetModel,
@@ -52,8 +54,10 @@ const signup = async (req, res) => {
 }
 
 const login = async (req, res) => {
+  console.log('hi')
   try {
     const user = await loginModel(req.body.email)
+    console.log(user)
     if (user) {
       const token = jwt.sign(
         { user_id: user.user_id },
@@ -188,7 +192,30 @@ const userLikedPet = async (req, res) => {
     console.log(isPetLiked)
     if (isPetLiked) {
       res.status(200).send({
+        ok: true,
         data: 'Like saved',
+      })
+    } else if (!isPetLiked) {
+      res.status(200).send({
+        ok: true,
+        data: 'Pet not liked by user',
+      })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({
+      error: 'Internal server error',
+    })
+  }
+}
+const userUnlikedPet = async (req, res) => {
+  try {
+    const { user_id, pet_id } = req.body
+    const isPetLiked = await userLikedPetModel(user_id, pet_id)
+    console.log(isPetLiked)
+    if (isPetLiked) {
+      res.status(200).send({
+        data: 'Like unsaved',
       })
     } else if (!isPetLiked) {
       res.status(200).send({
@@ -259,6 +286,7 @@ module.exports = {
   updateUserDataPlusPicture,
   updatePassword,
   userLikedPet,
+  userUnlikedPet,
   userSavedPet,
   userUnsavedPet,
 }
