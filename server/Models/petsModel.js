@@ -16,7 +16,7 @@ async function getAllPetsModel() {
 }
 async function addPetModel(newPet) {
   try {
-    const [addedUser] = await dbConnection('pets').insert(newPet)
+    const addedUser = await dbConnection('pets').insert(newPet).returning('*')
     return addedUser
   } catch (error) {
     console.log(error)

@@ -17,8 +17,8 @@ router
   .post(
     '/',
     auth,
-    upload.single('picture'),
-    uploadToCludinary,
+    // upload.single('picture'),
+    // uploadToCludinary,
     petController.addANewPet,
   )
 
