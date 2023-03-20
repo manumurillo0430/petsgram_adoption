@@ -167,7 +167,7 @@ export default function MainTemplate({ children }) {
       </GridItem>
 
       {/* Footer */}
-      <GridItem area={'footer'}>Footer</GridItem>
+      {/* <GridItem area={'footer'}>Footer</GridItem> */}
     </Grid>
   )
 }

@@ -5,8 +5,10 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Redirect,
   Outlet,
 } from 'react-router-dom'
+
 import MainTemplate from './components/template/MainTemplate'
 import AdminDasboard from './pages/AdminDashboard'
 import Home from './pages/Home'

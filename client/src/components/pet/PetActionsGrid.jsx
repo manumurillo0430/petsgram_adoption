@@ -43,10 +43,6 @@ export default function PetActionsGrid({
     returnPet,
   } = useSearchContext()
 
-  // useEffect(() => {
-  //     setAdoptionStatus(status)
-  // }, [status])
-
   const [newAdoptionStatus, setNewAdoptionStatus] = useState(status)
   const [heart, setHeart] = useState(true)
   const [save, setSave] = useState(true)

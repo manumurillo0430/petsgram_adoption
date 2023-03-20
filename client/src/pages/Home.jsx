@@ -8,7 +8,7 @@ export default function Home() {
   const [isSmallerThan1700] = useMediaQuery('(max-weight: 1700px)')
   const { isActiveSession, user_id } = useAuthContext()
   const theme = useColorModeValue('dark', 'light')
-  console.log(isActiveSession, user_id)
+  console.log(process.env.NODE_ENV)
   const homeBg = {
     width: '100%',
     backgroundImage:

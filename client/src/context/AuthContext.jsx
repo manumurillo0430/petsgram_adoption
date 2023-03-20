@@ -24,6 +24,7 @@ const AuthContext = createContext({
   userUnsavedPet: () => {},
   getPetsUserLiked: () => {},
   getPetsUserSaved: () => {},
+  getUserById: () => {},
 })
 
 function AuthProvider({ children }) {
@@ -37,22 +38,24 @@ function AuthProvider({ children }) {
   const [user_id, setUser_id] = useState(undefined)
 
   useEffect(() => {
-    const awaitVerifyUser = async () => await verifyUser()
-    awaitVerifyUser() // eslint-disable-next-line
+    const checkUserAuth = async () => {
+      await verifyUser()
+      setIsActiveSession(true)
+    }
+    checkUserAuth()
   }, [])
 
   useEffect(() => {
     const awaitGetCurrentUser = async () => {
       try {
         const res = await GetReq(`/user/${user_id}`)
-        if (res) {
-          setCurrentUser(res.user)
-          setPetsUserAdopted(res.pets.adopted)
-          setPetsUserFostered(res.pets.fostered)
-          setPetsUserSaved(res.pets.saved)
-          setPetsUserLiked(res.pets.liked)
-          setIsActiveSession(true)
-        }
+        setIsActiveSession(true)
+        setIsLoading(false)
+        setCurrentUser(res.user)
+        setPetsUserAdopted(res.pets.adopted)
+        setPetsUserFostered(res.pets.fostered)
+        setPetsUserSaved(res.pets.saved)
+        setPetsUserLiked(res.pets.liked)
       } catch (error) {
         console.log(error)
       }
@@ -66,20 +69,36 @@ function AuthProvider({ children }) {
   const verifyUser = async () => {
     try {
       const res = await GetReq('')
-      console.log(res)
       if (res.ok) {
-        setUser_id(res.user_id)
         setIsActiveSession(true)
-      } else {
-        setIsActiveSession(false)
-        setUser_id(undefined)
+        setUser_id(res.user_id)
       }
     } catch (error) {
-      setIsActiveSession(false)
-      setUser_id(undefined)
       console.log(error)
     }
   }
+
+  // const verifyUser = async () => {
+  //   try {
+  //     const res = await GetReq('')
+  //     console.log('res.ok:', res.ok)
+  //     console.log('isActiveSession', isActiveSession)
+  //     if (res.ok) {
+  //       console.log('res.ok:', res.ok, 'in the if')
+  //       setIsActiveSession(true)
+  //       console.log('isActiveSession', isActiveSession)
+  //       setUser_id(res.user_id)
+  //     } else {
+  //       setIsActiveSession(false)
+  //       setUser_id(undefined)
+  //     }
+  //   } catch (error) {
+  //     setIsActiveSession(false)
+  //     setUser_id(undefined)
+  //     console.log(error)
+  //   }
+  // }
+
   const getCurrentUser = async (user_id) => {
     try {
       const res = await GetReq(`/user/${user_id}`)
@@ -91,6 +110,17 @@ function AuthProvider({ children }) {
         setPetsUserLiked(res.pets.liked)
         setIsLoading(false)
         setIsActiveSession(true)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getUserById = async (user_id) => {
+    console.log(user_id, 'fjkasdjflksd')
+    try {
+      const res = await GetReq(`/user/${user_id}`)
+      if (res.ok) {
+        return { user: res.user, pets: res.pets }
       }
     } catch (error) {
       console.log(error)
@@ -157,10 +187,10 @@ function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
+        isActiveSession,
         currentUser,
         user_id,
         isLoading,
-        isActiveSession,
         petsUserAdopted,
         petsUserFostered,
         petsUserLiked,
@@ -174,6 +204,7 @@ function AuthProvider({ children }) {
         userUnsavedPet,
         getPetsUserLiked,
         getPetsUserSaved,
+        getUserById,
       }}
     >
       {children}

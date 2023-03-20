@@ -4,7 +4,7 @@ import { Text, Container, Flex, Image, Heading, Button } from '@chakra-ui/react'
 import { Divider } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import { PostReq } from '../../utils/api'
+import { PostReq, GetReq } from '../../utils/api'
 import { useAuthContext } from '../../context/AuthContext'
 import axios from 'axios'
 import Ourfeatures from './Ourfeatures'
@@ -15,28 +15,28 @@ export default function HomeTemplate() {
   const { clearCurrentUser } = useAuthContext()
   let navigate = useNavigate()
 
-  //   useEffect(() => {
-  //     const awaitGetPets = async () => await getAllPets()
-  //     awaitGetPets()
-  //   }, [])
+  useEffect(() => {
+    const awaitGetPets = async () => await getAllPets()
+    awaitGetPets()
+  }, [])
 
-  //   const getAllPets = async () => {
-  //     try {
-  //       const res = await GetReq('/pet')
-  //       console.log(res)
-  //       if (res) {
-  //         res.map(async (pet) => {
-  //           try {
-  //             await PostReq('/pet', pet)
-  //           } catch (error) {
-  //             console.error(error)
-  //           }
-  //         })
-  //       }
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
+  const getAllPets = async () => {
+    try {
+      const res = await GetReq('/pet')
+      console.log(res)
+      // if (res) {
+      //   res.pets.map(async (pet) => {
+      //     try {
+      //       await PostReq('/pet', pet)
+      //     } catch (error) {
+      //       console.error(error)
+      //     }
+      //   })
+      // }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <Container w="100%" h="100vh" display="flex">
