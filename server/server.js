@@ -20,14 +20,16 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://www.petsgram-adoption.com'],
+    origin: ['http://localhost:3000', 'https://petsgram-adoption.com'],
     credentials: true,
   }),
 )
 
 app.use(express.json())
 app.use(cookieParser())
+
 app.use('/', authRoute)
+// app.use('/', authRoute)
 app.use('/user', usersRoute)
 app.use('/pet', petsRoute)
 app.use('/logout', logoutRoute)
