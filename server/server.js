@@ -8,7 +8,7 @@ const dbConnection = require('./knex/knex')
 const cookieParser = require('cookie-parser')
 
 const app = express()
-s
+
 app.use(
   cors({
     origin: ['http://localhost:3000', 'https://www.petsgram-adoption.com'],
