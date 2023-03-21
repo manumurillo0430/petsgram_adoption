@@ -149,9 +149,6 @@ function SearchProvider() {
         pet_id: pet_id,
         adoptionStatus: adoptionStatus,
       })
-      if (res) {
-        setPetsArray(await getAllPets())
-      }
     } catch (error) {
       console.log(error)
     }

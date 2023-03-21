@@ -89,8 +89,7 @@ export default function PetActionsGrid({
 
   const handleAdoptionStatus = async (e) => {
     if (
-      userLocation(window.location.pathname)(window.location.pathname) !==
-        'search' &&
+      userLocation(window.location.pathname) !== 'search' &&
       tab === 'fostered'
     ) {
       setTimeout(() => {
