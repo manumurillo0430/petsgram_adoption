@@ -92,7 +92,7 @@ export default function Singup({ toggleModal }) {
             fieldName="phonenumber"
             fieldLabel="Phone Number"
           />
-          <FormSubmitButtom buttonLabel="Sing Up" />
+          <FormSubmitButtom buttonLabel="Sign Up" />
         </form>
       )}
     </Formik>

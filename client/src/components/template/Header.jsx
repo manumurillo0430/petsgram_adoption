@@ -68,7 +68,7 @@ export default function Header({ toggleCollapsed }) {
                   onClick={toggleModal}
                   fontWeight="500"
                 >
-                  Log&nbsp;In&nbsp;/&nbsp;Sing&nbsp;Up
+                  Log&nbsp;In&nbsp;/&nbsp;Sign&nbsp;Up
                 </Link>
                 <Link
                   mr={6}
