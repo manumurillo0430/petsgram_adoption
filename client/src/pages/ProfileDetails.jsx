@@ -8,7 +8,7 @@ import { userLocation } from '../utils/globals'
 export default function ProfileDetails() {
   const { isActiveSession, getUserById } = useAuthContext()
   const [user, setUser] = useState(
-    Number(userLocation(window.location.pathname)(window.location.pathname)),
+    Number(userLocation(window.location.pathname)),
   )
   useEffect(() => {
     async function fetchUserDetails() {
