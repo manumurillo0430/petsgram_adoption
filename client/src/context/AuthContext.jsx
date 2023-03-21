@@ -29,7 +29,7 @@ function AuthProvider({ children }) {
   const [petsUserSaved, setPetsUserSaved] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isActiveSession, setIsActiveSession] = useState(false)
-  const [user_id, setUser_id] = useState(undefined)
+  const [user_id, setUser_id] = useState()
 
   useEffect(() => {
     const checkUserAuth = async () => {

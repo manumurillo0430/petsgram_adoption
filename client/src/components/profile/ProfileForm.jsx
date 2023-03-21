@@ -43,7 +43,7 @@ export default function ProfileForm() {
     if (e.target.checked === true) {
       setIsChecked(1)
     }
-    setPublicProfile(publicProfile === 1 ? 0 : 1)
+    setPublicProfile(e.target.checked)
   }
 
   const toast = useToast({
@@ -64,7 +64,7 @@ export default function ProfileForm() {
     email: yup.string().email('Invalid e-mail.'),
     phonenumber: yup.string().matches(telRegExp, 'Invalid phone number.'),
     bio: yup.string().max(250, bioeExcdedText),
-    is_private: yup.number(),
+    is_private: yup.bool(),
   })
 
   return (

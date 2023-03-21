@@ -8,7 +8,6 @@ const BASE_URL =
 export const GetReq = async (path) => {
   const rest = await axios.get(BASE_URL + path, {
     withCredentials: true,
-    mode: 'cors',
   })
   return rest.data
 }
@@ -19,7 +18,6 @@ export const GetReqQuery = async (path, params) => {
     { params: params },
     {
       withCredentials: true,
-      mode: 'cors',
     },
   )
   return rest.data
@@ -28,7 +26,6 @@ export const GetReqQuery = async (path, params) => {
 export const PostReq = async (path, data) => {
   const rest = await axios.post(BASE_URL + path, data, {
     withCredentials: true,
-    mode: 'cors',
   })
   return rest.data
 }
@@ -42,7 +39,6 @@ export const DeleteReq = async (path, data) => {
   const rest = await axios.delete(BASE_URL + path, {
     data: data,
     withCredentials: true,
-    mode: 'cors',
   })
   return rest.data
 }
