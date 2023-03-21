@@ -53,7 +53,7 @@ export default function Singup({ toggleModal }) {
       onSubmit={async (newUser, { resetForm }) => {
         try {
           setServerError('')
-          const res = await PostReq('/user/signup/', newUser)
+          const res = await PostReq('/user/signup', newUser)
           if (res) {
             toast()
             resetForm()
