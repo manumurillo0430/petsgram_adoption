@@ -22,7 +22,6 @@ export default function ProfileForm() {
   const theme = useColorModeValue('dark', 'light')
 
   const { currentUser, getCurrentUser } = useAuthContext()
-  console.log(currentUser.is_private)
   const [picture, setPicture] = useState(
     currentUser?.picture === '' ? noProfilePictureDark : currentUser?.picture,
   )
@@ -32,14 +31,11 @@ export default function ProfileForm() {
   const [isChecked, setIsChecked] = useState(0)
 
   const toggleAccount = (e) => {
-    console.log(e.target.checked)
     if (e.target.checked === false) {
       setIsChecked(0)
-      console.log(isChecked)
     }
     if (e.target.checked === true) {
       setIsChecked(1)
-      console.log(isChecked)
     }
     setPublicProfile(publicProfile === 1 ? 0 : 1)
   }
@@ -77,6 +73,7 @@ export default function ProfileForm() {
       }}
       validationSchema={updateUserSchema}
       onSubmit={async (user) => {
+        console.log('here2')
         if (typeof picture === 'object') {
           try {
             const updatedUserData = new FormData()
@@ -88,10 +85,6 @@ export default function ProfileForm() {
             }
             updatedUserData.append('picture', picture)
 
-            console.log('here2')
-            for (let key in user) {
-              console.log(`${key}`, `${user[key]}`)
-            }
             setUpdatingUserData(true)
             const res = await PutReq(
               `/user/picture/${currentUser.user_id}`,
@@ -117,7 +110,6 @@ export default function ProfileForm() {
               picture: picture,
               is_private: isChecked,
             }
-            console.log(updatedUserData)
             setUpdatingUserData(true)
             const res = await PutReq(
               `/user/${currentUser.user_id}`,
@@ -135,7 +127,7 @@ export default function ProfileForm() {
         }
       }}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, isSubmitting }) => (
         <form onSubmit={handleSubmit} flexDirection="row">
           <Flex flexDirection="row" justifyContent="center">
             <Box mr={6}>
@@ -214,10 +206,10 @@ export default function ProfileForm() {
                   please don't hesitate to contact us.
                 </Text>
               )}
-
               <Divider style={{ border: 'none' }} />
               <FormSubmitButtom
                 buttonLabel={!updatingUserData ? 'Update' : <Spinner />}
+                isSubmitting={updatingUserData}
               />
             </Box>
           </Flex>

@@ -10,7 +10,6 @@ export default function ProfileDetails() {
   const { isActiveSession, getUserById } = useAuthContext()
   const [user, setUser] = useState(userLocation)
   useEffect(() => {
-    // if (userLocation.user_id !== userLocation) {
     async function fetchUserDetails() {
       try {
         const userInfo = await getUserById(userLocation)
@@ -22,10 +21,6 @@ export default function ProfileDetails() {
     }
 
     fetchUserDetails()
-    // } else {
-    //   setUser(userLocation)
-    //   console.log(user, 'this is my users')
-    // }
   }, [])
 
   console.log(userLocation)
