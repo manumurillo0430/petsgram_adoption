@@ -1,5 +1,4 @@
 const express = require('express')
-const PORT = process.env.PORT || 8080
 const cors = require('cors')
 const usersRoute = require('./Routes/usersRoute')
 const petsRoute = require('./Routes/petsRoute')
@@ -9,15 +8,24 @@ const dbConnection = require('./knex/knex')
 const cookieParser = require('cookie-parser')
 
 const app = express()
-
-app.use(express.json())
-
+s
 app.use(
   cors({
     origin: ['http://localhost:3000', 'https://www.petsgram-adoption.com'],
     credentials: true,
   }),
 )
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  )
+  next()
+})
+
+app.use(express.json())
 app.use(cookieParser())
 app.use('/', authRoute)
 app.use('/user', usersRoute)
@@ -29,8 +37,8 @@ dbConnection.migrate
   .then((migration) => {
     if (migration) {
       console.log('Connected to DB', migration)
-      app.listen(PORT, () => {
-        console.log('Listening on port ' + PORT)
+      app.listen(process.env.PORT || 8080, () => {
+        console.log('Listening on port ' + (process.env.PORT || 8080))
       })
     }
   })
