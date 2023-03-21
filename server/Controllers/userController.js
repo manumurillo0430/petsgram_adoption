@@ -54,14 +54,13 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const user = await loginModel(req.body.email)
-    console.log(user)
+
     if (user) {
       const token = jwt.sign(
         { user_id: user.user_id },
         process.env.ACCESS_TOKEN_SECRET,
       )
-      const pets_info_promise = await getUsersLikesPetModel() // call the function
-      console.log(pets_info_promise, 'his')
+      const pets_info_promise = await getUsersLikesPetModel()
       res.cookie('token', token, cookieSettings)
       res.status(200).send({
         ok: true,

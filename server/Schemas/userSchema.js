@@ -1,5 +1,3 @@
-const { format } = require('mysql')
-
 const newUserSchema = {
   type: 'object',
   properties: {
@@ -33,8 +31,8 @@ const updateProfileShema = {
     phonenumber: { type: 'string', minLength: 8 },
     bio: { type: 'string' },
     picture: { type: 'string' },
-    user_id: { type: 'number' },
-    is_private: { type: 'number' },
+    user_id: { type: 'integer' },
+    is_private: { type: 'integer' },
   },
   required: ['email', 'firstname'],
   additionalProperties: false,
