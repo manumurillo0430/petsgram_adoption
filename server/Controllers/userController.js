@@ -11,8 +11,6 @@ const {
   updateUserDataPlusPictureModel,
   updatePasswordModel,
   userLikedPetModel,
-  userLikePetModel,
-  userUnlikePetModel,
   userSavedPetModel,
   userUnsavedPetModel,
   getUsersLikesPetModel,
@@ -54,7 +52,6 @@ const signup = async (req, res) => {
 }
 
 const login = async (req, res) => {
-  console.log('hi')
   try {
     const user = await loginModel(req.body.email)
     console.log(user)

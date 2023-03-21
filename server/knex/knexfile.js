@@ -4,7 +4,8 @@ module.exports = {
   client: 'pg',
   connection: {
     connectionString:
-      'postgres://petsgram:eYNzCuQadgPLBNHTwoxnbKdgBfnICKyh@dpg-cgc86qe4dad7acc2rc7g-a.oregon-postgres.render.com/pestgram',
+      'postgres://petsgram:rYX0r1zV9k9Dsol4xfJfWlLGm2GZS4pI@dpg-cgcaoid269v4icvhnnug-a.oregon-postgres.render.com/pestgram_lb73',
+
     ssl: {
       rejectUnauthorized: false,
     },

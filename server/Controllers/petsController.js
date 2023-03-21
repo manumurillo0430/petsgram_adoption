@@ -49,7 +49,7 @@ const addANewPet = async (req, res) => {
       height,
       hypoallergenic,
       name,
-      picture,
+      pictureUrl,
       type,
       weight,
       total_likes,
@@ -59,7 +59,7 @@ const addANewPet = async (req, res) => {
       type,
       name,
       adoptionStatus,
-      picture: picture,
+      picture: pictureUrl,
       breed,
       height,
       weight,
@@ -68,6 +68,9 @@ const addANewPet = async (req, res) => {
       dietary,
       hypoallergenic,
       total_likes,
+    }
+    if (newPet.bio.length > 255) {
+      throw new Error('Name is too long')
     }
 
     const addedPet = await petModel.addPetModel(newPet)
