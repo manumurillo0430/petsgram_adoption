@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const BASE_URL =
   process.env.NODE_ENV !== 'development'
-    ? 'http://localhost:8080'
-    : 'https://petsgram-adoption-server.onrender.com'
+    ? 'https://petsgram-adoption-server.onrender.com'
+    : 'http://localhost:8080'
 
 export const GetReq = async (path) => {
   const rest = await axios.get(BASE_URL + path, {
