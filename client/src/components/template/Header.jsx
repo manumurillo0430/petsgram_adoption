@@ -5,6 +5,7 @@ import {
   useDisclosure,
   Button,
   useColorModeValue,
+  ColorModeProvider,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { brandLight, brandDark } from '../../utils/globals'
@@ -80,8 +81,9 @@ export default function Header({ toggleCollapsed }) {
                 </Link>
               </>
             )}
-
-            <ModeSwitcher />
+            <ColorModeProvider initialColorMode="dark">
+              <ModeSwitcher />
+            </ColorModeProvider>
           </Flex>
         </Flex>
       </Box>

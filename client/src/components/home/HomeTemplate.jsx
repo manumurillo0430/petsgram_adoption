@@ -50,17 +50,17 @@ export default function HomeTemplate() {
           <Divider style={{ border: 'none', margin: '0.6rem' }} />
           <Divider style={{ border: 'none', margin: '0.3rem' }} />
           <Ourfeatures
-            feature="Discover and Rescue"
-            text="Browse and save pets by name, breed, age, and more."
+            textA="Discover and Rescue"
+            mainText="Browse and save pets by name, breed, age, and more."
           />
 
           <Ourfeatures
-            feature="Socialize&nbsp;with&nbsp;Pets"
-            text="Follow them and connect with other pet lovers."
+            textA="Socialize&nbsp;with&nbsp;Pets"
+            mainText="Follow them and connect with other pet lovers."
           />
           <Ourfeatures
-            feature="Adopt&nbsp;or&nbsp;Foster"
-            text="Apply with our expert guidance."
+            textA="Adopt&nbsp;or&nbsp;Foster"
+            mainText="Apply with our expert guidance."
           />
           <Ourfeatures
             textA="Enjoy and be part"
