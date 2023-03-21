@@ -9,13 +9,6 @@ const cookieParser = require('cookie-parser')
 
 const app = express()
 
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://www.petsgram-adoption.com'],
-    credentials: true,
-  }),
-)
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header(
@@ -24,6 +17,13 @@ app.use((req, res, next) => {
   )
   next()
 })
+
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'https://www.petsgram-adoption.com'],
+    credentials: true,
+  }),
+)
 
 app.use(express.json())
 app.use(cookieParser())
