@@ -1,16 +1,17 @@
-import { useState, useEffect, React } from 'react'
-import { Text, Flex, Tooltip, Button } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Text, Flex, Tooltip, Spinner } from '@chakra-ui/react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import { useSearchContext } from '../../context/SearchContext'
 import { useAuthContext } from '../../context/AuthContext'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
-import { Spinner } from '@chakra-ui/react'
-import './PetCardGrid.css'
-import { useMediaQuery } from '@mui/material'
-import PetButtonSM from './PetButtonSM'
+import PetButtonSM from './PetButtonsSaveLike'
 import PetButtonStatus from './PetButtonStatus'
+import { userLocation } from '../../utils/globals'
+import './PetCardGrid.css'
+import PetButtonsSaveLike from './PetButtonsSaveLike'
+
 export default function PetActionsGrid({
   setCleanOfList,
   pet,
@@ -19,8 +20,6 @@ export default function PetActionsGrid({
   userInfoLikes,
   setAdoptionStatus,
 }) {
-  const location = window.location.pathname.split('/')
-  const userLocation = location[location.length - 1]
   const {
     currentUser,
     user_id,
@@ -31,7 +30,6 @@ export default function PetActionsGrid({
     petsUserSaved,
     setPetsUserAdopted,
     userLikedPet,
-    userUnlikedPet,
     userSavedPet,
     userUnsavedPet,
   } = useAuthContext()
@@ -48,8 +46,10 @@ export default function PetActionsGrid({
   const [save, setSave] = useState(true)
 
   const handleLike = async () => {
-    console.log(userLocation)
-    if (userLocation !== 'search' && tab === 'liked') {
+    if (
+      userLocation(window.location.pathname) !== 'search' &&
+      tab === 'liked'
+    ) {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
@@ -57,7 +57,11 @@ export default function PetActionsGrid({
     console.log(pet)
     console.log(pet.pet_id)
     setHeart(!heart)
-    await userLikedPet(pet.pet_id, currentUser?.user?.user_id, location)
+    await userLikedPet(
+      pet.pet_id,
+      currentUser?.user?.user_id,
+      userLocation(window.location.pathname),
+    )
     await addLike(user_id, pet.pet_id)
   }
 
@@ -71,7 +75,10 @@ export default function PetActionsGrid({
   }
 
   const handleUnsave = async () => {
-    if (userLocation !== 'search' && tab === 'saved') {
+    if (
+      userLocation(window.location.pathname) !== 'search' &&
+      tab === 'saved'
+    ) {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
@@ -81,7 +88,11 @@ export default function PetActionsGrid({
   }
 
   const handleAdoptionStatus = async (e) => {
-    if (userLocation !== 'search' && tab === 'fostered') {
+    if (
+      userLocation(window.location.pathname)(window.location.pathname) !==
+        'search' &&
+      tab === 'fostered'
+    ) {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
@@ -101,7 +112,10 @@ export default function PetActionsGrid({
   }
 
   const handleReturn = async () => {
-    if (userLocation !== 'search' && tab === 'adopted') {
+    if (
+      userLocation(window.location.pathname) !== 'search' &&
+      tab === 'adopted'
+    ) {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
@@ -138,7 +152,7 @@ export default function PetActionsGrid({
           </Tooltip>
         ) : (
           <Tooltip label={!heart ? 'Unlike' : 'Like'} placement="bottom">
-            <PetButtonSM
+            <PetButtonsSaveLike
               color={!heart ? '#f78991' : ''}
               icon={!heart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               action={handleLike}
@@ -146,7 +160,7 @@ export default function PetActionsGrid({
           </Tooltip>
         )}
         {petsUserSaved === 0 && isActiveSession && (
-          <PetButtonSM
+          <PetButtonsSaveLike
             label={save ? 'Unsave' : 'Save'}
             icon={<BookmarkIcon />}
             action={handleSave}
@@ -155,13 +169,13 @@ export default function PetActionsGrid({
         {petsUserSaved !== 0 &&
         petsUserSaved?.includes(pet.pet_id) &&
         isActiveSession ? (
-          <PetButtonSM
+          <PetButtonsSaveLike
             label={save ? 'Unsave' : 'Save'}
             icon={save ? <BookmarkIcon /> : <TurnedInNotIcon />}
             action={handleUnsave}
           />
         ) : (
-          <PetButtonSM
+          <PetButtonsSaveLike
             label={!save ? 'Unsave' : 'Save'}
             icon={!save ? <BookmarkIcon /> : <TurnedInNotIcon />}
             action={handleSave}

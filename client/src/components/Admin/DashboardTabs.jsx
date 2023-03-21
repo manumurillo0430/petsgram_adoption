@@ -22,7 +22,7 @@ export default function DashboardTabs({
   let navigate = useNavigate()
   return (
     <>
-      <Tabs isFitted colorScheme="blue" w="100%" m="auto">
+      <Tabs isFitted colorScheme="blue" w="100%">
         <TabList>
           <Tab onClick={() => setTab('pets')}>Pets</Tab>
           <Tab onClick={() => setTab('users')}>Users</Tab>

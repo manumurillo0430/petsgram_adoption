@@ -1,26 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import FormTextAreaField from '../form/FormTextAreaField'
-import { Box, Flex, Switch, Text, useColorModeValue } from '@chakra-ui/react'
-import FormInputField from '../form/FormInputField'
-import * as yup from 'yup'
-import { telRegExp } from '../../utils/globals'
-import { Formik } from 'formik'
-import { Divider } from 'antd'
-import { useAuthContext } from '../../context/AuthContext'
-import FormSubmitButtom from '../form/FormSubmitButtom'
-import { PutReq } from '../../utils/api'
-import FormFileField from '../form/FormFileField'
-import { useToast } from '@chakra-ui/react'
-import { requiredField } from '../../utils/globals'
-import { Spinner } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Switch,
+  Text,
+  useColorModeValue,
+  useToast,
+  Spinner,
+} from '@chakra-ui/react'
 import {
   noProfilePictureDark,
   noProfilePictureLight,
+  requiredField,
+  bioeExcdedText,
+  telRegExp,
 } from '../../utils/globals'
+import * as yup from 'yup'
+import { Formik } from 'formik'
+import { Divider } from 'antd'
+import { useAuthContext } from '../../context/AuthContext'
+import FormInputField from '../form/FormInputField'
+import FormFileField from '../form/FormFileField'
+import FormSubmitButtom from '../form/FormSubmitButtom'
+import { PutReq } from '../../utils/api'
 
 export default function ProfileForm() {
   const theme = useColorModeValue('dark', 'light')
-
   const { currentUser, getCurrentUser } = useAuthContext()
   const [picture, setPicture] = useState(
     currentUser?.picture === '' ? noProfilePictureDark : currentUser?.picture,
@@ -57,7 +63,7 @@ export default function ProfileForm() {
     lastname: yup.string().min(3, 'Last Name must be at least 3 characters.'),
     email: yup.string().email('Invalid e-mail.'),
     phonenumber: yup.string().matches(telRegExp, 'Invalid phone number.'),
-    bio: yup.string().max(350, "Bio can't exceed 350 characters."),
+    bio: yup.string().max(250, bioeExcdedText),
     is_private: yup.number(),
   })
 
@@ -127,7 +133,7 @@ export default function ProfileForm() {
         }
       }}
     >
-      {({ handleSubmit, isSubmitting }) => (
+      {({ handleSubmit }) => (
         <form onSubmit={handleSubmit} flexDirection="row">
           <Flex flexDirection="row" justifyContent="center">
             <Box mr={6}>
@@ -209,7 +215,6 @@ export default function ProfileForm() {
               <Divider style={{ border: 'none' }} />
               <FormSubmitButtom
                 buttonLabel={!updatingUserData ? 'Update' : <Spinner />}
-                isSubmitting={updatingUserData}
               />
             </Box>
           </Flex>

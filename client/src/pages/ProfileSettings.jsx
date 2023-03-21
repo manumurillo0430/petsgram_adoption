@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Link,
-  Box,
-} from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react'
 import ProfileForm from '../components/profile/ProfileForm'
 import ChangePasswordForm from '../components/profile/ChangePasswordForm'
 import { Divider } from 'antd'

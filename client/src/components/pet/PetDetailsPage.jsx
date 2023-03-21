@@ -1,19 +1,19 @@
 import React from 'react'
-import { Flex, Box, VStack, Center, Text } from '@chakra-ui/react'
+import { Center, Text } from '@chakra-ui/react'
 import { GetReq } from '../../utils/api'
 import { useEffect, useState } from 'react'
-import { useSearchContext } from '../../context/SearchContext'
+import { userLocation } from '../../utils/globals'
 import PetCardFull from './PetCardFull'
-export default function PetDetailsPage() {
-  const pathArray = window.location.pathname.split('/')
-  const pet_id = pathArray[pathArray.length - 1]
-  console.log(pet_id)
+
+export default function PetDetailsPage({ userInfoLikes, viewTab }) {
   const [pet, setPet] = useState({})
   const [serverMessage, setServerMessage] = useState(false)
   useEffect(() => {
     const getPetById = async () => {
       try {
-        const res = await GetReq(`/pet/${pet_id}`)
+        const res = await GetReq(
+          `/pet/${userLocation(window.location.pathname)}`,
+        )
         if (res.ok) {
           setServerMessage(false)
           setPet(res.pet)
@@ -23,14 +23,18 @@ export default function PetDetailsPage() {
         setServerMessage(error.response.data)
       }
     }
-
     getPetById()
   }, [])
-  console.log(pet)
+
   return (
-    <Center mr={6} ml={6} w="70%">
+    <Center m={6} w="70%">
       {!serverMessage ? (
-        <PetCardFull pet={pet} />
+        <PetCardFull
+          pet={pet}
+          status={pet.adoptionStatus ? pet.adoptionStatus : ''}
+          userInfoLikes={userInfoLikes}
+          viewTab={viewTab}
+        />
       ) : (
         <Text>{serverMessage}</Text>
       )}

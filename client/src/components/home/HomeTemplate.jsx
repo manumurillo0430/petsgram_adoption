@@ -1,12 +1,9 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { Text, Container, Flex, Image, Heading, Button } from '@chakra-ui/react'
-import { Divider } from 'antd'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-import { PostReq, GetReq } from '../../utils/api'
+import { Text, Container, Flex, Button } from '@chakra-ui/react'
+import { Divider } from 'antd'
+import { GetReq } from '../../utils/api'
 import { useAuthContext } from '../../context/AuthContext'
-import axios from 'axios'
 import Ourfeatures from './Ourfeatures'
 
 export default function HomeTemplate() {
@@ -66,9 +63,9 @@ export default function HomeTemplate() {
             text="Apply with our expert guidance."
           />
           <Ourfeatures
-            feature="Enjoy and be part"
-            feature2="of community"
-            text="Join and stay connected with your favorite pets. Get notified of new pets for adoption or fostering."
+            textA="Enjoy and be part"
+            textB="of community"
+            mainText="Join and stay connected with your favorite pets. Get notified of new pets for adoption or fostering."
           />
 
           <Button

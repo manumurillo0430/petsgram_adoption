@@ -1,13 +1,7 @@
 import React from 'react'
-import { Box, Flex, Center } from '@chakra-ui/react'
 import DashboardTabs from './DashboardTabs'
 import { useState, useEffect } from 'react'
 import { GetReq } from '../../utils/api'
-import { petStatus, petTypes } from '../../utils/globals'
-import PieChart from './PieChart'
-import BarChart from './BarChart'
-import Statistics from './StatisticsPets'
-import { Divider } from 'antd'
 
 export default function DashboardTemple({ data, labels }) {
   const [pets, setPets] = useState([])

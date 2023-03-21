@@ -1,17 +1,13 @@
 import React from 'react'
 import {
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
   Text,
-  Button,
   Image,
   Box,
   Flex,
   Avatar,
   Heading,
-  Tooltip,
   IconButton,
   Link,
 } from '@chakra-ui/react'

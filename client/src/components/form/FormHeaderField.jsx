@@ -1,8 +1,14 @@
-import { FormControl, FormLabel, Input, FormErrorMessage, Heading } from "@chakra-ui/react";
-import { useFormikContext, Field } from "formik";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Heading,
+} from '@chakra-ui/react'
+import { useFormikContext, Field } from 'formik'
 
 export default function FormHeaderField({ fieldName, fieldLabel, req }) {
-  const { values, errors, touched, handleChange } = useFormikContext();
+  const { values, errors, touched, handleChange } = useFormikContext()
 
   return (
     <FormControl
@@ -12,7 +18,9 @@ export default function FormHeaderField({ fieldName, fieldLabel, req }) {
       isRequired={req}
       isInvalid={errors[fieldName] !== undefined && touched[fieldName]}
     >
-      <FormLabel display="flex"><Heading size="lg">{fieldLabel}</Heading></FormLabel>
+      <FormLabel display="flex">
+        <Heading size="lg">{fieldLabel}</Heading>
+      </FormLabel>
       <Field
         as={Input}
         name={fieldName}

@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Text,
-  Button,
-  Image,
-  Box,
-  Flex,
-  Avatar,
-  Heading,
-  Tooltip,
-  IconButton,
-  Link,
-} from '@chakra-ui/react'
-import { GetReq, PostReq } from '../../utils/api'
+import { Card, CardBody, Text, Divider } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
 import { useAuthContext } from '../../context/AuthContext'
-import { Divider } from '@chakra-ui/react'
-import { NavLink } from 'react-router-dom'
-import './ProfileCard.css'
 import PetAvatar from './PetAvatar'
+import './ProfileCard.css'
 
 export default function MyPetsCard() {
   const {
@@ -44,6 +26,7 @@ export default function MyPetsCard() {
     }
     fetchPets()
   }, [])
+
   return (
     <>
       <Card maxW="md">

@@ -12,7 +12,8 @@ import { PutReq } from '../../utils/api'
 export default function ChangePasswordForm() {
   const [changingUserPassword, setCangingUserPassword] = useState(false)
   const [serverError, setServerError] = useState(false)
-  const { currentUser, userId } = useAuthContext()
+  const { currentUser } = useAuthContext()
+  console.log(currentUser)
   const toast = useToast({
     title: 'Password updated.',
     description: "We've updated your password.",
@@ -73,8 +74,8 @@ export default function ChangePasswordForm() {
           >
             <Avatar
               size={80}
+              src={currentUser.picture}
               name={`${currentUser.firstname} ${currentUser.lastname}`}
-              src={currentUser?.picture}
             />
             <Text mt={3} fontWeight="bold">
               {currentUser.firstname} {currentUser.lastname}

@@ -1,12 +1,9 @@
-import { Box, useMediaQuery } from '@chakra-ui/react'
+import { Box, useMediaQuery, useColorModeValue } from '@chakra-ui/react'
 import HomeTemplate from '../components/home/HomeTemplate'
-import { useAuthContext } from '../context/AuthContext'
-import { useColorModeValue } from '@chakra-ui/react'
 
 export default function Home() {
   const [isSmallerThan900] = useMediaQuery('(max-height: 900px)')
   const [isSmallerThan1700] = useMediaQuery('(max-weight: 1700px)')
-  const { isActiveSession, user_id } = useAuthContext()
   const theme = useColorModeValue('dark', 'light')
   console.log(process.env.NODE_ENV)
   const homeBg = {

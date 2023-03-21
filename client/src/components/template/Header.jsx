@@ -1,15 +1,19 @@
-import { Box, Flex, Link, useDisclosure, Button } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Link,
+  useDisclosure,
+  Button,
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
+import { brandLight, brandDark } from '../../utils/globals'
+import { useAuthContext } from '../../context/AuthContext'
 import ModeSwitcher from '../../ModeSwitcher'
 import ResgistrationModal from '../registration/RegistrationModal'
-import { useAuthContext } from '../../context/AuthContext'
-import { useColorModeValue } from '@chakra-ui/react'
 import MenuIcon from '@mui/icons-material/Menu'
 import ProfileMenu from './ProfileMenu'
 import Logo from './Logo'
-import SearchBar from '../search/SearchBar'
-import { useNavigate } from 'react-router-dom'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import { brandLight, brandDark } from '../../utils/globals'
 
 export default function Header({ toggleCollapsed }) {
   const { isActiveSession, currentUser } = useAuthContext()

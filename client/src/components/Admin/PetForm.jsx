@@ -1,36 +1,43 @@
 import React, { useState, useEffect } from 'react'
+import {
+  petTypes,
+  petStatus,
+  bioeExcdedText,
+  requiredField,
+  noProfilePetDark,
+  noProfilePetLight,
+  userLocation,
+} from '../../utils/globals'
+import {
+  Box,
+  Center,
+  useToast,
+  Text,
+  useColorModeValue,
+  Spinner,
+} from '@chakra-ui/react'
 import FormTextAreaField from '../form/FormTextAreaField'
-import { Box, Center, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import FormInputField from '../form/FormInputField'
 import FormSubmitButtom from '../form/FormSubmitButtom'
 import FormFileField from '../form/FormFileField'
 import FormSelectField from '../form/FormSelectField'
+import FormCheckbox from '../form/FormCheckbox'
+import FormNumberField from '../form/FormNumberField'
 import * as yup from 'yup'
 import { Formik } from 'formik'
 import { Divider } from 'antd'
-import { useAuthContext } from '../../context/AuthContext'
 import { PostReq } from '../../utils/api'
-import { useToast } from '@chakra-ui/react'
-import { requiredField } from '../../utils/globals'
-import { Spinner } from '@chakra-ui/react'
-import { petTypes } from '../../utils/globals'
-import { petStatus } from '../../utils/globals'
-import FormCheckbox from '../form/FormCheckbox'
-import { noProfilePetDark } from '../../utils/globals'
-import { noProfilePetLight } from '../../utils/globals'
-import FormNumberField from '../form/FormNumberField'
 import { GetReq } from '../../utils/api'
 
 export default function PetForm() {
-  const location = window.location.pathname.split('/')
-  const userLocation = location[location.length - 1]
-  console.log(userLocation)
   const [pet, setPet] = useState(false)
   useEffect(() => {
     const getPetById = async () => {
       try {
-        if (userLocation !== 'new') {
-          const res = await GetReq(`/pet/${userLocation}`)
+        if (userLocation(window.location.pathname) !== 'new') {
+          const res = await GetReq(
+            `/pet/${userLocation(window.location.pathname)}`,
+          )
           if (res) {
             setPet(res)
           }
@@ -67,7 +74,7 @@ export default function PetForm() {
     hypoallergenic: yup.bool(),
     dietary: yup.string(),
     breed: yup.string().required(requiredField),
-    bio: yup.string(),
+    bio: yup.string().max(250, bioeExcdedText),
   })
 
   return (

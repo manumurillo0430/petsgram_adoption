@@ -1,20 +1,12 @@
-import { useState, useEffect, React, useRef, useLayoutEffect } from 'react'
+import { useState, useEffect, React, useNavigate } from 'react'
 import {
   Card,
-  CardHeader,
-  useToast,
   CardFooter,
   Text,
-  Button,
   Image,
-  Box,
   Flex,
   Avatar,
   Heading,
-  IconButton,
-  Tooltip,
-  Tag,
-  TagLabel,
   useColorMode,
   Stack,
   CardBody,
@@ -22,26 +14,19 @@ import {
   useMediaQuery,
 } from '@chakra-ui/react'
 import { petStatusBgColor } from '../../utils/globals'
-import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
-import { useSearchContext } from '../../context/SearchContext'
-import { useAuthContext } from '../../context/AuthContext'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import BookmarkIcon from '@mui/icons-material/Bookmark'
-import { Spinner } from '@chakra-ui/react'
-import './PetCardGrid.css'
-import { HeartFilled } from '@ant-design/icons'
-
-import '../search/search.css'
-import { useSearchParams } from 'react-router-dom'
-import PetActionsFull from './PetActionsFull'
 import PetTag from './PetTag'
 import PetActionsGrid from './PetActionsGrid'
-export default function PetCardFull({ pet, status, userInfoLikes, viewTab }) {
+import './PetCardGrid.css'
+import '../search/search.css'
+
+export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
+  const [adoptionStatus, setAdoptionStatus] = useState(status)
+  useEffect(() => {
+    setAdoptionStatus(status)
+  }, [status])
   const theme = useColorMode('dark', 'light')
   const [isSmallerThan1400] = useMediaQuery('(max-width: 1500px)')
   const [isSmallerThan980] = useMediaQuery('(max-width: 980px)')
-  const [adoptionStatus, setAdoptionStatus] = useState(status)
   useEffect(() => {
     setAdoptionStatus(status)
   }, [status])
@@ -112,14 +97,18 @@ export default function PetCardFull({ pet, status, userInfoLikes, viewTab }) {
             <PetTag label={`${pet?.height}cm`} />
             <PetTag label={`${pet?.weight}kg`} />
           </Flex>
+          <Text mt={2}>
+            <b>Adoption Status:</b>
+          </Text>
+          <Text>{pet?.adoptionStatus}</Text>
         </CardBody>
         <CardFooter>
           <PetActionsGrid
+            setAdoptionStatus={setAdoptionStatus}
             pet={pet}
             status={status}
+            tab={tab}
             userInfoLikes={userInfoLikes}
-            viewTab={viewTab}
-            // setAdoptionStatus={setAdoptionStatus}
           />
         </CardFooter>
       </Stack>

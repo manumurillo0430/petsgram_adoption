@@ -24,12 +24,10 @@ export default function FormFileField({
     picture === '' ? noPicture : picture,
   )
   const theme = useColorModeValue('dark', 'light')
-
   const handlePicture = (e) => {
     setPictureView(URL.createObjectURL(e.target.files[0]))
     setPicture(e.target.files[0])
   }
-
   const handleDeletePicture = () => {
     setPicture('')
     setPictureView(noPicture)

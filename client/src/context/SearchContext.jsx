@@ -1,11 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from 'react'
-import { DeleteReq, GetReq, GetReqQuery, PostReq, PutReq } from '../utils/api'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { DeleteReq, GetReq, GetReqQuery, PostReq } from '../utils/api'
 import { Outlet } from 'react-router-dom'
 import { useAuthContext } from './AuthContext'
 
@@ -155,6 +149,9 @@ function SearchProvider() {
         pet_id: pet_id,
         adoptionStatus: adoptionStatus,
       })
+      if (res) {
+        setPetsArray(await getAllPets())
+      }
     } catch (error) {
       console.log(error)
     }

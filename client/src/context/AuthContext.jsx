@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { DeleteReq, GetReq } from '../utils/api'
 import { PutReq } from '../utils/api'
 
@@ -77,27 +71,6 @@ function AuthProvider({ children }) {
     }
   }
 
-  // const verifyUser = async () => {
-  //   try {
-  //     const res = await GetReq('')
-  //     console.log('res.ok:', res.ok)
-  //     console.log('isActiveSession', isActiveSession)
-  //     if (res.ok) {
-  //       console.log('res.ok:', res.ok, 'in the if')
-  //       setIsActiveSession(true)
-  //       console.log('isActiveSession', isActiveSession)
-  //       setUser_id(res.user_id)
-  //     } else {
-  //       setIsActiveSession(false)
-  //       setUser_id(undefined)
-  //     }
-  //   } catch (error) {
-  //     setIsActiveSession(false)
-  //     setUser_id(undefined)
-  //     console.log(error)
-  //   }
-  // }
-
   const getCurrentUser = async (user_id) => {
     try {
       const res = await GetReq(`/user/${user_id}`)
@@ -128,7 +101,6 @@ function AuthProvider({ children }) {
 
   const userLikedPet = async (pet_id, user_id, location) => {
     try {
-      console.log(location)
       const res = await PutReq(`/user/like/${user_id}`, { pet_id })
     } catch (error) {
       console.log(error)
@@ -149,7 +121,6 @@ function AuthProvider({ children }) {
   const userSavedPet = async (user_id, pet_id) => {
     try {
       const res = await PutReq(`/user/save/${user_id}`, { pet_id })
-      console.log(res)
       if (res) {
         setPetsUserSaved(res.savedPetsIdsListUpdated)
       }
@@ -160,7 +131,6 @@ function AuthProvider({ children }) {
   const getPetsUserSaved = async (user_id) => {
     try {
       const res = await GetReq(`/user/save/${user_id}`)
-      console.log(res)
       if (res) {
         setPetsUserSaved(res.savedPets)
       }
@@ -169,7 +139,6 @@ function AuthProvider({ children }) {
   const userUnsavedPet = async (user_id, pet_id) => {
     try {
       const res = await DeleteReq(`/user/unsave/${user_id}`, { pet_id })
-      console.log(res)
       if (res) {
         getCurrentUser(user_id)
       }

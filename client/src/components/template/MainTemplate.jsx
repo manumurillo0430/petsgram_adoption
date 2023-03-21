@@ -1,24 +1,19 @@
-import React, { useEffect } from 'react'
-import { Grid, GridItem } from '@chakra-ui/react'
-import { useColorModeValue } from '@chakra-ui/react'
-import { Menu } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Grid, GridItem, Link, useColorModeValue } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
-import { NavLink } from 'react-router-dom'
-import { Link } from '@chakra-ui/react'
-import Header from './Header'
-import { HomeFilled, SettingFilled } from '@ant-design/icons'
+import { Menu } from 'antd'
+import { HomeFilled, SettingFilled, UserOutlined } from '@ant-design/icons'
 import { useAuthContext } from '../../context/AuthContext'
-import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import Header from './Header'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
 import PetsIcon from '@mui/icons-material/Pets'
-import { UserOutlined } from '@ant-design/icons'
 import { useLocation } from 'react-router-dom'
 import './MainTemplate.css'
 
 export default function MainTemplate({ children }) {
   const { isActiveSession, currentUser } = useAuthContext()
-  console.log(currentUser, isActiveSession, 'here')
   const [collapsed, setCollapsed] = useState(false)
   const location = useLocation()
   const [selectedKeys, setSelectedKeys] = useState(['1'])

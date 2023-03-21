@@ -1,10 +1,9 @@
-import { useMemo, usenae } from 'react'
-import { Link } from '@chakra-ui/react'
+import { useMemo } from 'react'
+import { Link, Avatar } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
 import DashboardTable from './DashboardTable'
 import { petStatusColor } from '../../utils/globals'
-import { Avatar } from '@chakra-ui/react'
 
 export default function TableDataPets({ pets }) {
   const data = useMemo(() => {

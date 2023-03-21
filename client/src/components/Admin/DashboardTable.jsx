@@ -1,15 +1,5 @@
 import React from 'react'
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Flex,
-  Avatar,
-  Text,
-} from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Td, Flex } from '@chakra-ui/react'
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
 import { useTable, useSortBy } from 'react-table'
 

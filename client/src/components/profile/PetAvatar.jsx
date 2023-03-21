@@ -1,6 +1,6 @@
 import React from 'react'
-import { Avatar, Tooltip, Link } from '@chakra-ui/react'
 import { NavLink } from 'react-router-dom'
+import { Avatar, Tooltip, Link } from '@chakra-ui/react'
 import './ProfileCard.css'
 
 export default function PetAvatar({ id, picture, label }) {

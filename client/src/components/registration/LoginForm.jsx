@@ -17,7 +17,7 @@ import { useSearchContext } from '../../context/SearchContext'
 
 export default function LoginForm({ toggleModal }) {
   console.log(toggleModal)
-  const { getCurrentUser, isActiveSession } = useAuthContext()
+  const { getCurrentUser } = useAuthContext()
   const { getUserLikes } = useSearchContext
   const [serverError, setServerError] = useState(false)
   const loginSchema = yup.object().shape({
@@ -40,7 +40,6 @@ export default function LoginForm({ toggleModal }) {
           console.log(res.token, 'userid:', res.user_id, res.user_likes)
           if (res) {
             toggleModal()
-
             await getCurrentUser(res.user_id)
             await getUserLikes(res.user_likes)
           }

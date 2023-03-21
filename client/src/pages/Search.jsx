@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useSearchContext } from '../context/SearchContext'
 import {
   Box,
   Flex,
@@ -8,14 +9,12 @@ import {
   TabPanel,
   Tabs,
   TabPanels,
-  Text,
 } from '@chakra-ui/react'
+import { Divider } from 'antd'
 import BasicSearchFilterCriteria from '../components/search/BasicSearchFilterCriteria'
 import AdvancedSearchFilterCriteria from '../components/search/AdvancedSearchFilterCriteria'
 import GridViewPets from '../components/pet/GridViewPets'
-import SocialMediaViewPets from '../components/pet/SocialMediaViewPets'
-import { useSearchContext } from '../context/SearchContext'
-import { Divider } from 'antd'
+import FullViewPets from '../components/pet/FullViewPets'
 import SearchToggle from '../components/search/SearchToggle'
 
 export default function Search() {
@@ -64,7 +63,6 @@ export default function Search() {
                   FULL VIEW
                 </Tab>
               </TabList>
-
               <TabPanels>
                 <TabPanel>
                   <GridViewPets
@@ -77,7 +75,7 @@ export default function Search() {
                 <TabPanel justifyContent="center">
                   <Center flexDirection="column" w="90%">
                     <Divider style={{ border: 'none', margin: '0.3rem' }} />
-                    <SocialMediaViewPets
+                    <FullViewPets
                       petsArray={petsArray}
                       usersLikes={usersLikes}
                       viewTab={viewTab}

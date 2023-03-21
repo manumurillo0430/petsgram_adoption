@@ -1,18 +1,17 @@
 import React from 'react'
-import { useEffect } from 'react'
-import { Text, Container, Flex, Image, Heading, Button } from '@chakra-ui/react'
+import { Text, Flex } from '@chakra-ui/react'
 import { Divider } from 'antd'
 
-export default function Ourfeatures({ feature, text, feature2 }) {
+export default function Ourfeatures({ mainText, textA, textB }) {
   return (
     <>
       <Flex w="100%">
         <Text w="50%" fontWeight="semibold" fontSize="lg">
-          {feature}
+          {textA}
           <br />
-          {feature2}
+          {textB}
         </Text>
-        <Text w="50%">{text}</Text>
+        <Text w="50%">{mainText}</Text>
       </Flex>
       <Divider style={{ border: 'none', margin: '0.5rem' }} />
     </>

@@ -102,6 +102,7 @@ export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
               variant="ghost"
               colorScheme="gray"
               aria-label="See more"
+              userInfoLikes={userInfoLikes}
               onClick={() => navigate(`/admin/editpet/${pet.pet_id}`)}
             />
           </Tooltip>
