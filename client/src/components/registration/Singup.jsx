@@ -60,8 +60,8 @@ export default function Singup({ toggleModal }) {
           setIsRegistrating(true)
           if (res) {
             setIsRegistrating(false)
-            resetForm()
             toast()
+            resetForm()
             toggleModal()
           }
 
