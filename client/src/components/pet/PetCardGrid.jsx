@@ -21,18 +21,21 @@ import { petStatusBgColor } from '../../utils/globals'
 import { Divider } from 'antd'
 import './PetCardGrid.css'
 import '../search/search.css'
-import PetActionsGrid from '../pet/PetActionsGrid'
+import PetActionsGrid from './PetActions'
+import { useAuthContext } from '../../context/AuthContext'
 
 export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
   const location = window.location.pathname.split('/')
   const userLocation = location[location.length - 1]
   let navigate = useNavigate()
+  const { currentUser } = useAuthContext()
   const [adoptionStatus, setAdoptionStatus] = useState(status)
+
   useEffect(() => {
     setAdoptionStatus(status)
   }, [status])
 
-  const [cleanOffList, setCleanOfList] = useState(false) // This state is created while the user is on their page.
+  const [cleanOffList, setCleanOfList] = useState(false)
   return (
     <Card
       display={userLocation !== 'search' && cleanOffList ? 'none' : ''}
@@ -78,7 +81,21 @@ export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
               </Text>
             </Box>
           </Flex>
-
+          {currentUser?.role && (
+            <Tooltip label="Edit pet information" placement="top">
+              <IconButton
+                icon={<ModeEditOutlinedIcon />}
+                p="0.1rem"
+                fontSize="0.7rem"
+                pet={pet}
+                variant="ghost"
+                colorScheme="gray"
+                aria-label="See more"
+                userInfoLikes={userInfoLikes}
+                onClick={() => navigate(`/admin/editpet/${pet.pet_id}`)}
+              />
+            </Tooltip>
+          )}
           <Tooltip label="See full information" placement="top">
             <IconButton
               p="0.1rem"
@@ -92,20 +109,6 @@ export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
               onClick={() => navigate(`/pet/${pet?.pet_id}`)}
             />
           </Tooltip>
-
-          <Tooltip label="Edit pet information" placement="top">
-            <IconButton
-              icon={<ModeEditOutlinedIcon />}
-              p="0.1rem"
-              fontSize="0.7rem"
-              pet={pet}
-              variant="ghost"
-              colorScheme="gray"
-              aria-label="See more"
-              userInfoLikes={userInfoLikes}
-              onClick={() => navigate(`/admin/editpet/${pet.pet_id}`)}
-            />
-          </Tooltip>
         </Flex>
       </CardHeader>
       <Image
@@ -116,28 +119,29 @@ export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
         objectPosition="top"
         w="100%"
       />
-
-      <CardFooter
-        // justify="start"
-        alignItems="center"
-        flexWrap="nowrap"
-        pt={0}
-        sx={{
-          '& > button': {
-            minW: '136px',
-          },
-        }}
-      >
-        <PetActionsGrid
-          setAdoptionStatus={setAdoptionStatus}
-          setCleanOfList={setCleanOfList}
-          userLocation={userLocation}
-          pet={pet}
-          status={status}
-          tab={tab}
-          userInfoLikes={userInfoLikes}
-        />
-      </CardFooter>
+      {currentUser.user_id && (
+        <CardFooter
+          // justify="start"
+          alignItems="center"
+          flexWrap="nowrap"
+          pt={0}
+          sx={{
+            '& > button': {
+              minW: '136px',
+            },
+          }}
+        >
+          <PetActionsGrid
+            setAdoptionStatus={setAdoptionStatus}
+            setCleanOfList={setCleanOfList}
+            userLocation={userLocation}
+            pet={pet}
+            status={status}
+            tab={tab}
+            userInfoLikes={userInfoLikes}
+          />
+        </CardFooter>
+      )}
     </Card>
   )
 }

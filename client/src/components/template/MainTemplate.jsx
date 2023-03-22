@@ -67,7 +67,6 @@ export default function MainTemplate({ children }) {
         <SettingFilled />
       </Link>,
     ),
-
     { type: 'divider' },
     getItem(
       `Add New Pet`,
@@ -84,7 +83,12 @@ export default function MainTemplate({ children }) {
       </Link>,
     ),
   ]
-
+  const filteredItems = items.filter((item) => {
+    if (item.key === '6' || item.key === '7') {
+      return currentUser.role
+    }
+    return true
+  })
   useEffect(() => {
     if (location.pathname === '/') {
       setSelectedKeys(['1'])
@@ -144,7 +148,7 @@ export default function MainTemplate({ children }) {
             theme={theme === 'dark' ? 'light' : 'dark'}
             mode="inline"
             inlineCollapsed={!collapsed ? 'none' : ''}
-            items={items}
+            items={filteredItems}
           />
         ) : null}
       </GridItem>

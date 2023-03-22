@@ -41,7 +41,7 @@ export default function PetActionsGrid({
     returnPet,
   } = useSearchContext()
 
-  const [newAdoptionStatus, setNewAdoptionStatus] = useState(status)
+  // const [newAdoptionStatus, setNewAdoptionStatus] = useState(status)
   const [heart, setHeart] = useState(true)
   const [save, setSave] = useState(true)
 
@@ -54,6 +54,8 @@ export default function PetActionsGrid({
         setCleanOfList(true)
       }, 400)
     }
+    console.log(pet)
+    console.log(pet.pet_id)
     setHeart(!heart)
     await userLikedPet(
       pet.pet_id,
@@ -95,15 +97,16 @@ export default function PetActionsGrid({
       }, 400)
     }
     if (e.target.textContent === 'Foster') {
-      setNewAdoptionStatus('Fostered')
+      console.log(e.target.textContent)
       setAdoptionStatus('Fostered')
       await updatingAdoptionStatus(currentUser?.user_id, pet.pet_id, 'Fostered')
     }
+    console.log(e.target.textContent)
     if (e.target.textContent == 'Adopt') {
-      setPetsUserAdopted([...petsUserLiked, pet.pet_id])
-      setNewAdoptionStatus('Adopted')
       setAdoptionStatus('Adopted')
+      console.log(status)
       await updatingAdoptionStatus(currentUser?.user_id, pet.pet_id, 'Adopted')
+      console.log(status)
     }
   }
 
@@ -116,7 +119,7 @@ export default function PetActionsGrid({
         setCleanOfList(true)
       }, 400)
     }
-    setNewAdoptionStatus('Available')
+
     setAdoptionStatus('Available')
     await returnPet(currentUser?.user_id, pet.pet_id, status)
   }
@@ -129,7 +132,7 @@ export default function PetActionsGrid({
       <Flex w="100%" wrap="wrap" justify="start" gap={2}>
         {petsUserLiked === 0 && isActiveSession && (
           <Tooltip label={heart ? 'Unlike' : 'Like'} placement="bottom">
-            <PetButtonSM
+            <PetButtonsSaveLike
               color={heart ? '#f78991' : ''}
               icon={!heart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               action={handleLike}
@@ -140,7 +143,7 @@ export default function PetActionsGrid({
         petsUserLiked?.includes(pet.pet_id) &&
         isActiveSession ? (
           <Tooltip label={heart ? 'Unlike' : 'Like'} placement="bottom">
-            <PetButtonSM
+            <PetButtonsSaveLike
               color={heart ? '#f78991' : ''}
               icon={heart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               action={handleLike}
@@ -214,13 +217,14 @@ export default function PetActionsGrid({
       </Flex>
       <Flex w="100%">
         {isActiveSession &&
-          newAdoptionStatus === 'Adopted' &&
+          console.log(status) &&
+          status === 'Adopted' &&
           petsUserAdopted.includes(pet.pet_id) === true && (
             <PetButtonStatus label="Return" onClick={handleReturn} />
           )}
 
         {isActiveSession &&
-          newAdoptionStatus === 'Adopted' &&
+          status === 'Adopted' &&
           petsUserAdopted.includes(pet.pet_id) === false && (
             <Flex width="100%">
               <PetButtonStatus mr={2} ml={0} label="Adopt" isDisabled={true} />
@@ -228,7 +232,7 @@ export default function PetActionsGrid({
             </Flex>
           )}
         {isActiveSession &&
-          newAdoptionStatus === 'Fostered' &&
+          status === 'Fostered' &&
           petsUserFostered.includes(pet.pet_id) === true && (
             <Flex width="100%">
               <PetButtonStatus
@@ -247,12 +251,12 @@ export default function PetActionsGrid({
             </Flex>
           )}
         {isActiveSession &&
-          newAdoptionStatus === 'Fostered' &&
+          status === 'Fostered' &&
           petsUserFostered.includes(pet.pet_id) === false && (
             <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
           )}
 
-        {isActiveSession && newAdoptionStatus === 'Available' && (
+        {isActiveSession && status === 'Available' && (
           <>
             <PetButtonStatus
               mr={2}

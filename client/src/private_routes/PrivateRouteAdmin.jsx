@@ -1,10 +1,7 @@
 import { Navigate } from 'react-router-dom'
-import { useAuthContext } from '../context/AuthContext'
 
-export default function PrivateRouteUser({ children }) {
-  const { isActiveSession } = useAuthContext()
-  console.log('isActiveSession', isActiveSession) // add this line for debugging
-
-  if (!isActiveSession) return <Navigate to="/" replace />
+export default function PrivateRouteAdmin({ children }) {
+  const role = localStorage.getItem('userRole')
+  if (!role) return <Navigate to="/" replace />
   else return children
 }

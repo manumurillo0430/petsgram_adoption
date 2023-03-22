@@ -32,20 +32,14 @@ function AuthProvider({ children }) {
   const [user_id, setUser_id] = useState()
 
   useEffect(() => {
-    const checkUserAuth = async () => {
-      await verifyUser()
-    }
-    checkUserAuth()
-  }, [])
-
-  useEffect(() => {
     const awaitGetCurrentUser = async () => {
       try {
         const res = await GetReq(`/user/${user_id}`)
-        setIsLoading(false)
+        setIsLoading(true)
         if (res.ok) {
+          localStorage.setItem('userRole', res.user.role)
           setIsActiveSession(true)
-          setIsLoading(true)
+          setIsLoading(false)
           setCurrentUser(res.user)
           setPetsUserAdopted(res.pets.adopted)
           setPetsUserFostered(res.pets.fostered)
@@ -62,6 +56,13 @@ function AuthProvider({ children }) {
     }
   }, [user_id])
 
+  useEffect(() => {
+    const checkUserAuth = async () => {
+      await verifyUser()
+    }
+    checkUserAuth()
+  }, [])
+
   const verifyUser = async () => {
     try {
       const res = await GetReq('')
@@ -73,6 +74,14 @@ function AuthProvider({ children }) {
       console.log(error)
     }
   }
+  useEffect(() => {
+    const userAuth = localStorage.getItem('userAuth')
+    if (userAuth) {
+      const { user_id, isActiveSession } = JSON.parse(userAuth)
+      setIsActiveSession(isActiveSession)
+      setUser_id(user_id)
+    }
+  }, [])
 
   const getCurrentUser = async (user_id) => {
     try {
@@ -150,10 +159,11 @@ function AuthProvider({ children }) {
   }
 
   const clearCurrentUser = async () => {
+    localStorage.removeItem('userAuth')
+    localStorage.removeItem('userRole')
     setCurrentUser({})
     setIsActiveSession(false)
   }
-
   return (
     <AuthContext.Provider
       value={{

@@ -27,7 +27,7 @@ export default function LoginForm({ toggleModal }) {
 
   const toast = useToast({
     title: 'Welcome back!',
-    description: 'Enjoy our flurry friends.',
+    description: 'Enjoy our furry friends.',
     status: 'success',
     duration: 5000,
     isClosable: true,
@@ -46,10 +46,15 @@ export default function LoginForm({ toggleModal }) {
         try {
           setIsLogging(true)
           const res = await PostReq('/user/login/', user)
+          console.log(res)
           if (res) {
             toggleModal()
             toast()
             setIsLogging(false)
+            localStorage.setItem(
+              'userAuth',
+              JSON.stringify({ user_id: res.user_id, isActiveSession: true }),
+            )
             await getCurrentUser(res.user_id)
             await getUserLikes(res.user_likes)
           }

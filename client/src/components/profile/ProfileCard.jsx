@@ -10,7 +10,9 @@ import {
   Heading,
   IconButton,
   Link,
+  Spinner,
 } from '@chakra-ui/react'
+import { noProfilePictureDark } from '../../utils/globals'
 import { Divider } from 'antd'
 import './ProfileCard.css'
 
@@ -18,13 +20,15 @@ export default function ProfileCard({ user }) {
   return (
     <>
       <Card maxW="md">
+        {user == undefined && <Spinner />}
         <Image
           alt={`${user.firstname} ${user.lastname}`}
-          src={user.picture}
+          src={user.picture === '' ? noProfilePictureDark : user.picture}
           maxHeight="25rem"
           objectFit="cover"
           objectPosition="top"
-          w="100%"
+          alignSelf={user.picture == '' && 'center'}
+          w={user.picture == '' ? '60%' : '100%'}
         />
         <Divider style={{ border: 'none', margin: '0.3rem' }} />
         <CardBody

@@ -13,9 +13,10 @@ import {
   Center,
   useMediaQuery,
 } from '@chakra-ui/react'
+import { useAuthContext } from '../../context/AuthContext'
 import { petStatusBgColor } from '../../utils/globals'
 import PetTag from './PetTag'
-import PetActionsGrid from './PetActionsGrid'
+import PetActionsGrid from './PetActions'
 import './PetCardGrid.css'
 import '../search/search.css'
 
@@ -24,6 +25,7 @@ export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
   useEffect(() => {
     setAdoptionStatus(status)
   }, [status])
+  const { currentUser } = useAuthContext()
   const theme = useColorMode('dark', 'light')
   const [isSmallerThan1400] = useMediaQuery('(max-width: 1500px)')
   const [isSmallerThan980] = useMediaQuery('(max-width: 980px)')
@@ -38,7 +40,6 @@ export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
           ? { base: 'row', sm: 'column' }
           : { base: 'column', sm: 'row' }
       }
-      overflow="scroll"
       variant="outline"
       mb={8}
       bgColor={theme === 'dark' && '#121212'}
@@ -103,13 +104,15 @@ export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
           <Text>{pet?.adoptionStatus}</Text>
         </CardBody>
         <CardFooter>
-          <PetActionsGrid
-            setAdoptionStatus={setAdoptionStatus}
-            pet={pet}
-            status={status}
-            tab={tab}
-            userInfoLikes={userInfoLikes}
-          />
+          {currentUser?.user_id && (
+            <PetActionsGrid
+              setAdoptionStatus={setAdoptionStatus}
+              pet={pet}
+              status={status}
+              tab={tab}
+              userInfoLikes={userInfoLikes}
+            />
+          )}
         </CardFooter>
       </Stack>
     </Card>

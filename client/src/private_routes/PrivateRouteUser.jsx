@@ -4,7 +4,10 @@ import { useAuthContext } from '../context/AuthContext'
 
 export default function PrivateRouteUser({ children }) {
   const { isActiveSession } = useAuthContext()
-  console.log('isActiveSession', isActiveSession) // add this line for debugging
-  if (!isActiveSession) return <Navigate to="/" replace />
+  const userAuth = localStorage.getItem('userAuth')
+  const isAuthenticated =
+    isActiveSession || (userAuth && JSON.parse(userAuth).isActiveSession)
+
+  if (!isAuthenticated) return <Navigate to="/" replace />
   else return children
 }

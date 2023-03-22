@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Text, Container, Flex, Button } from '@chakra-ui/react'
 import { Divider } from 'antd'
-import { GetReq, PostReq } from '../../utils/api'
 import { useAuthContext } from '../../context/AuthContext'
 import Ourfeatures from './Ourfeatures'
 
