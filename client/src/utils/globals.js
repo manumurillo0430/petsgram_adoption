@@ -1,19 +1,11 @@
 export const requiredField = 'Required field.'
+
 export const userNameTooShort = 'Username too short.'
+
 export const passwordTooShort = 'Password too short.'
 
 export const telRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 export const petTypes = ['Any', 'Dog', 'Cat', 'Rabbit', 'Bird']
-
-export const petStatus = ['Adopted', 'Fostered', 'Available']
-export const userRoleColor = (role) => {
-  let style = {}
-
-  if (role === true) style['color'] = '#0096FF'
-  else style['color'] = '#50C878'
-
-  return style
-}
 
 export const logInPictureLight =
   'https://res.cloudinary.com/dugudxkyu/image/upload/v1676643038/7fbac6523f58c558f3f2329469aa5594_hmabe1.jpg'
@@ -44,6 +36,16 @@ export const brandDark =
 
 export const logoWithBrandLight =
   'https://res.cloudinary.com/dugudxkyu/image/upload/v1676923781/blanco_wlbvex.png'
+
+export const petStatus = ['Adopted', 'Fostered', 'Available']
+export const userRoleColor = (role) => {
+  let style = {}
+
+  if (role === true) style['color'] = '#0096FF'
+  else style['color'] = '#50C878'
+
+  return style
+}
 
 export const petStatusColor = (adoptionStatus) => {
   let style = {}

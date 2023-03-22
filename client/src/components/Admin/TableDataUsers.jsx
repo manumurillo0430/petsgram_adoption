@@ -6,6 +6,7 @@ import { LinkIcon } from '@chakra-ui/icons'
 import { userRoleColor } from '../../utils/globals'
 
 export default function TableDataUsers({ users }) {
+  console.log(users)
   const data = useMemo(
     () =>
       users.map((user) => {
@@ -49,7 +50,7 @@ export default function TableDataUsers({ users }) {
         Header: 'Role',
         accessor: 'role',
         Cell: (e) => {
-          if (e.value === 1) {
+          if (e.value == true) {
             return (
               <span style={userRoleColor(e.value)} className="small-caps">
                 Admin

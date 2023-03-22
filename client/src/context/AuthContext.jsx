@@ -42,17 +42,20 @@ function AuthProvider({ children }) {
     const awaitGetCurrentUser = async () => {
       try {
         const res = await GetReq(`/user/${user_id}`)
-        setIsActiveSession(true)
         setIsLoading(false)
-        setCurrentUser(res.user)
-        setPetsUserAdopted(res.pets.adopted)
-        setPetsUserFostered(res.pets.fostered)
-        setPetsUserSaved(res.pets.saved)
-        setPetsUserLiked(res.pets.liked)
+        if (res.ok) {
+          setIsActiveSession(true)
+          setIsLoading(true)
+          setCurrentUser(res.user)
+          setPetsUserAdopted(res.pets.adopted)
+          setPetsUserFostered(res.pets.fostered)
+          setPetsUserSaved(res.pets.saved)
+          setPetsUserLiked(res.pets.liked)
+        }
       } catch (error) {
         console.log(error)
       }
-      setIsLoading(false)
+      setIsLoading(true)
     }
     if (user_id) {
       awaitGetCurrentUser(user_id)

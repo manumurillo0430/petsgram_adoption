@@ -1,25 +1,28 @@
 import { React, useState } from 'react'
 import * as yup from 'yup'
-import { requiredField, telRegExp } from '../../utils/globals'
 import FormInputField from '../form/FormInputField'
 import FormSubmitButtom from '../form/FormSubmitButtom'
 import FormPasswordField from '../form/FormPasswordField'
+import { useAuthContext } from '../../context/AuthContext'
+import { requiredField, telRegExp } from '../../utils/globals'
+import { Text, Spinner } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { PostReq } from '../../utils/api'
 import { useToast } from '@chakra-ui/react'
 
 export default function Singup({ toggleModal }) {
-  const [serverError, setServerError] = useState('')
+  const [serverError, setServerError] = useState(false)
+  const [isRegistrating, setIsRegistrating] = useState(false)
 
   const toast = useToast({
     title: 'Profile created!',
     description: 'You can already log in.',
     status: 'success',
-    duration: 6000,
+    duration: 5000,
     isClosable: true,
     position: 'top',
   })
-
+  const { isLoading } = useAuthContext()
   const singupSchema = yup.object().shape({
     firstname: yup
       .string()
@@ -54,14 +57,18 @@ export default function Singup({ toggleModal }) {
         try {
           setServerError('')
           const res = await PostReq('/user/signup', newUser)
+          setIsRegistrating(true)
           if (res) {
-            toast()
+            setIsRegistrating(false)
             resetForm()
+            toast()
             toggleModal()
           }
 
           console.log(newUser)
-        } catch (error) {}
+        } catch (error) {
+          console.log(error)
+        }
       }}
     >
       {({ handleSubmit }) => (
@@ -92,7 +99,10 @@ export default function Singup({ toggleModal }) {
             fieldName="phonenumber"
             fieldLabel="Phone Number"
           />
-          <FormSubmitButtom buttonLabel="Sign Up" />
+          <FormSubmitButtom
+            buttonLabel={isRegistrating ? <Spinner /> : 'Sign Up'}
+          />
+          {serverError ? <Text>{serverError}</Text> : ''}
         </form>
       )}
     </Formik>

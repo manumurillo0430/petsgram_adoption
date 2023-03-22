@@ -12,13 +12,12 @@ import { Formik } from 'formik'
 import { PostReq } from '../../utils/api'
 import { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-import { Text } from '@chakra-ui/react'
+import { Text, Spinner } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
 
 export default function LoginForm({ toggleModal }) {
-  console.log(toggleModal)
-  const { getCurrentUser } = useAuthContext()
-  const { getUserLikes } = useSearchContext
+  const { isLoading, getCurrentUser } = useAuthContext()
+  const { getUserLikes } = useSearchContext()
   const [serverError, setServerError] = useState(false)
   const loginSchema = yup.object().shape({
     email: yup.string().required(requiredField).min(6, userNameTooShort),
@@ -37,7 +36,6 @@ export default function LoginForm({ toggleModal }) {
         try {
           setServerError('')
           const res = await PostReq('/user/login/', user)
-          console.log(res.token, 'userid:', res.user_id, res.user_likes)
           if (res) {
             toggleModal()
             await getCurrentUser(res.user_id)
@@ -64,7 +62,7 @@ export default function LoginForm({ toggleModal }) {
             fieldName="password"
             fieldLabel="Password"
           />
-          <FormSubmitButtom buttonLabel="Log In" />
+          <FormSubmitButtom buttonLabel={!isLoading ? <Spinner /> : 'Log In'} />
           {serverError ? <Text>{serverError}</Text> : ''}
         </form>
       )}

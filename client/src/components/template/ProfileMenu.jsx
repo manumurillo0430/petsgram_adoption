@@ -36,7 +36,18 @@ export default function ProfileMenu() {
       </MenuButton>
       <MenuList fontSize="xl">
         {currentUser.role === true ? (
-          <MenuItem onClick={() => navigate('/dashboard')}>Dashboard</MenuItem>
+          <MenuItem
+            fontSize="md"
+            _hover={{
+              backgroundColor: !theme === 'light' ? '#efeef0' : '#303c53',
+              color: !theme === 'light' ? '#232d40' : 'white',
+            }}
+            color={theme === 'light' ? 'white' : 'black'}
+            backgroundColor={theme === 'light' ? '#011529' : 'white'}
+            onClick={() => navigate('/admin/dashboard')}
+          >
+            Dashboard
+          </MenuItem>
         ) : null}
         <MenuItem
           fontSize="md"
