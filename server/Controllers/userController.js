@@ -35,7 +35,7 @@ const signup = async (req, res) => {
       firstname: firstname,
       lastname: lastname,
       phonenumber: phonenumber,
-      role: 1,
+      role: 0,
       is_private: 0,
       picture: '',
       password: req.hash,

@@ -166,7 +166,7 @@ const updateLikeCounter = async (req, res) => {
 const deletePet = async (req, res) => {
   try {
     const { pet_id, user_id } = req.body
-    const deletePet = await petModel.deletePetModel(user_id, pet_id)
+    const deletePet = await petModel.deletePetModel(pet_id, user_id)
     if (deletePet) {
       res.status(200).send({ ok: true, message: 'Pet deleted' })
     }

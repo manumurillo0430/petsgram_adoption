@@ -45,7 +45,6 @@ async function advancedSearchModel(
 async function getPetByIdModel(pet_id) {
   try {
     const pet = await dbConnection('pets').where({ pet_id }).first()
-    console.log(pet)
     if (pet) {
       return pet
     } else return false
@@ -255,7 +254,7 @@ async function deletePetModel(pet_id) {
       await trx('pets').where({ pet_id: pet_id }).delete()
     })
 
-    return
+    return true
   } catch (error) {
     console.log(error)
     throw error
