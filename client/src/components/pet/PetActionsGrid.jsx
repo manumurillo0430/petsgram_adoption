@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, Flex, Tooltip, Spinner } from '@chakra-ui/react'
+import { Text, Flex, Tooltip, Spinner, Button } from '@chakra-ui/react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import { useSearchContext } from '../../context/SearchContext'
@@ -54,8 +54,6 @@ export default function PetActionsGrid({
         setCleanOfList(true)
       }, 400)
     }
-    console.log(pet)
-    console.log(pet.pet_id)
     setHeart(!heart)
     await userLikedPet(
       pet.pet_id,
@@ -97,7 +95,6 @@ export default function PetActionsGrid({
       }, 400)
     }
     if (e.target.textContent === 'Foster') {
-      console.log(e.target.textContent)
       setNewAdoptionStatus('Fostered')
       setAdoptionStatus('Fostered')
       await updatingAdoptionStatus(currentUser?.user_id, pet.pet_id, 'Fostered')

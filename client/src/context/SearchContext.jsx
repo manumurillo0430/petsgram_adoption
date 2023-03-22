@@ -68,7 +68,6 @@ function SearchProvider() {
   const getAllPets = async () => {
     try {
       const res = await GetReq(`/pet`)
-      console.log(res)
       if (res.ok) {
         setIsLoadingPetList(false)
         setPetsArray(res.pets)
@@ -81,12 +80,9 @@ function SearchProvider() {
 
   const getUserLikes = async () => {
     try {
-      console.log('hols')
       const res = await GetReq('/')
-      console.log(res, res.user_likes)
       if (res) {
         setUsersLikes(res.user_likes)
-        console.log(usersLikes)
       }
     } catch (error) {
       console.log(error)
@@ -128,7 +124,6 @@ function SearchProvider() {
         pet_id,
         adoptionStatus,
       })
-      console.log(res)
       if (res) {
         if (adoptionStatus === 'Fostered') {
           currentUser.pets.fostered = res.myFosteredPetsIds
@@ -139,10 +134,8 @@ function SearchProvider() {
       }
     } catch (error) {}
   }
-  // /pet/users/:user_id
 
   const returnPet = async (user_id, pet_id, adoptionStatus) => {
-    console.log("I'm about to send the request to the back-end")
     try {
       const res = await DeleteReq('/pet/return', {
         user_id: user_id,
@@ -155,15 +148,11 @@ function SearchProvider() {
   }
 
   const addLike = async (user_id, pet_id) => {
-    console.log("I'm about to send the request to the back-end")
     try {
       const res = await PostReq(`/pet/like/`, {
         user_id: user_id,
         pet_id: pet_id,
       })
-      if (res) {
-        console.log(res)
-      }
     } catch (error) {
       console.log(error)
     }
@@ -173,9 +162,6 @@ function SearchProvider() {
     console.log(pet_id)
     try {
       const res = await DeleteReq(`/pet/delete`, { pet_id: pet_id })
-      if (res) {
-        console.log(res)
-      }
     } catch (error) {
       console.log(error)
     }

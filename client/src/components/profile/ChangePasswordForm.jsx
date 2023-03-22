@@ -13,7 +13,7 @@ export default function ChangePasswordForm() {
   const [changingUserPassword, setCangingUserPassword] = useState(false)
   const [serverError, setServerError] = useState(false)
   const { currentUser } = useAuthContext()
-  console.log(currentUser)
+
   const toast = useToast({
     title: 'Password updated.',
     description: "We've updated your password.",
@@ -58,7 +58,6 @@ export default function ChangePasswordForm() {
             resetForm()
           }
         } catch (error) {
-          console.log(error)
           setServerError(error.response.data)
           setCangingUserPassword(false)
         }

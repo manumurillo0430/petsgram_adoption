@@ -4,7 +4,6 @@ import LoginForm from './LoginForm'
 import Singup from './Singup'
 
 export default function Resgistration({ toggleModal }) {
-  console.log('Toggle modal in Registration', toggleModal)
   return (
     <Box w="100%" p={0} m={0}>
       <Tabs isFitted>

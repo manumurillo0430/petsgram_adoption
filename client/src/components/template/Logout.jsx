@@ -9,7 +9,6 @@ export default function Logout() {
 
   const handleLogout = async () => {
     try {
-      console.log('here')
       const res = await PostReq('/logout', {})
 
       if (res.ok) {

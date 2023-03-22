@@ -56,7 +56,7 @@ function App() {
                   />
 
                   <Route
-                    path="mypets/"
+                    path="mypets"
                     element={
                       <PrivateRouteUser>
                         <MyPets />

@@ -6,7 +6,6 @@ import { LinkIcon } from '@chakra-ui/icons'
 import { userRoleColor } from '../../utils/globals'
 
 export default function TableDataUsers({ users }) {
-  console.log(users)
   const data = useMemo(
     () =>
       users.map((user) => {

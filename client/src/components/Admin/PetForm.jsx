@@ -48,7 +48,6 @@ export default function PetForm() {
     }
     getPetById()
   }, [])
-  console.log(pet, 'jhere', pet.type, pet.name)
 
   const theme = useColorModeValue('dark', 'light')
   const [serverError, setServerError] = useState('')
@@ -98,7 +97,6 @@ export default function PetForm() {
             values.hypoallergenic = 0
           }
           if (values.hypoallergenic === true) {
-            console.log(values.hypoallergenic)
             values.hypoallergenic = 1
           }
           const updatedPetData = new FormData()
@@ -106,9 +104,7 @@ export default function PetForm() {
             updatedPetData.append(`${key}`, `${values[key]}`)
           }
           updatedPetData.append('picture', picture)
-          for (let key in values) {
-            console.log(`${key}`, `${values[key]}`)
-          }
+
           setUpdatingPetData(true)
           const res = await PostReq('/pet', updatedPetData)
           if (res) {

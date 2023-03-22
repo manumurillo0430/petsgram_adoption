@@ -17,7 +17,6 @@ import Logo from './Logo'
 
 export default function Header({ toggleCollapsed }) {
   const { isActiveSession, currentUser } = useAuthContext()
-  console.log(isActiveSession, currentUser)
   let navigate = useNavigate()
   const { isOpen, onToggle } = useDisclosure()
   const toggleModal = () => onToggle()

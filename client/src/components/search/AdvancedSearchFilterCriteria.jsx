@@ -1,15 +1,38 @@
 import { useEffect, useState } from 'react'
-import { Center, Button, Flex, Input } from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
+import { petTypes, petStatus } from '../../utils/globals'
 import { useSearchContext } from '../../context/SearchContext'
+import { Divider } from 'antd'
+import {
+  Flex,
+  Input,
+  Center,
+  InputGroup,
+  Button,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem,
+  Spinner,
+  Box,
+} from '@chakra-ui/react'
+
 import * as yup from 'yup'
 import { Formik } from 'formik'
 import FilterSlider from './FilterSlider'
 
-export default function AdvancedSearchFilterCriteria() {
+export default function AdvancedSearchFilterCriteria({
+  searchResults,
+  advancedSearch,
+}) {
   const {
     getFilteredPetsByCriteria,
     setFilterSelection,
     filterSelection,
+    typeFilter,
+    setTypeFilter,
+    adpotionStatusFilter,
+    setAdpotionStatusFilter,
   } = useSearchContext()
 
   const [minHeight, setMinHeight] = useState(0)
@@ -19,6 +42,27 @@ export default function AdvancedSearchFilterCriteria() {
   const [maxWeight, setMaxWeight] = useState(100)
 
   const [petName, setPetName] = useState()
+  useEffect(() => {
+    setFilterSelection({
+      type: typeFilter,
+      adoptionStatus: adpotionStatusFilter,
+    })
+  }, [typeFilter, adpotionStatusFilter])
+
+  const handleType = (type) => {
+    if (type === 'Any' || type === 'Type') {
+      setTypeFilter('Any')
+      filterSelection.type = ''
+      if (type === 'Type') filterSelection.type = ''
+    } else setTypeFilter(type)
+  }
+
+  const handleStatus = (status) => {
+    if (status === 'Any' || status === 'Adoption Status') {
+      setAdpotionStatusFilter('Any')
+      filterSelection.adoptionStatus = ''
+    } else setAdpotionStatusFilter(status)
+  }
 
   const handleSliderChangeHeight = (values) => {
     setMinHeight(values[0])
@@ -86,7 +130,6 @@ export default function AdvancedSearchFilterCriteria() {
             minWeight: minWeight,
             maxWeight: maxWeight,
           })
-          console.log(filterSelection)
           await getFilteredPetsByCriteria(filterSelection)
         } catch (error) {}
       }}
@@ -101,35 +144,92 @@ export default function AdvancedSearchFilterCriteria() {
               placeItems="center"
               flexDirection="column"
             >
-              <Input
-                name="name"
-                type="text"
-                placeholder="Search for a pet by name..."
-                px={6}
-                onChange={(e) => setPetName(e.target.value)}
-                onKeyDown={(e) => (e.key === 'Enter' ? handleSubmit() : null)}
-              />
-              <Flex my={4} alignContent="center" flexDirection="row">
-                <FilterSlider
-                  min={minHeight}
-                  max={maxHeight}
-                  onSliderChange={handleSliderChangeHeight}
-                  filter="height"
-                />
-                <FilterSlider
-                  min={minWeight}
-                  max={maxWeight}
-                  onSliderChange={handleSliderChangeWeight}
-                  filter="weight"
-                />
-              </Flex>
+              <InputGroup zIndex={4} justifyContent="center" w={'100%'}>
+                <Box flexDirection="column">
+                  <Flex>
+                    <Menu>
+                      <MenuButton
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        w="11.5rem"
+                      >
+                        {typeFilter}
+                      </MenuButton>
+                      <MenuList>
+                        {petTypes.map((type) => (
+                          <MenuItem key={type} onClick={() => handleType(type)}>
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </Menu>
+                    <Menu>
+                      <MenuButton
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        w="11.5rem"
+                        ml={6}
+                      >
+                        {adpotionStatusFilter === ''
+                          ? 'Any'
+                          : adpotionStatusFilter}
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem onClick={() => handleStatus('Any')}>
+                          Any
+                        </MenuItem>
+                        {petStatus.map((status) => (
+                          <MenuItem
+                            key={status}
+                            onClick={() => handleStatus(status)}
+                          >
+                            {status}
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </Menu>
+                  </Flex>
+                  <Divider style={{ border: 'none', margin: '0.4rem' }} />
+                </Box>
+              </InputGroup>
+              {advancedSearch ? (
+                <>
+                  <Input
+                    name="name"
+                    type="text"
+                    placeholder="Search for a pet by name..."
+                    px={6}
+                    onChange={(e) => setPetName(e.target.value)}
+                    onKeyDown={(e) =>
+                      e.key === 'Enter' ? handleSubmit() : null
+                    }
+                  />
+                  <Flex my={4} alignContent="center" flexDirection="row">
+                    <FilterSlider
+                      min={minHeight}
+                      max={maxHeight}
+                      onSliderChange={handleSliderChangeHeight}
+                      filter="height"
+                    />
+                    <FilterSlider
+                      min={minWeight}
+                      max={maxWeight}
+                      onSliderChange={handleSliderChangeWeight}
+                      filter="weight"
+                    />
+                  </Flex>
+                </>
+              ) : (
+                ''
+              )}
+
               <Button
                 w="50%"
                 aria-label="Search"
                 colorScheme="blue"
                 onClick={handleSubmit}
               >
-                Search
+                {searchResults.length == 0 ? <Spinner /> : 'Search'}
               </Button>
             </Flex>
           </Center>

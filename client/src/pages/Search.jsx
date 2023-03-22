@@ -11,7 +11,6 @@ import {
   TabPanels,
 } from '@chakra-ui/react'
 import { Divider } from 'antd'
-import BasicSearchFilterCriteria from '../components/search/BasicSearchFilterCriteria'
 import AdvancedSearchFilterCriteria from '../components/search/AdvancedSearchFilterCriteria'
 import GridViewPets from '../components/pet/GridViewPets'
 import FullViewPets from '../components/pet/FullViewPets'
@@ -34,20 +33,18 @@ export default function Search() {
       <Divider style={{ border: 'none', margin: '1rem' }} />
       <Flex flexDirection="column">
         <Center flexDirection="column">
-          <BasicSearchFilterCriteria
+          <AdvancedSearchFilterCriteria
             advancedSearch={advancedSearch}
             searchResults={petsArray}
           />
-          {advancedSearch ? (
-            <AdvancedSearchFilterCriteria
+
+          {petsArray.length === 0 ? null : (
+            <SearchToggle
+              toggleAdvancedSearch={toggleAdvancedSearch}
               advancedSearch={advancedSearch}
-              searchResults={petsArray}
             />
-          ) : null}
-          <SearchToggle
-            toggleAdvancedSearch={toggleAdvancedSearch}
-            advancedSearch={advancedSearch}
-          />
+          )}
+
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
         </Center>
 
@@ -64,7 +61,7 @@ export default function Search() {
                 </Tab>
               </TabList>
               <TabPanels>
-                <TabPanel>
+                <TabPanel mb={6}>
                   <GridViewPets
                     cardSize={25}
                     usersLikes={usersLikes}

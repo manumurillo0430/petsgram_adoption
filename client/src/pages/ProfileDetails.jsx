@@ -16,7 +16,6 @@ export default function ProfileDetails() {
         const userInfo = await getUserById(
           userLocation(window.location.pathname),
         )
-        console.log(userInfo, userLocation(window.location.pathname), 'hey hey')
         setUser(userInfo.user)
       } catch (error) {
         console.error('Error:', error)

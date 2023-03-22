@@ -19,7 +19,6 @@ export default function PetDetailsPage({ userInfoLikes, viewTab }) {
           setPet(res.pet)
         }
       } catch (error) {
-        console.log(error)
         setServerMessage(error.response.data)
       }
     }

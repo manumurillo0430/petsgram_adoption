@@ -56,7 +56,7 @@ export default function MainTemplate({ children }) {
     getItem(
       `My Pets`,
       '4',
-      <Link as={NavLink} to="/profile/mypets/">
+      <Link as={NavLink} to="/profile/mypets">
         <PetsIcon style={{ fontSize: '1.1rem' }} />
       </Link>,
     ),
@@ -92,7 +92,7 @@ export default function MainTemplate({ children }) {
       setSelectedKeys(['2'])
     } else if (location.pathname === `/profile/${currentUser.user_id}`) {
       setSelectedKeys(['3'])
-    } else if (location.pathname === '/profile/mypets/') {
+    } else if (location.pathname === '/profile/mypets') {
       setSelectedKeys(['4'])
     } else if (location.pathname === '/profile/settings') {
       setSelectedKeys(['5'])

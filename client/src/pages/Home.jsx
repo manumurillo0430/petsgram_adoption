@@ -5,7 +5,6 @@ export default function Home() {
   const [isSmallerThan900] = useMediaQuery('(max-height: 900px)')
   const [isSmallerThan1700] = useMediaQuery('(max-weight: 1700px)')
   const theme = useColorModeValue('dark', 'light')
-  console.log(process.env.NODE_ENV)
   const homeBg = {
     width: '100%',
     backgroundImage:
@@ -22,6 +21,7 @@ export default function Home() {
     justifyContent: 'space-around',
     height: '100vh',
   }
+
   return (
     <Box
       w="100%"

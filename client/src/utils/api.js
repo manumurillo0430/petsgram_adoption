@@ -35,7 +35,6 @@ export const PutReq = async (path, data) => {
   return rest.data
 }
 export const DeleteReq = async (path, data) => {
-  console.log(data, 'delete')
   const rest = await axios.delete(BASE_URL + path, {
     data: data,
     withCredentials: true,

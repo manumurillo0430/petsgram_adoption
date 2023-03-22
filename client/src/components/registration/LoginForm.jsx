@@ -12,7 +12,7 @@ import { Formik } from 'formik'
 import { PostReq } from '../../utils/api'
 import { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-import { Text, Spinner } from '@chakra-ui/react'
+import { Text, Spinner, useToast } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
 
 export default function LoginForm({ toggleModal }) {
@@ -23,6 +23,15 @@ export default function LoginForm({ toggleModal }) {
   const loginSchema = yup.object().shape({
     email: yup.string().required(requiredField).min(6, userNameTooShort),
     password: yup.string().required(requiredField).min(6, passwordTooShort),
+  })
+
+  const toast = useToast({
+    title: 'Welcome back!',
+    description: 'Enjoy our flurry friends.',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'top',
   })
 
   return (
@@ -39,17 +48,15 @@ export default function LoginForm({ toggleModal }) {
           const res = await PostReq('/user/login/', user)
           if (res) {
             toggleModal()
+            toast()
             setIsLogging(false)
             await getCurrentUser(res.user_id)
             await getUserLikes(res.user_likes)
           }
         } catch (error) {
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.error
-          ) {
-            setServerError(error.response.data.error)
+          setIsLogging(false)
+          if (error.response) {
+            setServerError(error.response.data)
           } else {
             setServerError('An error occurred. Please try again later.')
           }
@@ -64,8 +71,18 @@ export default function LoginForm({ toggleModal }) {
             fieldName="password"
             fieldLabel="Password"
           />
-          <FormSubmitButtom buttonLabel={isLogging ? <Spinner /> : 'Log In'} />
-          {serverError ? <Text>{serverError}</Text> : ''}
+          <FormSubmitButtom
+            mt={3}
+            buttonLabel={isLogging ? <Spinner /> : 'Log In'}
+          />
+
+          {serverError ? (
+            <Text fontWeight="500" color="#ef6e6e" mt={4} textAlign="center">
+              {serverError}
+            </Text>
+          ) : (
+            ''
+          )}
         </form>
       )}
     </Formik>

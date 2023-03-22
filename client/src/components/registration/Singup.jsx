@@ -3,7 +3,6 @@ import * as yup from 'yup'
 import FormInputField from '../form/FormInputField'
 import FormSubmitButtom from '../form/FormSubmitButtom'
 import FormPasswordField from '../form/FormPasswordField'
-import { useAuthContext } from '../../context/AuthContext'
 import { requiredField, telRegExp } from '../../utils/globals'
 import { Text, Spinner } from '@chakra-ui/react'
 import { Formik } from 'formik'
@@ -22,7 +21,6 @@ export default function Singup({ toggleModal }) {
     isClosable: true,
     position: 'top',
   })
-  const { isLoading } = useAuthContext()
   const singupSchema = yup.object().shape({
     firstname: yup
       .string()
@@ -55,7 +53,6 @@ export default function Singup({ toggleModal }) {
       validateOnChange={false}
       onSubmit={async (newUser, { resetForm }) => {
         try {
-          setServerError('')
           const res = await PostReq('/user/signup', newUser)
           setIsRegistrating(true)
           if (res) {
@@ -64,10 +61,13 @@ export default function Singup({ toggleModal }) {
             resetForm()
             toggleModal()
           }
-
-          console.log(newUser)
         } catch (error) {
-          console.log(error)
+          setIsRegistrating(false)
+          if (error.response) {
+            setServerError(error.response.data)
+          } else {
+            setServerError('An error occurred. Please try again later.')
+          }
         }
       }}
     >
@@ -100,9 +100,16 @@ export default function Singup({ toggleModal }) {
             fieldLabel="Phone Number"
           />
           <FormSubmitButtom
+            mt={4}
             buttonLabel={isRegistrating ? <Spinner /> : 'Sign Up'}
           />
-          {serverError ? <Text>{serverError}</Text> : ''}
+          {serverError ? (
+            <Text fontWeight="500" color="#ef6e6e" mt={4} textAlign="center">
+              {serverError}
+            </Text>
+          ) : (
+            ''
+          )}
         </form>
       )}
     </Formik>

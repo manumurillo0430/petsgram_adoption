@@ -91,7 +91,6 @@ function AuthProvider({ children }) {
     }
   }
   const getUserById = async (user_id) => {
-    console.log(user_id, 'fjkasdjflksd')
     try {
       const res = await GetReq(`/user/${user_id}`)
       if (res.ok) {

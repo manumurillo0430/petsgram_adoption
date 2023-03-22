@@ -2,38 +2,14 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Text, Container, Flex, Button } from '@chakra-ui/react'
 import { Divider } from 'antd'
-import { GetReq } from '../../utils/api'
+import { GetReq, PostReq } from '../../utils/api'
 import { useAuthContext } from '../../context/AuthContext'
 import Ourfeatures from './Ourfeatures'
 
 export default function HomeTemplate() {
   const { currentUser } = useAuthContext()
-  console.log(currentUser)
-  const { clearCurrentUser } = useAuthContext()
+
   let navigate = useNavigate()
-
-  useEffect(() => {
-    const awaitGetPets = async () => await getAllPets()
-    awaitGetPets()
-  }, [])
-
-  const getAllPets = async () => {
-    try {
-      const res = await GetReq('/pet')
-      console.log(res)
-      // if (res) {
-      //   res.pets.map(async (pet) => {
-      //     try {
-      //       await PostReq('/pet', pet)
-      //     } catch (error) {
-      //       console.error(error)
-      //     }
-      //   })
-      // }
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   return (
     <Container w="100%" h="100vh" display="flex">

@@ -79,7 +79,6 @@ export default function ProfileForm() {
       }}
       validationSchema={updateUserSchema}
       onSubmit={async (user) => {
-        console.log('here2')
         if (typeof picture === 'object') {
           try {
             const updatedUserData = new FormData()
@@ -127,7 +126,6 @@ export default function ProfileForm() {
               getCurrentUser(currentUser.user_id)
             }
           } catch (error) {
-            console.log(error.response.data.error)
             setServerMessage(error.response.data.error)
           }
         }

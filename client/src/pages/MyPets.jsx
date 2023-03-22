@@ -23,7 +23,6 @@ export default function MyPets() {
     async function fetchPets() {
       try {
         const allPets = await getAllPets()
-        console.log(allPets, 'allpets')
         await getCurrentUser(user_id)
         if (allPets && petsUserFostered) {
           const filteredPets = allPets.filter((pet) =>
@@ -43,11 +42,9 @@ export default function MyPets() {
       setTab(tabSelected)
       if (tabSelected === 'liked') {
         const allPets = await getAllPets()
-        console.log(allPets)
         setPetsTabArray(
           allPets?.filter((pet) => petsUserLiked.includes(pet.pet_id)),
         )
-        console.log(petsTabArray, 'hello')
       }
       if (tabSelected === 'saved') {
         const allPets = await getAllPets()
