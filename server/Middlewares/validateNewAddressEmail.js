@@ -3,7 +3,6 @@ const { getAllUsersModel } = require('../Models/usersModel')
 
 const validateNewAddressEmail = async (request, response, next) => {
   try {
-    console.log(request.body, 'fklasjlkdfj')
     const { id } = request.params
     const { email } = request.body
     const user = await dbConnection.from('users').first().where({ user_id: id })

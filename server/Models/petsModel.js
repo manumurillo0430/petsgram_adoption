@@ -1,12 +1,7 @@
-const fs = require('fs')
-const path = require('path')
 const dbConnection = require('../knex/knex')
-const pathUsersDB = path.resolve(__dirname, '../Database/petsDB.json')
 
 async function getAllPetsModel() {
   try {
-    // const allPets = fs.readFileSync(pathUsersDB)
-    // return JSON.parse(allPets)
     const allPets = await dbConnection('pets').select('*')
     return allPets
   } catch (error) {
@@ -36,7 +31,7 @@ async function advancedSearchModel(
     const advancedSearchPets = await dbConnection('pets')
       .whereLike('type', `%${type || ''}%`)
       .whereLike('adoptionStatus', `%${adoptionStatus || ''}%`)
-      .whereRaw('LOWER(name) LIKE ?', `%${name ? name.toLowerCase() : ''}%`)
+      .whereRaw('LOWER(name) LIKE ?', `${name ? name.toLowerCase() : ''}%`)
       .andWhere('height', '>', Number(minHeight) || 0)
       .andWhere('height', '<', Number(maxHeight) || 1000)
       .andWhere('weight', '>', Number(minWeight) || 0)
@@ -160,7 +155,6 @@ async function adoptPetModel(user_id, pet_id, adoptionStatus) {
         return adoptionStatusUpdated
       }
     }
-    // When user can foster or adopt
     await dbConnection('pets').where({ pet_id: pet_id }).update({
       adoptionStatus: adoptionStatus,
     })
@@ -237,7 +231,6 @@ async function returnPetModel(user_id, pet_id, adoptionStatus) {
       }
     }
     if (adoptionStatus === 'Fostered') {
-      console.log('fostered')
       const isUserFosteringThisPet = await dbConnection('fostered_pets')
         .where({ user_id: user_id, fostered: pet_id })
         .first()
@@ -255,7 +248,7 @@ async function returnPetModel(user_id, pet_id, adoptionStatus) {
     console.log(error)
   }
 }
-async function deletePetModel(user_id, pet_id) {
+async function deletePetModel(pet_id) {
   try {
     await dbConnection.transaction(async (trx) => {
       await trx('liked_pets').where({ pet_id: pet_id }).delete()

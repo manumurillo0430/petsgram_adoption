@@ -3,7 +3,6 @@ const { getUsersLikesPetModel } = require('../Models/usersModel')
 const getUsersLikesAuth = async (request, response, next) => {
   try {
     const usersLikes = getUsersLikesPetModel()
-    console.log(usersLikes)
     if (usersLikes) {
       request.usersLikes = usersLikes
       return next()

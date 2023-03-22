@@ -6,7 +6,6 @@ const isAdmin = async (request, response, next) => {
       .first()
       .select('role')
       .where({ userId: request.userId })
-    console.log(isThisUserAdmin)
     if (isThisUserAdmin.role) {
       next()
     } else next(error)

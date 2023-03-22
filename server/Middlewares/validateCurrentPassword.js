@@ -11,7 +11,6 @@ const validateCurrentPassword = async (request, response, next) => {
         currentpassword,
         user.password,
       )
-      console.log(isPasswordCorrect)
       if (isPasswordCorrect) {
         return next()
       } else next(error)

@@ -1,8 +1,6 @@
 const knex = require('knex')
 const config = require('./knexfile')
 
-// const tableName = 'pet_user_likes' // Replace with your table name
-
 const db = knex(config)
 
 db.schema

@@ -3,14 +3,12 @@ const fs = require('fs')
 
 const upload = multer({ dest: './images' })
 const imageUrl = (request, response, next) => {
-  console.log(request.body)
   try {
     if (!request.file) {
       response.status(400).send('No image attached')
       return
     }
     const pictureUrl = 'http://localhost:8080/' + request.file.path
-    console.log(pictureUrl, 'imageUrl')
     request.body.pictureUrl = pictureUrl
     next()
   } catch (error) {

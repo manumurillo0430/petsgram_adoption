@@ -7,7 +7,6 @@ const validatePassword = async (request, response, next) => {
     .from('users')
     .first()
     .where({ email: email })
-  console.log(userData)
   try {
     if (userData) {
       const hashedPassword = userData.password

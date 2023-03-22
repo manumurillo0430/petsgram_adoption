@@ -15,8 +15,6 @@ const {
   userUnsavedPetModel,
   getUsersLikesPetModel,
 } = require('../Models/usersModel')
-const { getMyPetsModel } = require('../Models/petsModel')
-const dbConnection = require('../knex/knex')
 
 const getAllUsers = async (req, res) => {
   try {
@@ -114,7 +112,6 @@ const updateUserData = async (req, res) => {
       picture: picture,
       is_private: is_private,
     }
-    console.log(dataToUpdate, 'here')
     const isUserUpdated = await updateUserDataModel(id, dataToUpdate, req.body)
     if (isUserUpdated) {
       res.status(200).send({
@@ -168,7 +165,6 @@ const updatePassword = async (req, res) => {
   try {
     const hash = req.hash
     const { id } = req.params
-    console.log(id)
     const isPasswordUpdated = await updatePasswordModel(hash, id)
     if (isPasswordUpdated) {
       res.status(200).send({ ok: true, message: 'Password updated' })
@@ -182,10 +178,8 @@ const updatePassword = async (req, res) => {
 
 const userLikedPet = async (req, res) => {
   try {
-    console.log(req.body, 'Liking Area')
     const { user_id, pet_id } = req.body
     const isPetLiked = await userLikedPetModel(user_id, pet_id)
-    console.log(isPetLiked)
     if (isPetLiked) {
       res.status(200).send({
         ok: true,
@@ -208,7 +202,6 @@ const userUnlikedPet = async (req, res) => {
   try {
     const { user_id, pet_id } = req.body
     const isPetLiked = await userLikedPetModel(user_id, pet_id)
-    console.log(isPetLiked)
     if (isPetLiked) {
       res.status(200).send({
         data: 'Like unsaved',
@@ -229,10 +222,8 @@ const userUnlikedPet = async (req, res) => {
 
 const userSavedPet = async (req, res) => {
   try {
-    console.log(req.body, 'Saving Area')
     const { user_id, pet_id } = req.body
     const isPetSaved = await userSavedPetModel(user_id, pet_id)
-    console.log(isPetSaved)
     if (isPetSaved) {
       res.status(200).send({
         ok: true,

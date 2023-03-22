@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 
-// auth function will verify if the token we are sending from the front end is the same token we have in the back end
 require('dotenv').config()
 const auth = async (request, response, next) => {
   jwt.verify(
@@ -12,7 +11,6 @@ const auth = async (request, response, next) => {
         return
       }
       if (decoded) {
-        console.log(request.userId)
         request.body.user_id = decoded.user_id
         next()
       }

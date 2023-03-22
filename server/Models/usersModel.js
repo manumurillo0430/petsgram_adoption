@@ -79,7 +79,6 @@ async function getUserByIdModel(user_id) {
 
 async function updateUserDataPlusPictureModel(id, dataToUpdate, body) {
   try {
-    console.log(body.is_private, 'this data')
     const isUserUpdated = await dbConnection
       .from('users')
       .where({ user_id: id })
@@ -100,7 +99,6 @@ async function updateUserDataPlusPictureModel(id, dataToUpdate, body) {
 
 async function updateUserDataModel(id, dataToUpdate) {
   try {
-    console.log(dataToUpdate, 'here')
     const isUserUpdated = await dbConnection
       .from('users')
       .where({ user_id: id })
@@ -140,7 +138,6 @@ async function userLikedPetModel(user_id, pet_id) {
       pet_id: pet_id,
     })
     if (!likedPet || likedPet === undefined) {
-      console.log(likedPet, user_id, pet_id)
       await dbConnection('liked_pets').insert({
         user_id: user_id,
         pet_id: pet_id,
@@ -178,13 +175,6 @@ async function getPetsUserLikesModel(user_id) {
 }
 async function userSavedPetModel(user_id, pet_id) {
   try {
-    // console.log('here')
-    // knex('pets')
-    //   .del()
-    //   .then(() => {
-    //     console.log('All rows deleted from table')
-    //   })
-    //   .catch((err) => console.error(err))
     const lookingForUser = await dbConnection
       .from('users')
       .first()
@@ -211,14 +201,6 @@ async function getSavedPetsModel(user_id) {
       .where({ user_id: user_id })
     if (petSavedByUser.length !== 0) {
       const savedPetIds = petSavedByUser.map((row) => row.saved)
-      // if (savedPetIds) {
-      //   const addPetsUserSaved = await dbConnection
-      //     .from('users')
-      //     .where({ user_id: user_id })
-
-      //     .update('saved', null)
-      //   console.log(addPetsUserSaved)
-      // }
       return savedPetIds
     }
     return []

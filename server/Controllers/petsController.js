@@ -78,7 +78,6 @@ const addANewPet = async (req, res) => {
       return res.status(201).send({ message: 'New pet added', pet: addedPet })
     }
   } catch (error) {
-    console.error(error)
     return res.status(500).send({ error: 'Failed to add new pet' })
   }
 }
@@ -206,7 +205,6 @@ const updatePet = async (req, res) => {
       type: type,
       weight: weight,
     }
-    console.log(dataToUpdate)
     const { petId } = req.params
     const editInfoPet = await updatePetModel(petId, dataToUpdate)
     if (editInfoPet) {
