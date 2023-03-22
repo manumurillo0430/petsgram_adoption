@@ -16,7 +16,8 @@ import { Text, Spinner } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
 
 export default function LoginForm({ toggleModal }) {
-  const { isLoading, getCurrentUser } = useAuthContext()
+  const [isLogging, setIsLogging] = useState(false)
+  const { getCurrentUser } = useAuthContext()
   const { getUserLikes } = useSearchContext()
   const [serverError, setServerError] = useState(false)
   const loginSchema = yup.object().shape({
@@ -34,10 +35,11 @@ export default function LoginForm({ toggleModal }) {
       validateOnChange={false}
       onSubmit={async (user) => {
         try {
-          setServerError('')
+          setIsLogging(true)
           const res = await PostReq('/user/login/', user)
           if (res) {
             toggleModal()
+            setIsLogging(false)
             await getCurrentUser(res.user_id)
             await getUserLikes(res.user_likes)
           }
@@ -62,7 +64,7 @@ export default function LoginForm({ toggleModal }) {
             fieldName="password"
             fieldLabel="Password"
           />
-          <FormSubmitButtom buttonLabel={!isLoading ? <Spinner /> : 'Log In'} />
+          <FormSubmitButtom buttonLabel={isLogging ? <Spinner /> : 'Log In'} />
           {serverError ? <Text>{serverError}</Text> : ''}
         </form>
       )}
