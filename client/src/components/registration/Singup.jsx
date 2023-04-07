@@ -53,8 +53,8 @@ export default function Singup({ toggleModal }) {
       validateOnChange={false}
       onSubmit={async (newUser, { resetForm }) => {
         try {
-          const res = await PostReq('/user/signup', newUser)
           setIsRegistrating(true)
+          const res = await PostReq('/user/signup', newUser)
           if (res) {
             setIsRegistrating(false)
             toast()
