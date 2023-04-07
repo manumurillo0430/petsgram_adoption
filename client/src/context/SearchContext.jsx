@@ -126,6 +126,7 @@ function SearchProvider() {
       })
       if (res) {
         if (adoptionStatus === 'Fostered') {
+          console.log(res)
           currentUser.pets.fostered = res.myFosteredPetsIds
         }
         if (adoptionStatus === 'Adopted') {
@@ -137,11 +138,13 @@ function SearchProvider() {
 
   const returnPet = async (user_id, pet_id, adoptionStatus) => {
     try {
+      console.log('returning')
       const res = await DeleteReq('/pet/return', {
         user_id: user_id,
         pet_id: pet_id,
         adoptionStatus: adoptionStatus,
       })
+      console.log(res)
     } catch (error) {
       console.log(error)
     }

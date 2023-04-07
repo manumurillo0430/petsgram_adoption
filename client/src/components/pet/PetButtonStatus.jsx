@@ -7,6 +7,7 @@ export default function PetButtonStatus({
   mr,
   ml,
   isDisabled,
+  display,
 }) {
   return (
     <Tooltip placement="bottom" label={labelTooltip}>
@@ -20,6 +21,7 @@ export default function PetButtonStatus({
         alignItems="center"
         onClick={onClick}
         isDisabled={isDisabled}
+        display={display}
       >
         {label}
       </Button>

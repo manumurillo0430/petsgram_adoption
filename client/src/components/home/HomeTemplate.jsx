@@ -6,8 +6,6 @@ import { useAuthContext } from '../../context/AuthContext'
 import Ourfeatures from './Ourfeatures'
 
 export default function HomeTemplate() {
-  const { currentUser } = useAuthContext()
-
   let navigate = useNavigate()
 
   return (

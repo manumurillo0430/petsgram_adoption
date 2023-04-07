@@ -1,7 +1,13 @@
 import { Grid, Text } from '@chakra-ui/react'
 import PetCardGrid from './PetCardGrid'
 
-export default function GridViewPets({ petsArray, cardSize, tab, usersLikes }) {
+export default function GridViewPets({
+  petsArray,
+  cardSize,
+  tab,
+  usersLikes,
+  location,
+}) {
   return (
     <Grid
       templateColumns={`repeat(auto-fit, minmax(${cardSize}rem, ${cardSize}rem))`}
@@ -22,6 +28,7 @@ export default function GridViewPets({ petsArray, cardSize, tab, usersLikes }) {
               cardSize={cardSize}
               status={pet.adoptionStatus ? pet.adoptionStatus : ''}
               userInfoLikes={userInfoLikes !== undefined && userInfoLikes}
+              location={location}
             />
           )
         })

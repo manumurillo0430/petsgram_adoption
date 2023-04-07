@@ -8,22 +8,26 @@ import {
   MenuItem,
   MenuList,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import Logout from './Logout'
+
 export default function ProfileMenu() {
-  const { currentUser } = useAuthContext()
+  const { currentUser, isLoading } = useAuthContext()
   const navigate = useNavigate()
   const theme = useColorModeValue('dark', 'light')
-  const menuItemStyle = {
+
+  const menuItemSx = (theme) => ({
     fontSize: '1rem',
     _hover: {
-      backgroundColor: !theme === 'light' ? 'white' : '#303c53',
-      color: !theme === 'light' ? '#232d40' : 'white',
+      bg: theme === 'light' ? '#303c53' : '#edf2f7',
+      color: theme === 'light' ? 'white' : '#313640',
     },
     color: theme === 'light' ? 'white' : 'black',
     backgroundColor: theme === 'light' ? '#011529' : 'white',
-  }
+  })
+
   return (
     <Menu autoSelect={false}>
       <MenuButton
@@ -32,10 +36,14 @@ export default function ProfileMenu() {
         colorScheme="white"
         rightIcon={<ChevronDownIcon />}
       >
-        <Avatar
-          name={`${currentUser.firstname} ${currentUser.lastname}`}
-          src={currentUser?.picture}
-        />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Avatar
+            name={`${currentUser.firstname} ${currentUser.lastname}`}
+            src={currentUser?.picture}
+          />
+        )}
       </MenuButton>
       <MenuList
         backgroundColor={theme === 'light' ? '#011529' : 'white'}
@@ -43,27 +51,26 @@ export default function ProfileMenu() {
         fontSize="xl"
       >
         <MenuItem
-          style={menuItemStyle}
+          sx={menuItemSx(theme)}
           onClick={() => navigate(`/profile/${currentUser.user_id}`)}
         >
           My Profile
         </MenuItem>
         <MenuItem
-          style={menuItemStyle}
+          sx={menuItemSx(theme)}
           onClick={() => navigate('/profile/mypets')}
         >
           My Pets
         </MenuItem>
         <MenuItem
-          style={menuItemStyle}
+          sx={menuItemSx(theme)}
           onClick={() => navigate('/profile/settings')}
         >
           Settings
         </MenuItem>
         {currentUser.role === true ? (
           <MenuItem
-            style={menuItemStyle}
-            backgroundColor={theme === 'light' ? '#011529' : 'white'}
+            sx={menuItemSx(theme)}
             onClick={() => navigate('/admin/dashboard')}
           >
             Dashboard

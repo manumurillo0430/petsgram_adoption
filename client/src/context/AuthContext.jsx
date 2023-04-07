@@ -11,6 +11,8 @@ const AuthContext = createContext({
   petsUserFostered: [],
   petsUserLiked: [],
   setPetsUserAdopted: () => {},
+  setPetsUserLiked: () => {},
+  setPetsUserSaved: () => {},
   verifyUser: () => {},
   getCurrentUser: () => {},
   userLikedPet: () => {},
@@ -35,7 +37,6 @@ function AuthProvider({ children }) {
     const awaitGetCurrentUser = async () => {
       try {
         const res = await GetReq(`/user/${user_id}`)
-        setIsLoading(true)
         if (res.ok) {
           localStorage.setItem('userRole', res.user.role)
           setIsActiveSession(true)
@@ -49,7 +50,7 @@ function AuthProvider({ children }) {
       } catch (error) {
         console.log(error)
       }
-      setIsLoading(true)
+      setIsLoading(false)
     }
     if (user_id) {
       awaitGetCurrentUser(user_id)
@@ -92,7 +93,6 @@ function AuthProvider({ children }) {
         setPetsUserFostered(res.pets.fostered)
         setPetsUserSaved(res.pets.saved)
         setPetsUserLiked(res.pets.liked)
-        setIsLoading(false)
         setIsActiveSession(true)
       }
     } catch (error) {
@@ -113,6 +113,7 @@ function AuthProvider({ children }) {
   const userLikedPet = async (pet_id, user_id, location) => {
     try {
       const res = await PutReq(`/user/like/${user_id}`, { pet_id })
+      console.log(res)
     } catch (error) {
       console.log(error)
     }
@@ -176,6 +177,8 @@ function AuthProvider({ children }) {
         petsUserLiked,
         petsUserSaved,
         setPetsUserAdopted,
+        setPetsUserLiked,
+        setPetsUserSaved,
         verifyUser,
         clearCurrentUser,
         getCurrentUser,

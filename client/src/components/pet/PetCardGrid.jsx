@@ -4,7 +4,6 @@ import {
   CardHeader,
   CardFooter,
   Text,
-  Button,
   Image,
   Box,
   Flex,
@@ -13,32 +12,35 @@ import {
   Tooltip,
   IconButton,
 } from '@chakra-ui/react'
-import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
-import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined'
+import { useAuthContext } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { petStatusColor } from '../../utils/globals'
 import { petStatusBgColor } from '../../utils/globals'
 import { Divider } from 'antd'
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
+import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined'
+import PetActionsGrid from './PetActions'
 import './PetCardGrid.css'
 import '../search/search.css'
-import PetActionsGrid from './PetActions'
-import { useAuthContext } from '../../context/AuthContext'
 
-export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
-  const location = window.location.pathname.split('/')
-  const userLocation = location[location.length - 1]
+export default function PetCardGrid({
+  pet,
+  status,
+  tab,
+  userInfoLikes,
+  location,
+}) {
   let navigate = useNavigate()
   const { currentUser } = useAuthContext()
-  const [adoptionStatus, setAdoptionStatus] = useState(status)
+  const [adoptionStatus, setAdoptionStatus] = useState(pet.pet_id)
 
   useEffect(() => {
     setAdoptionStatus(status)
   }, [status])
-
   const [cleanOffList, setCleanOfList] = useState(false)
   return (
     <Card
-      display={userLocation !== 'search' && cleanOffList ? 'none' : ''}
+      display={location !== 'search' && cleanOffList ? 'none' : ''}
       justify="space-between"
       maxW="md"
     >
@@ -53,7 +55,6 @@ export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
                   : petStatusBgColor(adoptionStatus)
               }
               name={pet.name}
-              src=""
             />
             <Box>
               <Heading size="md">{pet.name}</Heading>
@@ -133,10 +134,10 @@ export default function PetCardGrid({ pet, status, tab, userInfoLikes }) {
         >
           <PetActionsGrid
             setAdoptionStatus={setAdoptionStatus}
+            adoptionStatus={adoptionStatus}
             setCleanOfList={setCleanOfList}
-            userLocation={userLocation}
+            location={location}
             pet={pet}
-            status={status}
             tab={tab}
             userInfoLikes={userInfoLikes}
           />

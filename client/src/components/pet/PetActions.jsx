@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, Flex, Tooltip, Spinner, Button } from '@chakra-ui/react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
@@ -6,29 +6,27 @@ import { useSearchContext } from '../../context/SearchContext'
 import { useAuthContext } from '../../context/AuthContext'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
-import PetButtonSM from './PetButtonsSaveLike'
+
 import PetButtonStatus from './PetButtonStatus'
-import { userLocation } from '../../utils/globals'
 import './PetCardGrid.css'
 import PetButtonsSaveLike from './PetButtonsSaveLike'
+import PetLikesText from './PetLikesText'
 
 export default function PetActionsGrid({
   setCleanOfList,
   pet,
-  status,
+  setAdoptionStatus,
   tab,
   userInfoLikes,
-  setAdoptionStatus,
+  location,
 }) {
   const {
     currentUser,
     user_id,
-    isActiveSession,
     petsUserAdopted,
     petsUserFostered,
     petsUserLiked,
     petsUserSaved,
-    setPetsUserAdopted,
     userLikedPet,
     userSavedPet,
     userUnsavedPet,
@@ -41,27 +39,37 @@ export default function PetActionsGrid({
     returnPet,
   } = useSearchContext()
 
-  // const [newAdoptionStatus, setNewAdoptionStatus] = useState(status)
-  const [heart, setHeart] = useState(true)
-  const [save, setSave] = useState(true)
+  const [status, setStatus] = useState(pet.adoptionStatus)
+  useEffect(() => {
+    setStatus(pet.adoptionStatus)
+  }, [pet.adoptionStatus])
+
+  const [heart, setHeart] = useState(petsUserLiked?.includes(pet.pet_id))
+  const [save, setSave] = useState(petsUserSaved?.includes(pet.pet_id))
+  const [adopt, setAdopt] = useState(false)
+  const [likesCounterText, setLikesCounterText] = useState(false)
+
+  const isAdoptedByCurrentUser =
+    status === 'Adopted' && petsUserAdopted.includes(pet.pet_id)
+  const isFosteredByCurrentUser =
+    status === 'Fostered' && petsUserFostered.includes(pet.pet_id)
+  const isFosteredByOthers =
+    status === 'Fostered' && !petsUserFostered.includes(pet.pet_id)
+  const isAdoptedByOthers = status === 'Adopted' && !isAdoptedByCurrentUser
 
   const handleLike = async () => {
-    if (
-      userLocation(window.location.pathname) !== 'search' &&
-      tab === 'liked'
-    ) {
+    setLikesCounterText(true)
+    console.log(likesCounterText, 'likecounter')
+    if (location !== 'search' && tab === 'liked') {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
     }
-    console.log(pet)
-    console.log(pet.pet_id)
+    // console.log(pet)
+    // console.log(pet.pet_id)
+    setIsLiked(!isLiked)
     setHeart(!heart)
-    await userLikedPet(
-      pet.pet_id,
-      currentUser?.user?.user_id,
-      userLocation(window.location.pathname),
-    )
+    await userLikedPet(pet.pet_id, currentUser?.user?.user_id, location)
     await addLike(user_id, pet.pet_id)
   }
 
@@ -75,10 +83,7 @@ export default function PetActionsGrid({
   }
 
   const handleUnsave = async () => {
-    if (
-      userLocation(window.location.pathname) !== 'search' &&
-      tab === 'saved'
-    ) {
+    if (location !== 'search' && tab === 'saved') {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
@@ -88,191 +93,131 @@ export default function PetActionsGrid({
   }
 
   const handleAdoptionStatus = async (e) => {
-    if (
-      userLocation(window.location.pathname) !== 'search' &&
-      tab === 'fostered'
-    ) {
+    if (location !== 'search' && tab === 'fostered') {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
     }
     if (e.target.textContent === 'Foster') {
-      console.log(e.target.textContent)
       setAdoptionStatus('Fostered')
+      setStatus('Fostered')
       await updatingAdoptionStatus(currentUser?.user_id, pet.pet_id, 'Fostered')
     }
-    console.log(e.target.textContent)
     if (e.target.textContent == 'Adopt') {
+      setAdopt(true)
       setAdoptionStatus('Adopted')
-      console.log(status)
+      setStatus('Adopted')
       await updatingAdoptionStatus(currentUser?.user_id, pet.pet_id, 'Adopted')
-      console.log(status)
     }
   }
 
   const handleReturn = async () => {
-    if (
-      userLocation(window.location.pathname) !== 'search' &&
-      tab === 'adopted'
-    ) {
+    if (location !== 'search' && tab === 'adopted') {
       setTimeout(() => {
         setCleanOfList(true)
       }, 400)
     }
-
     setAdoptionStatus('Available')
-    await returnPet(currentUser?.user_id, pet.pet_id, status)
+    setStatus('Available')
+    await returnPet(currentUser?.user_id, pet.pet_id, pet.adoptionStatus)
   }
-
-  const isLiked =
-    userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id)
+  const [isLiked, setIsLiked] = useState(
+    userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id),
+  )
 
   return (
     <Flex flexDir="column" width="100%">
       <Flex w="100%" wrap="wrap" justify="start" gap={2}>
-        {petsUserLiked === 0 && isActiveSession && (
-          <Tooltip label={heart ? 'Unlike' : 'Like'} placement="bottom">
-            <PetButtonsSaveLike
-              color={heart ? '#f78991' : ''}
-              icon={!heart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              action={handleLike}
-            />
-          </Tooltip>
-        )}
-        {petsUserLiked !== 0 &&
-        petsUserLiked?.includes(pet.pet_id) &&
-        isActiveSession ? (
-          <Tooltip label={heart ? 'Unlike' : 'Like'} placement="bottom">
-            <PetButtonsSaveLike
-              color={heart ? '#f78991' : ''}
-              icon={heart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              action={handleLike}
-            />
-          </Tooltip>
-        ) : (
-          <Tooltip label={!heart ? 'Unlike' : 'Like'} placement="bottom">
-            <PetButtonsSaveLike
-              color={!heart ? '#f78991' : ''}
-              icon={!heart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              action={handleLike}
-            />
-          </Tooltip>
-        )}
-        {petsUserSaved === 0 && isActiveSession && (
-          <PetButtonsSaveLike
-            label={save ? 'Unsave' : 'Save'}
-            icon={<BookmarkIcon />}
-            action={handleSave}
-          />
-        )}
-        {petsUserSaved !== 0 &&
-        petsUserSaved?.includes(pet.pet_id) &&
-        isActiveSession ? (
-          <PetButtonsSaveLike
-            label={save ? 'Unsave' : 'Save'}
-            icon={save ? <BookmarkIcon /> : <TurnedInNotIcon />}
-            action={handleUnsave}
-          />
-        ) : (
-          <PetButtonsSaveLike
-            label={!save ? 'Unsave' : 'Save'}
-            icon={!save ? <BookmarkIcon /> : <TurnedInNotIcon />}
-            action={handleSave}
-          />
-        )}
+        <PetButtonsSaveLike
+          color={heart ? '#f78991' : ''}
+          icon={heart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          action={handleLike}
+        />
+        <PetButtonsSaveLike
+          label={save ? 'Unsave' : 'Save'}
+          icon={save ? <BookmarkIcon /> : <TurnedInNotIcon />}
+          action={save ? handleUnsave : handleSave}
+        />
       </Flex>
       <Flex>
-        {userInfoLikes?.length === 1 && isLiked ? (
-          <Text fontSize="0.83rem">
-            <b>You</b> like this pet
-          </Text>
-        ) : (
-          <Text
-            display={!isLiked && userInfoLikes?.length > 0 ? ' ' : 'none'}
-            fontSize="0.83rem"
-          >
-            {userInfoLikes?.length}&nbsp;
-            {userInfoLikes?.length === 1 ? 'person likes' : 'people like'} this
-            pet
-          </Text>
-        )}
-        <Text
-          display={isLiked && userInfoLikes?.length > 1 ? ' ' : 'none'}
-          fontSize="0.83rem"
-        >
-          <b>You</b>&nbsp;
-          {userInfoLikes?.length > 1 && isLiked
-            ? `and ${userInfoLikes?.length - 1} more person like`
-            : 'people like'}
-          &nbsp;
-          {userInfoLikes?.length === 1 ? 'person likes' : 'people like'} this
-          pet
-        </Text>
-        {userInfoLikes?.length === 0 ||
-          (userInfoLikes?.length === undefined && (
-            <Text fontSize="0.83rem">
-              <br />
-            </Text>
-          ))}
+        <PetLikesText isLiked={isLiked} userInfoLikes={userInfoLikes} />
       </Flex>
+
       <Flex w="100%">
-        {isActiveSession &&
-          console.log(status) &&
-          status === 'Adopted' &&
-          petsUserAdopted.includes(pet.pet_id) === true && (
-            <PetButtonStatus label="Return" onClick={handleReturn} />
-          )}
-
-        {isActiveSession &&
-          status === 'Adopted' &&
-          petsUserAdopted.includes(pet.pet_id) === false && (
-            <Flex width="100%">
-              <PetButtonStatus mr={2} ml={0} label="Adopt" isDisabled={true} />
-              <PetButtonStatus mr={0} ml={2} label="Foster" isDisabled={true} />
-            </Flex>
-          )}
-        {isActiveSession &&
-          status === 'Fostered' &&
-          petsUserFostered.includes(pet.pet_id) === true && (
-            <Flex width="100%">
-              <PetButtonStatus
-                mr={2}
-                ml={0}
-                label="Adopt"
-                labelTooltip={`Would you like to adopt ${pet.name}, who is currently available for adoption after being fostered?`}
-                onClick={handleAdoptionStatus}
-              />
-              <PetButtonStatus
-                mr={0}
-                ml={2}
-                label="Return"
-                onClick={handleReturn}
-              />
-            </Flex>
-          )}
-        {isActiveSession &&
-          status === 'Fostered' &&
-          petsUserFostered.includes(pet.pet_id) === false && (
+        {status === 'Available' && (
+          <>
             <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
-          )}
-
-        {isActiveSession && status === 'Available' && (
+            <PetButtonStatus label="Foster" onClick={handleAdoptionStatus} />
+          </>
+        )}
+        {isFosteredByCurrentUser && (
+          <>
+            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
+            <PetButtonStatus label="Return" onClick={handleReturn} />
+          </>
+        )}
+        {isAdoptedByCurrentUser && (
+          <PetButtonStatus label="Return" onClick={handleReturn} />
+        )}
+        {adopt && <PetButtonStatus label="Return" onClick={handleReturn} />}
+        {isFosteredByOthers && (
+          <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
+        )}
+        {isAdoptedByOthers && !adopt && (
           <>
             <PetButtonStatus
-              mr={2}
-              ml={0}
               label="Adopt"
               onClick={handleAdoptionStatus}
+              isDisabled={true}
             />
             <PetButtonStatus
-              mr={0}
-              ml={2}
               label="Foster"
               onClick={handleAdoptionStatus}
+              isDisabled={true}
             />
           </>
         )}
-        {/* <Button flex="1" variant="ghost" onClick={handleDelete}>
+
+        {/* <PetButtonStatus
+          display={textLeftButton() === 0 ? 'none' : ''}
+          label={textLeftButton()}
+          isDisabled={
+            pet.adoptionStatus === 'Adopted' &&
+            petsUserAdopted.includes(pet.pet_id) === false
+              ? true
+              : false
+          }
+          onClick={handleAdoptionStatus}
+          ml
+          mr={2}
+        />
+        <PetButtonStatus
+          display={textRightButton() === 0 ? 'none' : ''}
+          label={textRightButton()}
+          isDisabled={
+            pet.adoptionStatus === 'Adopted' &&
+            !petsUserAdopted.includes(pet.pet_id)
+              ? true
+              : false
+          }
+          onClick={handleAdoptionStatus}
+        />
+        <PetButtonStatus
+          display={textBigButton() === 0 ? 'none' : ''}
+          label={textBigButton()}
+          isDisabled={
+            pet.adoptionStatus === 'Adopted' &&
+            !petsUserAdopted.includes(pet.pet_id)
+              ? true
+              : false
+          }
+          onClick={
+            textBigButton() === 'Adopt' ? handleAdoptionStatus : handleReturn
+          }
+          ml={2}
+        /> */}
+        {/* 
+        <Button flex="1" variant="ghost" onClick={handleDelete}>
           Delete
         </Button> */}
       </Flex>
