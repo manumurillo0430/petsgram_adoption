@@ -10,7 +10,6 @@ import { PostReq } from '../../utils/api'
 import { useToast } from '@chakra-ui/react'
 
 export default function Singup({ toggleModal }) {
-  const [serverError, setServerError] = useState(false)
   const [isRegistrating, setIsRegistrating] = useState(true)
 
   const toast = useToast({
@@ -53,10 +52,8 @@ export default function Singup({ toggleModal }) {
       validateOnChange={false}
       onSubmit={async (newUser, { resetForm }) => {
         try {
-          setIsRegistrating(true)
           const res = await PostReq('/user/signup', newUser)
           if (res) {
-            setIsRegistrating(false)
             toast()
             resetForm()
             toggleModal()
