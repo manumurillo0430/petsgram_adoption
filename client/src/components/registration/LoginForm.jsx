@@ -3,59 +3,93 @@ import * as yup from 'yup'
 import FormSubmitButtom from '../form/FormSubmitButtom'
 import FormInputField from '../form/FormInputField'
 import FormPasswordField from '../form/FormPasswordField'
-import { requiredField, userNameTooShort, passwordTooShort } from '../../utils/globals'
+import {
+  requiredField,
+  userNameTooShort,
+  passwordTooShort,
+} from '../../utils/globals'
 import { Formik } from 'formik'
 import { PostReq } from '../../utils/api'
 import { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-import { Text } from '@chakra-ui/react'
+import { Text, Spinner, useToast } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
 
 export default function LoginForm({ toggleModal }) {
-    console.log(toggleModal)
-    const { getCurrentUser } = useAuthContext()
-    const { getUserLikes } = useSearchContext
-    const [serverError, setServerError] = useState(false)
-    const loginSchema = yup.object().shape({
-        email: yup.string().required(requiredField).min(6, userNameTooShort),
-        password: yup.string().required(requiredField).min(6, passwordTooShort),
-    })
+  const [isLogging, setIsLogging] = useState(false)
+  const { getCurrentUser } = useAuthContext()
+  const { getUserLikes } = useSearchContext()
+  const [serverError, setServerError] = useState(false)
+  const loginSchema = yup.object().shape({
+    email: yup.string().required(requiredField).min(6, userNameTooShort),
+    password: yup.string().required(requiredField).min(6, passwordTooShort),
+  })
 
-    return (
-        <Formik
-            initialValues={{
-                email: '',
-                password: '',
-            }}
-            validationSchema={loginSchema}
-            validateOnChange={false}
-            onSubmit={async (user) => {
-                try {
-                    setServerError('')
-                    const res = await PostReq('/user/login/', user)
-                    console.log(res.token, 'userid:', res.user_id, res.user_likes)
-                    if (res) {
-                        toggleModal()
-                        await getCurrentUser(res.user_id)
-                        await getUserLikes(res.user_likes)
-                    }
-                } catch (error) {
-                    if (error.response && error.response.data && error.response.data.error) {
-                        setServerError(error.response.data.error)
-                    } else {
-                        setServerError('An error occurred. Please try again later.')
-                    }
-                }
-            }}
-        >
-            {({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                    <FormInputField req={true} fieldName="email" fieldLabel="Email" />
-                    <FormPasswordField req={true} fieldName="password" fieldLabel="Password" />
-                    <FormSubmitButtom buttonLabel="Log In" />
-                    {serverError ? <Text>{serverError}</Text> : ''}
-                </form>
-            )}
-        </Formik>
-    )
+  const toast = useToast({
+    title: 'Welcome back!',
+    description: 'Enjoy our furry friends.',
+    status: 'success',
+    duration: 5000,
+    isClosable: true,
+    position: 'top',
+  })
+
+  return (
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      validationSchema={loginSchema}
+      validateOnChange={false}
+      onSubmit={async (user) => {
+        try {
+          setIsLogging(true)
+          const res = await PostReq('/user/login/', user)
+          console.log(res)
+          if (res) {
+            toggleModal()
+            toast()
+            setIsLogging(false)
+            localStorage.setItem(
+              'userAuth',
+              JSON.stringify({ user_id: res.user_id, isActiveSession: true }),
+            )
+            await getCurrentUser(res.user_id)
+            await getUserLikes(res.user_likes)
+          }
+        } catch (error) {
+          setIsLogging(false)
+          if (error.response) {
+            setServerError(error.response.data)
+          } else {
+            setServerError('An error occurred. Please try again later.')
+          }
+        }
+      }}
+    >
+      {({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <FormInputField req={true} fieldName="email" fieldLabel="Email" />
+          <FormPasswordField
+            req={true}
+            fieldName="password"
+            fieldLabel="Password"
+          />
+          <FormSubmitButtom
+            mt={3}
+            buttonLabel={isLogging ? <Spinner /> : 'Log In'}
+          />
+
+          {serverError ? (
+            <Text fontWeight="500" color="#ef6e6e" mt={4} textAlign="center">
+              {serverError}
+            </Text>
+          ) : (
+            ''
+          )}
+        </form>
+      )}
+    </Formik>
+  )
 }

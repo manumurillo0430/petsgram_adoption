@@ -5,9 +5,11 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Redirect,
   Outlet,
 } from 'react-router-dom'
-import Sidebar from './components/nav/Sidebar'
+
+import MainTemplate from './components/template/MainTemplate'
 import AdminDasboard from './pages/AdminDashboard'
 import Home from './pages/Home'
 import MyPets from './pages/MyPets'
@@ -18,14 +20,16 @@ import SearchProvider from './context/SearchContext'
 import PrivateRouteUser from './private_routes/PrivateRouteUser'
 import PrivateRouteAdmin from './private_routes/PrivateRouteAdmin'
 import PetDetailsPage from './components/pet/PetDetailsPage'
-import PetForm from './components/Admin/PetForm'
+import AddNewPet from './pages/AddNewPet'
+import PetForm from './components/admin/PetForm'
+import ProfileDetails from './pages/ProfileDetails'
 
 function App() {
   return (
     <ChakraProvider>
       <AuthProvider>
         <Router>
-          <Sidebar>
+          <MainTemplate>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route element={<SearchProvider />}>
@@ -33,22 +37,33 @@ function App() {
                 <Route path="/pet/:id" element={<PetDetailsPage />} />
               </Route>
               <Route path="/profile" element={<Outlet />}>
-                <Route
-                  index
-                  element={
-                    <PrivateRouteUser>
-                      <ProfilesSettigs />
-                    </PrivateRouteUser>
-                  }
-                />
-                <Route
-                  path="mypets/"
-                  element={
-                    <PrivateRouteUser>
-                      <MyPets />
-                    </PrivateRouteUser>
-                  }
-                />
+                <Route element={<SearchProvider />}>
+                  <Route
+                    path="settings"
+                    element={
+                      <PrivateRouteUser>
+                        <ProfilesSettigs />
+                      </PrivateRouteUser>
+                    }
+                  />
+                  <Route
+                    path=":id"
+                    element={
+                      <PrivateRouteUser>
+                        <ProfileDetails />
+                      </PrivateRouteUser>
+                    }
+                  />
+
+                  <Route
+                    path="mypets"
+                    element={
+                      <PrivateRouteUser>
+                        <MyPets />
+                      </PrivateRouteUser>
+                    }
+                  />
+                </Route>
               </Route>
 
               <Route path="/admin" element={<Outlet />}>
@@ -56,7 +71,7 @@ function App() {
                   path="new"
                   element={
                     <PrivateRouteAdmin>
-                      <PetForm />
+                      <AddNewPet />
                     </PrivateRouteAdmin>
                   }
                 />
@@ -78,7 +93,7 @@ function App() {
                 />
               </Route>
             </Routes>
-          </Sidebar>
+          </MainTemplate>
         </Router>
       </AuthProvider>
     </ChakraProvider>

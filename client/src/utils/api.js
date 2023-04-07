@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 const BASE_URL =
-  'http://ec2-54-195-178-147.eu-west-1.compute.amazonaws.com:8080'
+  process.env.NODE_ENV !== 'development'
+    ? 'https://petsgram-adoption-server.onrender.com'
+    : 'http://localhost:8080'
 
 export const GetReq = async (path) => {
   const rest = await axios.get(BASE_URL + path, {
@@ -11,7 +13,6 @@ export const GetReq = async (path) => {
 }
 
 export const GetReqQuery = async (path, params) => {
-  console.log(params, 'params')
   const rest = await axios.get(
     BASE_URL + path,
     { params: params },
@@ -34,7 +35,6 @@ export const PutReq = async (path, data) => {
   return rest.data
 }
 export const DeleteReq = async (path, data) => {
-  console.log(data, 'delete')
   const rest = await axios.delete(BASE_URL + path, {
     data: data,
     withCredentials: true,

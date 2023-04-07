@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Box,
-  Tab,
-  TabList,
-  TabPanel,
-  Tabs,
-  TabPanels,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Tab, TabList, TabPanel, Tabs, TabPanels } from '@chakra-ui/react'
 import GridViewPets from '../components/pet/GridViewPets'
-import SocialMediaViewPets from '../components/pet/SocialMediaViewPets'
-import { GetReq, PostReq } from '../utils/api'
 import { useSearchContext } from '../context/SearchContext'
 import { Divider } from 'antd'
 import '../components/search/search.css'
-import SearchToggle from '../components/search/SearchToggle'
 import { useAuthContext } from '../context/AuthContext'
 
 export default function MyPets() {
   const {
-    currentUser,
     user_id,
     getCurrentUser,
     petsUserAdopted,
@@ -33,14 +21,17 @@ export default function MyPets() {
 
   useEffect(() => {
     async function fetchPets() {
-      const allPets = await getAllPets()
-      await getCurrentUser(user_id)
-      if (allPets && petsUserFostered) {
-        const filteredPets = allPets.filter((pet) =>
-          petsUserFostered.includes(pet.pet_id),
-        )
-        console.log(filteredPets)
-        setPetsTabArray(filteredPets)
+      try {
+        const allPets = await getAllPets()
+        await getCurrentUser(user_id)
+        if (allPets && petsUserFostered) {
+          const filteredPets = allPets.filter((pet) =>
+            petsUserFostered.includes(pet.pet_id),
+          )
+          setPetsTabArray(filteredPets)
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
     fetchPets()
@@ -54,7 +45,6 @@ export default function MyPets() {
         setPetsTabArray(
           allPets?.filter((pet) => petsUserLiked.includes(pet.pet_id)),
         )
-        console.log(petsTabArray)
       }
       if (tabSelected === 'saved') {
         const allPets = await getAllPets()
@@ -80,7 +70,7 @@ export default function MyPets() {
   }
 
   return (
-    <Box>
+    <Box width="100%">
       <Tabs isFitted>
         <Divider style={{ border: 'none', margin: '0.3rem' }} />
         <TabList>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSearchContext } from '../context/SearchContext'
 import {
   Box,
   Flex,
@@ -8,16 +9,14 @@ import {
   TabPanel,
   Tabs,
   TabPanels,
-  Text,
 } from '@chakra-ui/react'
-import BasicSearchFilterCriteria from '../components/search/BasicSearchFilterCriteria'
+import { Divider } from 'antd'
 import AdvancedSearchFilterCriteria from '../components/search/AdvancedSearchFilterCriteria'
 import GridViewPets from '../components/pet/GridViewPets'
-import SocialMediaViewPets from '../components/pet/SocialMediaViewPets'
-import { GetReq, PostReq } from '../utils/api'
-import { useSearchContext } from '../context/SearchContext'
-import { Divider } from 'antd'
+import FullViewPets from '../components/pet/FullViewPets'
 import SearchToggle from '../components/search/SearchToggle'
+import { useAuthContext } from '../context/AuthContext'
+import { userLocation } from '../utils/globals'
 
 export default function Search() {
   const {
@@ -36,20 +35,18 @@ export default function Search() {
       <Divider style={{ border: 'none', margin: '1rem' }} />
       <Flex flexDirection="column">
         <Center flexDirection="column">
-          <BasicSearchFilterCriteria
+          <AdvancedSearchFilterCriteria
             advancedSearch={advancedSearch}
             searchResults={petsArray}
           />
-          {advancedSearch ? (
-            <AdvancedSearchFilterCriteria
+
+          {petsArray.length === 0 ? null : (
+            <SearchToggle
+              toggleAdvancedSearch={toggleAdvancedSearch}
               advancedSearch={advancedSearch}
-              searchResults={petsArray}
             />
-          ) : null}
-          <SearchToggle
-            toggleAdvancedSearch={toggleAdvancedSearch}
-            advancedSearch={advancedSearch}
-          />
+          )}
+
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
         </Center>
 
@@ -65,20 +62,20 @@ export default function Search() {
                   FULL VIEW
                 </Tab>
               </TabList>
-
               <TabPanels>
-                <TabPanel>
+                <TabPanel mb={6}>
                   <GridViewPets
                     cardSize={25}
                     usersLikes={usersLikes}
                     petsArray={petsArray}
                     viewTab={viewTab}
+                    location={userLocation(window.location.pathname)}
                   />
                 </TabPanel>
                 <TabPanel justifyContent="center">
                   <Center flexDirection="column" w="90%">
                     <Divider style={{ border: 'none', margin: '0.3rem' }} />
-                    <SocialMediaViewPets
+                    <FullViewPets
                       petsArray={petsArray}
                       usersLikes={usersLikes}
                       viewTab={viewTab}

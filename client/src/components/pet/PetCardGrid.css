@@ -10,6 +10,25 @@
 
 }
 
+
+.collapsed-label {
+    display: none;
+  }
+  
+.ant-menu-item-selected .collapsed-label,
+.ant-menu-item:hover .collapsed-label {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 10px);
+    transform: translate(0, -50%);
+    white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 1;
+  }
 /* @media (min-width: 30em) {
     .chakra-card .css-n239yi{
         flex-direction: column;
