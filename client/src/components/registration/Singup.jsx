@@ -60,7 +60,6 @@ export default function Singup({ toggleModal }) {
             toggleModal()
           }
         } catch (error) {
-          setIsRegistrating(false)
           if (error.response) {
             setServerError(error.response.data)
           } else {
