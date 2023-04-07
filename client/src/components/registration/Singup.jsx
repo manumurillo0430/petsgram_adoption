@@ -11,6 +11,7 @@ import { useToast } from '@chakra-ui/react'
 
 export default function Singup({ toggleModal }) {
   const [isRegistrating, setIsRegistrating] = useState(true)
+  const [serverError, setServerError] = useState(false)
 
   const toast = useToast({
     title: 'Profile created!',
