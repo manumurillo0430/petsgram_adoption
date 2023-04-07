@@ -66,6 +66,7 @@ async function userLikedPetModel(user_id, pet_id) {
         user_id: user_id,
         pet_id: pet_id,
       })
+
       return true
     } else {
       await dbConnection('liked_pets')
@@ -222,31 +223,41 @@ async function returnPetModel(user_id, pet_id, adoptionStatus) {
         const deleteFosterStatus = await dbConnection('adopted_pets')
           .where({ user_id: user_id, adopted: pet_id })
           .delete()
+
         if (deleteFosterStatus) {
+          const updatedPet = await dbConnection('pets')
+            .where({ pet_id: pet_id })
+            .update({ adoptionStatus: 'Available' })
+            .returning('*')
+
+          return updatedPet
         }
-        await dbConnection('pets').where({ pet_id: pet_id }).update({
-          adoptionStatus: 'Available',
-        })
       }
     }
+
     if (adoptionStatus === 'Fostered') {
       const isUserFosteringThisPet = await dbConnection('fostered_pets')
         .where({ user_id: user_id, fostered: pet_id })
         .first()
+
       if (isUserFosteringThisPet) {
         await dbConnection('fostered_pets')
           .where({ user_id: user_id, fostered: pet_id })
           .delete()
 
-        await dbConnection('pets').where({ pet_id: pet_id }).update({
-          adoptionStatus: 'Available',
-        })
+        const updatedPet = await dbConnection('pets')
+          .where({ pet_id: pet_id })
+          .update({ adoptionStatus: 'Available' })
+          .returning('*')
+
+        return updatedPet
       }
     }
   } catch (error) {
     console.log(error)
   }
 }
+
 async function deletePetModel(pet_id) {
   try {
     await dbConnection.transaction(async (trx) => {
