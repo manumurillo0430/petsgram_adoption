@@ -96,10 +96,7 @@ export default function Singup({ toggleModal }) {
             fieldName="phonenumber"
             fieldLabel="Phone Number"
           />
-          <FormSubmitButtom
-            mt={4}
-            buttonLabel={isRegistrating ? 'Sign Up' : <Spinner />}
-          />
+          <FormSubmitButtom mt={4} buttonLabel={'Sign Up'} />
           {serverError ? (
             <Text fontWeight="500" color="#ef6e6e" mt={4} textAlign="center">
               {serverError}
