@@ -54,7 +54,9 @@ export default function Singup({ toggleModal }) {
       onSubmit={async (newUser, { resetForm }) => {
         try {
           const res = await PostReq('/user/signup', newUser)
+          setIsRegistrating(true)
           if (res) {
+            setIsRegistrating(false)
             toast()
             resetForm()
             toggleModal()
@@ -96,7 +98,10 @@ export default function Singup({ toggleModal }) {
             fieldName="phonenumber"
             fieldLabel="Phone Number"
           />
-          <FormSubmitButtom mt={4} buttonLabel={'Sign Up'} />
+          <FormSubmitButtom
+            mt={4}
+            buttonLabel={isRegistrating ? <Spinner /> : 'Sign Up'}
+          />
           {serverError ? (
             <Text fontWeight="500" color="#ef6e6e" mt={4} textAlign="center">
               {serverError}
