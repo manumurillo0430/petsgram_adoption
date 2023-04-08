@@ -9,6 +9,7 @@ db.schema
     console.log(`Table ${tableName} was dropped successfully.`)
     db.destroy()
   })
+
   .catch((err) => {
     console.error(`Error dropping table ${tableName}: ${err}`)
     db.destroy()
