@@ -27,6 +27,8 @@ export default function Search() {
     toggleAdvancedSearch,
   } = useSearchContext()
 
+  console.log(userLocation(window.location.pathname))
+
   const [viewTab, setViewTab] = useState('grid')
 
   return (

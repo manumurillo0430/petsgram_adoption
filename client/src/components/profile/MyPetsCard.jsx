@@ -36,7 +36,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserFostered.includes(pet.pet_id))
+              .filter((pet) => petsUserFostered?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   label={pet.name}
@@ -52,7 +52,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserAdopted.includes(pet.pet_id))
+              .filter((pet) => petsUserAdopted?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   label={pet.name}
@@ -68,7 +68,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserLiked.includes(pet.pet_id))
+              .filter((pet) => petsUserLiked?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   label={pet.name}
@@ -84,7 +84,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserSaved.includes(pet.pet_id))
+              .filter((pet) => petsUserSaved?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   label={pet.name}

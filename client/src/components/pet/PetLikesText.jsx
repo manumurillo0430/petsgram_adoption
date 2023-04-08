@@ -1,36 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text } from '@chakra-ui/react'
 
 export default function PetLikesText({ isLiked, userInfoLikes }) {
-  const numberOfLikes = userInfoLikes?.length
+  const [updatedLikes, setUpdatedLikes] = useState(userInfoLikes?.length)
+
+  useEffect(() => {
+    setUpdatedLikes(userInfoLikes?.length)
+  }, [userInfoLikes])
+
+  useEffect(() => {
+    if (isLiked) {
+      setUpdatedLikes((prevLikes) => prevLikes + 1)
+    } else {
+      setUpdatedLikes((prevLikes) => prevLikes - 1)
+    }
+  }, [isLiked])
 
   let likesText = ''
 
   if (isLiked) {
-    if (numberOfLikes === 0) {
+    if (updatedLikes === 1) {
       likesText = (
         <>
           <b>You</b> like this pet
         </>
       )
-    } else if (numberOfLikes === 1) {
+    } else if (updatedLikes > 1) {
       likesText = (
         <>
-          <b>You</b> and one more user like this pet
-        </>
-      )
-    } else if (numberOfLikes > 1) {
-      likesText = (
-        <>
-          <b>You</b> and {numberOfLikes} more users like this pet
+          <b>You</b> and {updatedLikes - 1} more users like this pet
         </>
       )
     }
   } else {
-    if (numberOfLikes === 1) {
+    if (updatedLikes === 1) {
       likesText = 'One user likes this pet'
-    } else if (numberOfLikes > 1) {
-      likesText = `${numberOfLikes} users like this pet`
+    } else if (updatedLikes > 1) {
+      likesText = `${updatedLikes} users like this pet`
     }
   }
 

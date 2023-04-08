@@ -6,7 +6,7 @@ import { useSearchContext } from '../../context/SearchContext'
 import { useAuthContext } from '../../context/AuthContext'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
-
+import { userNames } from '../../utils/globals'
 import PetButtonStatus from './PetButtonStatus'
 import './PetCardGrid.css'
 import PetButtonsSaveLike from './PetButtonsSaveLike'
@@ -46,7 +46,8 @@ export default function PetActionsGrid({
 
   const [heart, setHeart] = useState(petsUserLiked?.includes(pet.pet_id))
   const [save, setSave] = useState(petsUserSaved?.includes(pet.pet_id))
-  const [adopt, setAdopt] = useState(false)
+  const [justAdopted, setJustAdopted] = useState(false)
+  const [justFostered, setJustFostered] = useState(false)
   const [likesCounterText, setLikesCounterText] = useState(false)
 
   const isAdoptedByCurrentUser =
@@ -56,17 +57,16 @@ export default function PetActionsGrid({
   const isFosteredByOthers =
     status === 'Fostered' && !petsUserFostered.includes(pet.pet_id)
   const isAdoptedByOthers = status === 'Adopted' && !isAdoptedByCurrentUser
+  const isJustAdopted = status === 'Adopted' && justAdopted === true
+  const isJustFoster = status === 'Fostered' && justFostered === true
 
   const handleLike = async () => {
     setLikesCounterText(true)
-    console.log(likesCounterText, 'likecounter')
     if (location !== 'search' && tab === 'liked') {
       setTimeout(() => {
         setCleanOfList(true)
-      }, 400)
+      }, 300)
     }
-    // console.log(pet)
-    // console.log(pet.pet_id)
     setIsLiked(!isLiked)
     setHeart(!heart)
     await userLikedPet(pet.pet_id, currentUser?.user?.user_id, location)
@@ -79,35 +79,36 @@ export default function PetActionsGrid({
 
   const handleSave = async () => {
     setSave(!save)
-    await userSavedPet(currentUser?.user_id, pet.pet_id)
+    await userSavedPet(user_id, pet.pet_id)
   }
 
   const handleUnsave = async () => {
     if (location !== 'search' && tab === 'saved') {
       setTimeout(() => {
         setCleanOfList(true)
-      }, 400)
+      }, 300)
     }
     setSave(!save)
-    await userUnsavedPet(currentUser?.user_id, pet.pet_id)
+    await userUnsavedPet(user_id, pet.pet_id)
   }
 
   const handleAdoptionStatus = async (e) => {
     if (location !== 'search' && tab === 'fostered') {
       setTimeout(() => {
         setCleanOfList(true)
-      }, 400)
+      }, 300)
     }
     if (e.target.textContent === 'Foster') {
+      setJustFostered(true)
       setAdoptionStatus('Fostered')
       setStatus('Fostered')
-      await updatingAdoptionStatus(currentUser?.user_id, pet.pet_id, 'Fostered')
+      await updatingAdoptionStatus(user_id, pet.pet_id, 'Fostered')
     }
     if (e.target.textContent == 'Adopt') {
-      setAdopt(true)
+      setJustAdopted(true)
       setAdoptionStatus('Adopted')
       setStatus('Adopted')
-      await updatingAdoptionStatus(currentUser?.user_id, pet.pet_id, 'Adopted')
+      await updatingAdoptionStatus(user_id, pet.pet_id, 'Adopted')
     }
   }
 
@@ -115,11 +116,11 @@ export default function PetActionsGrid({
     if (location !== 'search' && tab === 'adopted') {
       setTimeout(() => {
         setCleanOfList(true)
-      }, 400)
+      }, 300)
     }
     setAdoptionStatus('Available')
     setStatus('Available')
-    await returnPet(currentUser?.user_id, pet.pet_id, pet.adoptionStatus)
+    await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
   }
   const [isLiked, setIsLiked] = useState(
     userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id),
@@ -140,7 +141,11 @@ export default function PetActionsGrid({
         />
       </Flex>
       <Flex>
-        <PetLikesText isLiked={isLiked} userInfoLikes={userInfoLikes} />
+        <Tooltip hasArrow label={userNames({ users: userInfoLikes })}>
+          <Text>
+            <PetLikesText isLiked={heart} userInfoLikes={userInfoLikes} />
+          </Text>
+        </Tooltip>
       </Flex>
 
       <Flex w="100%">
@@ -159,67 +164,37 @@ export default function PetActionsGrid({
         {isAdoptedByCurrentUser && (
           <PetButtonStatus label="Return" onClick={handleReturn} />
         )}
-        {adopt && <PetButtonStatus label="Return" onClick={handleReturn} />}
         {isFosteredByOthers && (
-          <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
+          <>
+            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
+            <PetButtonStatus
+              display={isJustFoster ? '' : 'none'}
+              label="Return"
+              onClick={handleReturn}
+            />
+          </>
         )}
-        {isAdoptedByOthers && !adopt && (
+        {isAdoptedByOthers && (
           <>
             <PetButtonStatus
               label="Adopt"
               onClick={handleAdoptionStatus}
               isDisabled={true}
+              display={!isJustAdopted ? '' : 'none'}
             />
             <PetButtonStatus
               label="Foster"
               onClick={handleAdoptionStatus}
               isDisabled={true}
+              display={!isJustAdopted ? '' : 'none'}
+            />
+            <PetButtonStatus
+              label="Return"
+              onClick={handleReturn}
+              display={isJustAdopted ? '' : 'none'}
             />
           </>
         )}
-
-        {/* <PetButtonStatus
-          display={textLeftButton() === 0 ? 'none' : ''}
-          label={textLeftButton()}
-          isDisabled={
-            pet.adoptionStatus === 'Adopted' &&
-            petsUserAdopted.includes(pet.pet_id) === false
-              ? true
-              : false
-          }
-          onClick={handleAdoptionStatus}
-          ml
-          mr={2}
-        />
-        <PetButtonStatus
-          display={textRightButton() === 0 ? 'none' : ''}
-          label={textRightButton()}
-          isDisabled={
-            pet.adoptionStatus === 'Adopted' &&
-            !petsUserAdopted.includes(pet.pet_id)
-              ? true
-              : false
-          }
-          onClick={handleAdoptionStatus}
-        />
-        <PetButtonStatus
-          display={textBigButton() === 0 ? 'none' : ''}
-          label={textBigButton()}
-          isDisabled={
-            pet.adoptionStatus === 'Adopted' &&
-            !petsUserAdopted.includes(pet.pet_id)
-              ? true
-              : false
-          }
-          onClick={
-            textBigButton() === 'Adopt' ? handleAdoptionStatus : handleReturn
-          }
-          ml={2}
-        /> */}
-        {/* 
-        <Button flex="1" variant="ghost" onClick={handleDelete}>
-          Delete
-        </Button> */}
       </Flex>
     </Flex>
   )

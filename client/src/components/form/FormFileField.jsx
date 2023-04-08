@@ -45,7 +45,9 @@ export default function FormFileField({
     >
       <FormLabel fontWeight="bold">{fieldLabel}</FormLabel>
       <Divider style={{ border: 'none' }} />
-      <div className="picturePreview">
+      <div
+        className={theme === 'light' ? 'picturePreview' : 'picturePreview dark'}
+      >
         {theme === 'dark' ? (
           <img src={picture === '' ? noPicture : pictureView} alt="Preview" />
         ) : (
