@@ -1,13 +1,8 @@
 import axios from 'axios'
-
-<<<<<<< HEAD
 const BASE_URL =
   process.env.NODE_ENV !== 'development'
     ? 'https://petsgram-adoption-server.onrender.com'
     : 'http://localhost:8080'
-=======
-const BASE_URL = 'http://localhost:8080'
->>>>>>> parent of 34a2e4845 (Merge pull request #5 from manumurillo0430/Frontend-updates)
 
 export const GetReq = async (path) => {
   const rest = await axios.get(BASE_URL + path, {
