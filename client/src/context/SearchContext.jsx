@@ -138,13 +138,11 @@ function SearchProvider() {
 
   const returnPet = async (user_id, pet_id, adoptionStatus) => {
     try {
-      console.log('returning')
       const res = await DeleteReq('/pet/return', {
         user_id: user_id,
         pet_id: pet_id,
         adoptionStatus: adoptionStatus,
       })
-      console.log(res)
     } catch (error) {
       console.log(error)
     }
@@ -162,7 +160,6 @@ function SearchProvider() {
   }
 
   const deletePet = async (pet_id) => {
-    console.log(pet_id)
     try {
       const res = await DeleteReq(`/pet/delete`, { pet_id: pet_id })
     } catch (error) {

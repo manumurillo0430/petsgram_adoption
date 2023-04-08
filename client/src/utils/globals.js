@@ -78,6 +78,20 @@ export const userLocation = (window) => {
   return userLocation
 }
 
+export const userNames = ({ users }) => {
+  if (!Array.isArray(users)) {
+    return ''
+  }
+
+  return (
+    <div>
+      {users.map((user, index) => (
+        <div key={index}>{`${user.firstname} ${user.lastname}`}</div>
+      ))}
+    </div>
+  )
+}
+
 export const colorScaleChart = [
   'rgb(218 112 214 / 80%)',
   'rgb(22 150 255 / 80%)',

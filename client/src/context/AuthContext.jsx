@@ -110,10 +110,9 @@ function AuthProvider({ children }) {
     }
   }
 
-  const userLikedPet = async (pet_id, user_id, location) => {
+  const userLikedPet = async (pet_id, user_id) => {
     try {
       const res = await PutReq(`/user/like/${user_id}`, { pet_id })
-      console.log(res)
     } catch (error) {
       console.log(error)
     }
