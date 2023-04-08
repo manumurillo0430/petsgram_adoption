@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 
 import MainTemplate from './components/template/MainTemplate'
-import AdminDasboard from './pages/AdminDashboard'
+import AdminDasboard from '/Users/manumurillo/Documents/About/petsgram_adoption/client/src/pages/AdminDashboard'
 import Home from './pages/Home'
 import MyPets from './pages/MyPets'
 import Search from './pages/Search'
