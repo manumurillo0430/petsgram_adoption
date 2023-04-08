@@ -20,7 +20,7 @@ import PrivateRouteUser from './private_routes/PrivateRouteUser'
 import PrivateRouteAdmin from './private_routes/PrivateRouteAdmin'
 import PetDetailsPage from './components/pet/PetDetailsPage'
 import AddNewPet from './pages/AddNewPet'
-import PetForm from './components/admin/PetForm'
+import PetForm from './components/Admin/PetForm'
 import ProfileDetails from './pages/ProfileDetails'
 
 function App() {
