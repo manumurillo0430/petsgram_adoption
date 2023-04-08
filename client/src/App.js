@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Redirect,
   Outlet,
 } from 'react-router-dom'
 

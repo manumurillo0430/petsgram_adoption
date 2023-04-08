@@ -1,11 +1,9 @@
 import React from 'react'
-import DashboardTemple from '../components/admin/DashboardTemplate'
-import { useAuthContext } from '../context/AuthContext'
-
+import DashboardTemplate from '../components/admin/DashboardTemplate'
 export default function AdminDashboard() {
   return (
     <>
-      <DashboardTemple />
+      <DashboardTemplate />
     </>
   )
 }
