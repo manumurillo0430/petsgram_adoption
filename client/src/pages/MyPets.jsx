@@ -5,6 +5,7 @@ import { useSearchContext } from '../context/SearchContext'
 import { Divider } from 'antd'
 import '../components/search/search.css'
 import { useAuthContext } from '../context/AuthContext'
+import { userLocation } from '../utils/globals'
 
 export default function MyPets() {
   const {
@@ -93,16 +94,36 @@ export default function MyPets() {
 
         <TabPanels>
           <TabPanel>
-            <GridViewPets cardSize={25} petsArray={petsTabArray} tab={tab} />
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
           </TabPanel>
           <TabPanel>
-            <GridViewPets cardSize={25} petsArray={petsTabArray} tab={tab} />
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
           </TabPanel>
           <TabPanel>
-            <GridViewPets cardSize={25} petsArray={petsTabArray} tab={tab} />
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
           </TabPanel>
           <TabPanel>
-            <GridViewPets cardSize={25} petsArray={petsTabArray} tab={tab} />
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
