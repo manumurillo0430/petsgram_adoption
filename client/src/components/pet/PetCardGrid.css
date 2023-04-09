@@ -1,0 +1,45 @@
+.chakra-ui-dark .css-644euu:not([data-theme]), [data-theme=dark] .css-644euu:not([data-theme]), .css-644euu[data-theme=dark] {
+    --card-bg: var(--chakra-colors-gray-700);
+    background-color: #011426;
+}
+.chakra-card .css-i5o76f{
+    background-color: #011426;
+}
+.chakra-button .css-r7xd4a{
+    cursor: pointer
+
+}
+
+
+.collapsed-label {
+    display: none;
+  }
+  
+.ant-menu-item-selected .collapsed-label,
+.ant-menu-item:hover .collapsed-label {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 10px);
+    transform: translate(0, -50%);
+    white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 1;
+  }
+
+.toggleSearch{
+    font-size: 20px;
+}
+.chakra-ui-dark .css-qrz0o2:not([data-theme]), [data-theme=dark] .css-qrz0o2:not([data-theme]), .css-qrz0o2[data-theme=dark] {
+    background-color: #011529;
+}
+/* @media (min-width: 30em) {
+    .chakra-card .css-n239yi{
+        flex-direction: column;
+
+    }
+  }
+ */
