@@ -53,7 +53,7 @@ export default function Header({ toggleCollapsed }) {
               {/* <SearchBar /> */}
               {isActiveSession && <ProfileMenu currentUser={currentUser} />}
             </>
-            {!isActiveSession && !isLoading ? (
+            {!isActiveSession ? (
               <>
                 <Link
                   mr={6}
