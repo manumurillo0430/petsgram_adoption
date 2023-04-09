@@ -20,6 +20,8 @@
     "axios": "^1.3.4",
     "chart.js": "^4.2.1",
     "formik": "^2.2.9",
+    "react-router-dom": "^6.9.0",
+    "react-scripts": "5.0.1",
     "framer-motion": "^10.0.2",
     "gatsby-plugin-preact": "^7.8.0",
     "next": "^13.3.0",
@@ -29,8 +31,6 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
-    "react-router-dom": "^6.9.0",
-    "react-scripts": "5.0.1",
     "react-table": "^7.8.0",
     "serve": "^14.2.0",
     "styled-components": "^5.3.8",
@@ -39,10 +39,9 @@
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "test": "react-scripts test",
-    "build": "next run build",
-    "eject": "react-scripts eject"
+    "start": "next start",
+    "build": "next build",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": [
