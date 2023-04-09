@@ -69,6 +69,7 @@ export default function ProfileForm() {
 
   return (
     <Formik
+      key={currentUser.user_id}
       initialValues={{
         firstname: currentUser.firstname,
         lastname: currentUser.lastname,

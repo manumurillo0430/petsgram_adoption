@@ -39,6 +39,7 @@ export default function MyPetsCard() {
               .filter((pet) => petsUserFostered?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
+                  key={pet.pet_id}
                   label={pet.name}
                   id={pet.pet_id}
                   picture={pet.picture}

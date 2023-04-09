@@ -24,6 +24,7 @@ export default function GridViewPets({
 
           return (
             <PetCardGrid
+              key={pet.pet_id}
               pet={pet}
               tab={tab}
               cardSize={cardSize}
