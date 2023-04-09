@@ -20,7 +20,10 @@
     "chart.js": "^4.2.1",
     "formik": "^2.2.9",
     "framer-motion": "^10.0.2",
+    "gatsby-plugin-preact": "^7.8.0",
     "next": "^13.2.3",
+    "preact": "^10.13.2",
+    "preact-render-to-string": "^6.0.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
@@ -36,7 +39,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "next build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -57,15 +60,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "main": "index.js",
-  "devDependencies": {
-    "eslint": "^8.38.0",
-    "webpack": "^5.78.0",
-    "webpack-cli": "^5.0.1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }
+
