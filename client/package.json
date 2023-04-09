@@ -40,8 +40,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "next run build",
     "test": "react-scripts test",
+    "build": "next run build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
