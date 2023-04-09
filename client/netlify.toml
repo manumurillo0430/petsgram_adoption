@@ -1,6 +1,7 @@
 [[redirects]]
   from = "/*"
   to = "/index.html"
+
   status = 200  
 
 [build]
@@ -9,3 +10,4 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  status = 200  
