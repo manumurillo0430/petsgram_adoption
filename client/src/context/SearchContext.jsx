@@ -142,9 +142,6 @@ function SearchProvider() {
         pet_id: pet_id,
         adoptionStatus: adoptionStatus,
       })
-      if (res.ok) {
-        return true
-      }
     } catch (error) {
       console.log(error)
     }
