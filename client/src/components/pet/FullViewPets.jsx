@@ -13,6 +13,7 @@ export default function FullViewPets({ petsArray, usersLikes, viewTab }) {
 
           return (
             <PetCardFull
+              key={pet.pet_id}
               pet={pet}
               status={pet.adoptionStatus ? pet.adoptionStatus : ''}
               userInfoLikes={userInfoLikes}

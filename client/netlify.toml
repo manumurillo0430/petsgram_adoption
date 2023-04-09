@@ -1,9 +1,13 @@
 [[redirects]]
   from = "/*"
   to = "/index.html"
-<<<<<<< HEAD
+
   status = 200  
 
-=======
+[build]
+  command = "npm start"
+  publish = "client/build"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
   status = 200  
->>>>>>> parent of 34a2e4845 (Merge pull request #5 from manumurillo0430/Frontend-updates)
