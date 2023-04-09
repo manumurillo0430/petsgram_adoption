@@ -6,9 +6,9 @@
 
 
 [build]
-  command = "npm start"
-  publish = "client/build"
+  command = "npm run build"
+  publish = "out"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  status = 200  
+ 
