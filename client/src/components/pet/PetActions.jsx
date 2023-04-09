@@ -116,11 +116,9 @@ export default function PetActionsGrid({
         setCleanOfList(true)
       }, 300)
     }
-    const returning = await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
-    if (returning) {
-      setAdoptionStatus('Available')
-      setStatus('Available')
-    }
+    await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
+    setAdoptionStatus('Available')
+    setStatus('Available')
   }
   const [isLiked, setIsLiked] = useState(
     userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id),

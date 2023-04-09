@@ -53,35 +53,36 @@ export default function Header({ toggleCollapsed }) {
               {/* <SearchBar /> */}
               {isActiveSession && <ProfileMenu currentUser={currentUser} />}
             </>
-            {!isActiveSession ? (
+            {!isActiveSession && (
               <>
-                <Link
-                  mr={6}
-                  color={theme === 'dark' ? 'black' : 'white'}
-                  onClick={() => navigate('/')}
-                  fontWeight="500"
-                >
-                  Home
-                </Link>
-                <Link
-                  mr={6}
-                  color={theme === 'dark' ? 'black' : 'white'}
-                  onClick={toggleModal}
-                  fontWeight="500"
-                >
-                  Log&nbsp;In&nbsp;/&nbsp;Sign&nbsp;Up
-                </Link>
-                <Link
-                  mr={6}
-                  color={theme === 'dark' ? 'black' : 'white'}
-                  onClick={() => navigate('/search')}
-                  fontWeight="500"
-                >
-                  Search
-                </Link>
+                <Box display={isActiveSession ? 'none' : ''}>
+                  <Link
+                    mr={6}
+                    color={theme === 'dark' ? 'black' : 'white'}
+                    onClick={() => navigate('/')}
+                    fontWeight="500"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    mr={6}
+                    color={theme === 'dark' ? 'black' : 'white'}
+                    onClick={toggleModal}
+                    fontWeight="500"
+                  >
+                    Log&nbsp;In&nbsp;/&nbsp;Sign&nbsp;Up
+                  </Link>
+                  <Link
+                    mr={6}
+                    color={theme === 'dark' ? 'black' : 'white'}
+                    onClick={() => navigate('/search')}
+                    fontWeight="500"
+                  >
+                    Search
+                  </Link>
+                </Box>
+                <Spinner display={!isLoading ? 'none' : ''} />
               </>
-            ) : (
-              <Spinner display={!isLoading ? 'none' : ''} />
             )}
             <ModeSwitcher />
           </Flex>
