@@ -20,7 +20,6 @@ import { Divider } from 'antd'
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined'
 import PetActionsGrid from './PetActions'
-import './PetCardGrid.css'
 import '../search/search.css'
 
 export default function PetCardGrid({
