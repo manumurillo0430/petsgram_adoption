@@ -49,6 +49,7 @@ export default function LoginForm({ toggleModal }) {
           console.log(res)
           if (res) {
             setIsLogging(true)
+            setIsActiveSession(true)
             toggleModal()
             toast()
             localStorage.setItem(

@@ -10,6 +10,7 @@ const AuthContext = createContext({
   petsUserAdopted: [],
   petsUserFostered: [],
   petsUserLiked: [],
+  setIsActiveSession: () => {},
   setPetsUserAdopted: () => {},
   setPetsUserLiked: () => {},
   setPetsUserSaved: () => {},
@@ -95,6 +96,7 @@ function AuthProvider({ children }) {
         setPetsUserLiked(res.pets.liked)
         setIsActiveSession(true)
       }
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -175,6 +177,7 @@ function AuthProvider({ children }) {
         petsUserFostered,
         petsUserLiked,
         petsUserSaved,
+        setIsActiveSession,
         setPetsUserAdopted,
         setPetsUserLiked,
         setPetsUserSaved,

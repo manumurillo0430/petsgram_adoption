@@ -81,7 +81,7 @@ export default function Header({ toggleCollapsed }) {
                     Search
                   </Link>
                 </Box>
-                <Spinner display={!isLoading ? 'none' : ''} />
+                <Spinner display={isActiveSession && isLoading ? '' : 'none'} />
               </>
             )}
             <ModeSwitcher />
