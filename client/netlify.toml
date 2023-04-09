@@ -4,5 +4,5 @@
   status = 200  
 
 [build]
-  command = "npm install --legacy-peer-deps && your-build-command"
-  publish = "build/"
+  command = "npm start"
+  publish = "client/build"
