@@ -5,6 +5,7 @@ import {
   useDisclosure,
   Button,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { brandLight, brandDark } from '../../utils/globals'
@@ -16,11 +17,12 @@ import ProfileMenu from './ProfileMenu'
 import Logo from './Logo'
 
 export default function Header({ toggleCollapsed }) {
-  const { isActiveSession, currentUser } = useAuthContext()
+  const { isActiveSession, currentUser, isLoading } = useAuthContext()
   let navigate = useNavigate()
   const { isOpen, onToggle } = useDisclosure()
   const toggleModal = () => onToggle()
   const theme = useColorModeValue('dark', 'light')
+  console.log(isLoading)
 
   return (
     <>
@@ -51,7 +53,7 @@ export default function Header({ toggleCollapsed }) {
               {/* <SearchBar /> */}
               {isActiveSession && <ProfileMenu currentUser={currentUser} />}
             </>
-            {!isActiveSession && (
+            {!isActiveSession && !isLoading ? (
               <>
                 <Link
                   mr={6}
@@ -78,6 +80,8 @@ export default function Header({ toggleCollapsed }) {
                   Search
                 </Link>
               </>
+            ) : (
+              <Spinner display={!isLoading ? 'none' : ''} />
             )}
             <ModeSwitcher />
           </Flex>
