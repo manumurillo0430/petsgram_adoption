@@ -4,6 +4,9 @@
   status = 200  
 
 [build]
-  command = "CI=false npm run build"
-  publish = "build/"
+  base = "client/"
+  publish = "client/.next/"
+  command = "npm run build"
 
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
