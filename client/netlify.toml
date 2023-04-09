@@ -3,6 +3,7 @@
   to = "/index.html"
   status = 200  
 
+
 [build]
   command = "npm start"
   publish = "client/build"
