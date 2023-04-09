@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, Flex, Tooltip, Spinner, Button } from '@chakra-ui/react'
+import { Text, Flex, Tooltip } from '@chakra-ui/react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import { useSearchContext } from '../../context/SearchContext'
@@ -33,7 +33,7 @@ export default function PetActionsGrid({
   } = useAuthContext()
 
   const {
-    deletePet,
+    // deletePet,
     updatingAdoptionStatus,
     addLike,
     returnPet,
@@ -48,7 +48,6 @@ export default function PetActionsGrid({
   const [save, setSave] = useState(petsUserSaved?.includes(pet.pet_id))
   const [justAdopted, setJustAdopted] = useState(false)
   const [justFostered, setJustFostered] = useState(false)
-  const [likesCounterText, setLikesCounterText] = useState(false)
 
   const isAdoptedByCurrentUser =
     status === 'Adopted' && petsUserAdopted.includes(pet.pet_id)
@@ -61,7 +60,6 @@ export default function PetActionsGrid({
   const isJustFoster = status === 'Fostered' && justFostered === true
 
   const handleLike = async () => {
-    setLikesCounterText(true)
     if (location !== 'search' && tab === 'liked') {
       setTimeout(() => {
         setCleanOfList(true)
@@ -73,9 +71,9 @@ export default function PetActionsGrid({
     await addLike(user_id, pet.pet_id)
   }
 
-  const handleDelete = async () => {
-    await deletePet(pet.pet_id, currentUser?.user?.user_id)
-  }
+  // const handleDelete = async () => {
+  //   await deletePet(pet.pet_id, currentUser?.user?.user_id)
+  // }
 
   const handleSave = async () => {
     setSave(!save)
@@ -104,7 +102,7 @@ export default function PetActionsGrid({
       setStatus('Fostered')
       await updatingAdoptionStatus(user_id, pet.pet_id, 'Fostered')
     }
-    if (e.target.textContent == 'Adopt') {
+    if (e.target.textContent === 'Adopt') {
       setJustAdopted(true)
       setAdoptionStatus('Adopted')
       setStatus('Adopted')
@@ -151,14 +149,26 @@ export default function PetActionsGrid({
       <Flex w="100%">
         {status === 'Available' && (
           <>
-            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
-            <PetButtonStatus label="Foster" onClick={handleAdoptionStatus} />
+            <PetButtonStatus
+              label="Adopt"
+              mr={2}
+              onClick={handleAdoptionStatus}
+            />
+            <PetButtonStatus
+              label="Foster"
+              ml={2}
+              onClick={handleAdoptionStatus}
+            />
           </>
         )}
         {isFosteredByCurrentUser && (
           <>
-            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
-            <PetButtonStatus label="Return" onClick={handleReturn} />
+            <PetButtonStatus
+              label="Adopt"
+              mr={2}
+              onClick={handleAdoptionStatus}
+            />
+            <PetButtonStatus label="Return" ml={2} onClick={handleReturn} />
           </>
         )}
         {isAdoptedByCurrentUser && (
@@ -166,10 +176,15 @@ export default function PetActionsGrid({
         )}
         {isFosteredByOthers && (
           <>
-            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
+            <PetButtonStatus
+              label="Adopt"
+              mr={2}
+              onClick={handleAdoptionStatus}
+            />
             <PetButtonStatus
               display={isJustFoster ? '' : 'none'}
               label="Return"
+              ml={2}
               onClick={handleReturn}
             />
           </>
@@ -178,18 +193,21 @@ export default function PetActionsGrid({
           <>
             <PetButtonStatus
               label="Adopt"
+              mr={2}
               onClick={handleAdoptionStatus}
               isDisabled={true}
               display={!isJustAdopted ? '' : 'none'}
             />
             <PetButtonStatus
               label="Foster"
+              ml={2}
               onClick={handleAdoptionStatus}
               isDisabled={true}
               display={!isJustAdopted ? '' : 'none'}
             />
             <PetButtonStatus
               label="Return"
+              ml={2}
               onClick={handleReturn}
               display={isJustAdopted ? '' : 'none'}
             />
