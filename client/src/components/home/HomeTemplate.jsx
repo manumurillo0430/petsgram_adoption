@@ -7,6 +7,8 @@ import Ourfeatures from './Ourfeatures'
 
 export default function HomeTemplate() {
   let navigate = useNavigate()
+  const { currentUser } = useAuthContext()
+  console.log(currentUser)
 
   return (
     <Container w="100%" h="100vh" display="flex">

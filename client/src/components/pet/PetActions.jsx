@@ -97,16 +97,16 @@ export default function PetActionsGrid({
       }, 300)
     }
     if (e.target.textContent === 'Foster') {
+      await updatingAdoptionStatus(user_id, pet.pet_id, 'Fostered')
       setJustFostered(true)
       setAdoptionStatus('Fostered')
       setStatus('Fostered')
-      await updatingAdoptionStatus(user_id, pet.pet_id, 'Fostered')
     }
     if (e.target.textContent === 'Adopt') {
+      await updatingAdoptionStatus(user_id, pet.pet_id, 'Adopted')
       setJustAdopted(true)
       setAdoptionStatus('Adopted')
       setStatus('Adopted')
-      await updatingAdoptionStatus(user_id, pet.pet_id, 'Adopted')
     }
   }
 
@@ -116,9 +116,11 @@ export default function PetActionsGrid({
         setCleanOfList(true)
       }, 300)
     }
-    setAdoptionStatus('Available')
-    setStatus('Available')
-    await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
+    const returning = await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
+    if (returning) {
+      setAdoptionStatus('Available')
+      setStatus('Available')
+    }
   }
   const [isLiked, setIsLiked] = useState(
     userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id),

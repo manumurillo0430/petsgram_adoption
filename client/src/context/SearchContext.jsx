@@ -124,9 +124,8 @@ function SearchProvider() {
         pet_id,
         adoptionStatus,
       })
-      if (res) {
+      if (res.ok) {
         if (adoptionStatus === 'Fostered') {
-          console.log(res)
           currentUser.pets.fostered = res.myFosteredPetsIds
         }
         if (adoptionStatus === 'Adopted') {
@@ -143,6 +142,9 @@ function SearchProvider() {
         pet_id: pet_id,
         adoptionStatus: adoptionStatus,
       })
+      if (res.ok) {
+        return true
+      }
     } catch (error) {
       console.log(error)
     }
