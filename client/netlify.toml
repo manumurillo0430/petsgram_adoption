@@ -7,7 +7,3 @@
   command = "npm run build"
   publish = "build/"
 
-[plugins]
-  package = '@netlify/plugin-nextjs'
-  [plugins.inputs]
-    disable = true
