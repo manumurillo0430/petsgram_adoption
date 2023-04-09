@@ -2,11 +2,3 @@
   from = "/*"
   to = "/index.html"
   status = 200  
-
-[build]
-  base = "client/"
-  publish = "client/.next/"
-  command = "CI=false npm run build"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
