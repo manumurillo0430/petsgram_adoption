@@ -151,7 +151,6 @@ async function adoptPetModel(user_id, pet_id, adoptionStatus) {
             "You have made the wonderful decision to adopt your pet. Let's continue to be friends!",
           myAdoptedPetsIds: myAdoptedPetsIds,
         }
-        console.log(adoptionStatusUpdated)
         return adoptionStatusUpdated
       }
     }

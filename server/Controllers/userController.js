@@ -52,6 +52,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const user = await loginModel(req.body.email)
+    console.log(user)
 
     if (user) {
       const token = jwt.sign(
@@ -64,6 +65,7 @@ const login = async (req, res) => {
         ok: true,
         token: token,
         user_id: user.user_id,
+        role: user.role,
         user_likes: pets_info_promise,
       })
     } else {
@@ -77,7 +79,7 @@ const login = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const { user_id } = req.body
+    const { user_id } = req.params
     const userData = await getUserByIdModel(user_id)
     if (userData) {
       res.send({
@@ -100,7 +102,6 @@ const updateUserData = async (req, res) => {
       lastname,
       phonenumber,
       bio,
-      picture,
       is_private,
     } = req.body
     const dataToUpdate = {
@@ -109,14 +110,15 @@ const updateUserData = async (req, res) => {
       lastname: lastname,
       phonenumber: phonenumber,
       bio: bio,
-      picture: picture,
+      picture: '',
       is_private: is_private,
     }
-    const isUserUpdated = await updateUserDataModel(id, dataToUpdate, req.body)
+    console.log(dataToUpdate)
+    const isUserUpdated = await updateUserDataModel(id, dataToUpdate)
     if (isUserUpdated) {
       res.status(200).send({
         ok: true,
-        isUserUpdated: 'Profile updated',
+        massage: 'Profile updated',
       })
     }
   } catch {
