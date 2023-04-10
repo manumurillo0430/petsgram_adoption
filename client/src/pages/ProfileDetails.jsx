@@ -8,26 +8,24 @@ import { Spinner } from '@chakra-ui/react'
 
 export default function ProfileDetails() {
   const { isActiveSession, getUserById, getCurrentUser } = useAuthContext()
-  const [user, setUser] = useState(
-    Number(userLocation(window.location.pathname)),
-  )
+
+  const [user, setUser] = useState(null)
+  const [userPets, setUserPets] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
     async function fetchUserDetails() {
       try {
         setIsLoading(true)
+
         const userInfo = await getUserById(
-          userLocation(window.location.pathname),
+          Number(userLocation(window.location.pathname)),
         )
+        console.log(userInfo, 'hola')
         if (userInfo) {
           setIsLoading(false)
           setUser(userInfo.user)
-        }
-        const userPets = await getCurrentUser(
-          userLocation(window.location.pathname),
-        )
-        if (userPets) {
-          setIsLoading(false)
+          setUserPets(userInfo.pets)
         }
       } catch (error) {
         console.error('Error:', error)
@@ -35,16 +33,24 @@ export default function ProfileDetails() {
     }
 
     fetchUserDetails()
-  }, [])
+  }, [Number(userLocation(window.location.pathname))])
 
   return (
     <>
       {isActiveSession && (
-        <Box>
+        <Box pb={6}>
           <Box display="Flex" m={6}>
-            {isLoading ? <Spinner /> : <ProfileCard user={user} />}
+            {isLoading ? (
+              <Spinner />
+            ) : user ? (
+              <ProfileCard user={user} />
+            ) : null}
             <Divider m={6} orientation="vertical" />
-            {isLoading ? <Spinner /> : <MyPetsCard user={user} />}
+            {isLoading ? (
+              <Spinner />
+            ) : user ? (
+              <MyPetsCard userPets={userPets} />
+            ) : null}
           </Box>
         </Box>
       )}

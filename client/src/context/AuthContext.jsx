@@ -89,6 +89,7 @@ function AuthProvider({ children }) {
     try {
       const res = await GetReq(`/user/${user_id}`)
       if (res) {
+        localStorage.setItem('userRole', res.user.role)
         setCurrentUser(res.user)
         setPetsUserAdopted(res.pets.adopted)
         setPetsUserFostered(res.pets.fostered)

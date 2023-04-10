@@ -5,13 +5,7 @@ import { useAuthContext } from '../../context/AuthContext'
 import PetAvatar from './PetAvatar'
 import './ProfileCard.css'
 
-export default function MyPetsCard() {
-  const {
-    petsUserAdopted,
-    petsUserFostered,
-    petsUserLiked,
-    petsUserSaved,
-  } = useAuthContext()
+export default function MyPetsCard({ userPets }) {
   const { getAllPets } = useSearchContext()
   const [petsArray, setPetsArray] = useState([])
 
@@ -36,7 +30,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserFostered?.includes(pet.pet_id))
+              .filter((pet) => userPets.fostered?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   key={pet.pet_id}
@@ -53,7 +47,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserAdopted?.includes(pet.pet_id))
+              .filter((pet) => userPets.adopted?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   label={pet.name}
@@ -69,7 +63,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserLiked?.includes(pet.pet_id))
+              .filter((pet) => userPets.liked?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   label={pet.name}
@@ -85,7 +79,7 @@ export default function MyPetsCard() {
           </Text>
           {petsArray?.length &&
             petsArray
-              .filter((pet) => petsUserSaved?.includes(pet.pet_id))
+              .filter((pet) => userPets.saved?.includes(pet.pet_id))
               .map((pet) => (
                 <PetAvatar
                   label={pet.name}

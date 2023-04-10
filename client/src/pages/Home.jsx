@@ -2,6 +2,10 @@ import { Box, useMediaQuery, useColorModeValue } from '@chakra-ui/react'
 import HomeTemplate from '../components/home/HomeTemplate'
 
 export default function Home() {
+  const role = localStorage.getItem('userRole')
+  const userAuth = localStorage.getItem('userAuth')
+
+  console.log(role, userAuth)
   const [isSmallerThan900] = useMediaQuery('(max-height: 900px)')
   const [isSmallerThan1700] = useMediaQuery('(max-weight: 1700px)')
   const theme = useColorModeValue('dark', 'light')

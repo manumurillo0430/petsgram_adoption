@@ -12,23 +12,24 @@ import {
   Link,
   Spinner,
 } from '@chakra-ui/react'
-import { noProfilePictureDark } from '../../utils/globals'
+import { noProfilePictureDark, noProfilePetLight } from '../../utils/globals'
 import { Divider } from 'antd'
 import './ProfileCard.css'
 
 export default function ProfileCard({ user }) {
+  console.log(user)
   return (
     <>
       <Card maxW="md">
         {user == undefined && <Spinner />}
         <Image
-          alt={`${user.firstname} ${user.lastname}`}
-          src={user.picture === '' ? noProfilePictureDark : user.picture}
+          alt={`${user?.firstname} ${user?.lastname}`}
+          src={user?.picture === '' ? noProfilePictureDark : user?.picture}
           maxHeight="25rem"
           objectFit="cover"
           objectPosition="top"
           alignSelf={user.picture == '' && 'center'}
-          w={user.picture == '' ? '60%' : '100%'}
+          w={user?.picture == '' ? '60%' : '100%'}
         />
         <Divider style={{ border: 'none', margin: '0.3rem' }} />
         <CardBody
@@ -38,16 +39,16 @@ export default function ProfileCard({ user }) {
         >
           <Flex spacing="4">
             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-              <Avatar name={`${user.firstname} ${user.lastname}`} />
+              <Avatar name={`${user?.firstname} ${user?.lastname}`} />
               <Box>
                 <Heading size="md">
-                  {`${user.firstname} ${user.lastname}`}
+                  {`${user?.firstname} ${user?.lastname}`}
                 </Heading>
                 <Text display="flex">
                   <Text Text fontWeight="600">
                     With us from:&nbsp;&nbsp;
                   </Text>
-                  {new Date(user.created_at).toLocaleDateString('en-US', {
+                  {new Date(user?.created_at).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
@@ -66,22 +67,22 @@ export default function ProfileCard({ user }) {
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
           <Text display="flex">
             <Text fontWeight="600">E-mail:&nbsp;&nbsp;</Text>
-            <Link href={`mailto:${user.email}`}>{user.email}</Link>
+            <Link href={`mailto:${user?.email}`}>{user?.email}</Link>
           </Text>
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
           <Text display="flex">
             <Text fontWeight="600">Number:&nbsp;&nbsp;</Text>
-            {user.phonenumber}
+            {user?.phonenumber}
           </Text>
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
           <Text display="flex">
             <Text fontWeight="600">Role:&nbsp;&nbsp;</Text>
-            {user.role === 1 ? 'Adminstrator' : 'User'}
+            {user?.role === 1 ? 'Adminstrator' : 'User'}
           </Text>
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
           <Text display="flex">
             <Text fontWeight="600">Bio:&nbsp;&nbsp;</Text>
-            {user.bio}
+            {user?.bio}
           </Text>
         </CardBody>
       </Card>
