@@ -47,9 +47,9 @@ export default function DashboardTable({ columns, data }) {
       {...getTableProps()}
     >
       <Thead>
-        {headerGroups.map((headerGroup) => (
+        {headerGroups?.map((headerGroup) => (
           <Tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
+            {headerGroup.headers?.map((column) => (
               <Th
                 {...column.getHeaderProps(
                   column.getSortByToggleProps({
@@ -73,11 +73,11 @@ export default function DashboardTable({ columns, data }) {
         ))}
       </Thead>
       <Tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows?.map((row) => {
           prepareRow(row)
           return (
             <Tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
+              {row.cells?.map((cell) => (
                 <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
               ))}
             </Tr>

@@ -7,7 +7,7 @@ import { petStatusColor } from '../../utils/globals'
 
 export default function TableDataPets({ pets }) {
   const data = useMemo(() => {
-    return (pets || []).map((pet) => {
+    return (pets || [])?.map((pet) => {
       return {
         picture: pet.picture,
         name: pet.name,

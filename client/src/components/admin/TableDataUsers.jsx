@@ -8,7 +8,7 @@ import { userRoleColor } from '../../utils/globals'
 export default function TableDataUsers({ users }) {
   const data = useMemo(
     () =>
-      users.map((user) => {
+      users?.map((user) => {
         return {
           picture: user.picture,
           firstname: user.firstname,

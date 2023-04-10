@@ -37,7 +37,7 @@ export default function FormSelectField({
         borderTopRightRadius={btrr}
         borderRadius={br}
       >
-        {fieldArray.map((item) => (
+        {fieldArray?.map((item) => (
           <option key={item} value={`${item}`}>
             {item}
           </option>

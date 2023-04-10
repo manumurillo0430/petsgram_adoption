@@ -17,7 +17,7 @@ export default function GridViewPets({
       gap={8}
     >
       {petsArray?.length > 0 ? (
-        petsArray.map((pet) => {
+        petsArray?.map((pet) => {
           const userInfoLikes = usersLikes?.find(
             (like) => like[0] === pet.pet_id,
           )?.[1]

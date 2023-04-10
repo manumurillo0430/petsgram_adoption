@@ -31,7 +31,7 @@ export default function MyPetsCard({ userPets }) {
           {petsArray?.length &&
             petsArray
               .filter((pet) => userPets.fostered?.includes(pet.pet_id))
-              .map((pet) => (
+              ?.map((pet) => (
                 <PetAvatar
                   key={pet.pet_id}
                   label={pet.name}
@@ -48,7 +48,7 @@ export default function MyPetsCard({ userPets }) {
           {petsArray?.length &&
             petsArray
               .filter((pet) => userPets.adopted?.includes(pet.pet_id))
-              .map((pet) => (
+              ?.map((pet) => (
                 <PetAvatar
                   label={pet.name}
                   id={pet.pet_id}
@@ -64,7 +64,7 @@ export default function MyPetsCard({ userPets }) {
           {petsArray?.length &&
             petsArray
               .filter((pet) => userPets.liked?.includes(pet.pet_id))
-              .map((pet) => (
+              ?.map((pet) => (
                 <PetAvatar
                   label={pet.name}
                   id={pet.pet_id}
@@ -80,7 +80,7 @@ export default function MyPetsCard({ userPets }) {
           {petsArray?.length &&
             petsArray
               .filter((pet) => userPets.saved?.includes(pet.pet_id))
-              .map((pet) => (
+              ?.map((pet) => (
                 <PetAvatar
                   label={pet.name}
                   id={pet.pet_id}

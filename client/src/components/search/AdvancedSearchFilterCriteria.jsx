@@ -156,7 +156,7 @@ export default function AdvancedSearchFilterCriteria({
                         {typeFilter}
                       </MenuButton>
                       <MenuList>
-                        {petTypes.map((type) => (
+                        {petTypes?.map((type) => (
                           <MenuItem key={type} onClick={() => handleType(type)}>
                             {type}
                           </MenuItem>
@@ -178,7 +178,7 @@ export default function AdvancedSearchFilterCriteria({
                         <MenuItem onClick={() => handleStatus('Any')}>
                           Any
                         </MenuItem>
-                        {petStatus.map((status) => (
+                        {petStatus?.map((status) => (
                           <MenuItem
                             key={status}
                             onClick={() => handleStatus(status)}
