@@ -1,13 +1,11 @@
+[build]
+  command = "CI= npm run build"
+
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-
-  status = 200  
-
-[build]
-  command = "npm start"
-  publish = "client/build"
+  to = "/:splat"
+  status = 200
+ 
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  status = 200  

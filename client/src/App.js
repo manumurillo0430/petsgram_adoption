@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
   Outlet,
+  Navigate,
 } from 'react-router-dom'
 
 import MainTemplate from './components/template/MainTemplate'
@@ -91,6 +92,7 @@ function App() {
                   }
                 />
               </Route>
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </MainTemplate>
         </Router>

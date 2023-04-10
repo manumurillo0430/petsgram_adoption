@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   FormControl,
   FormLabel,
   FormErrorMessage,
   Button,
   Flex,
+  Box,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { useFormikContext } from 'formik'
@@ -24,14 +25,20 @@ export default function FormFileField({
     picture === '' ? noPicture : picture,
   )
   const theme = useColorModeValue('dark', 'light')
+  const fileInputRef = useRef()
+
   const handlePicture = (e) => {
     setPictureView(URL.createObjectURL(e.target.files[0]))
     setPicture(e.target.files[0])
   }
+
   const handleDeletePicture = () => {
     setPicture('')
     setPictureView(noPicture)
     setFieldValue(fieldName, null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null
+    }
   }
 
   return (
@@ -54,43 +61,60 @@ export default function FormFileField({
           <img src={picture === '' ? noPicture : pictureView} alt="Preview" />
         )}
       </div>
-
-      <Divider style={{ border: 'none' }} />
-      {typeof picture !== 'string' ? (
-        <Flex justifyContent="space-between">
-          <Button colorScheme="blue" onClick={handleDeletePicture}>
-            Delete
-          </Button>
-
-          <label
-            class={
-              theme === 'light'
-                ? 'chakra-button css-r7xd4a'
-                : 'chakra-button css-jut409'
-            }
-            for="file-input"
-            style={{ cursor: 'pointer' }}
-          >
-            Change
-          </label>
-          <input type="file" id="file-input" onChange={handlePicture} />
-        </Flex>
-      ) : (
-        <>
-          <label
-            class={
-              theme === 'light'
-                ? 'chakra-button css-r7xd4a'
-                : 'chakra-button css-jut409'
-            }
-            for="file-input"
-            style={{ cursor: 'pointer' }}
-          >
-            {picture !== '' ? 'Change Picture' : 'Add Picture'}
-          </label>
-          <input type="file" id="file-input" onChange={handlePicture} />
-        </>
-      )}
+      <Flex justifyContent="space-between">
+        {picture !== '' && (
+          <Box marginRight="1">
+            <Button colorScheme="blue" onClick={handleDeletePicture}>
+              Delete
+            </Button>
+          </Box>
+        )}
+        {typeof picture !== 'string' ? (
+          <Flex justifyContent="space-between">
+            <Box marginRight="1">
+              <label
+                class={
+                  theme === 'light'
+                    ? 'chakra-button css-r7xd4a'
+                    : 'chakra-button css-jut409'
+                }
+                for="file-input"
+                style={{ cursor: 'pointer' }}
+              >
+                Change
+              </label>
+            </Box>
+            <input
+              type="file"
+              id="file-input"
+              onChange={handlePicture}
+              ref={fileInputRef}
+            />
+          </Flex>
+        ) : (
+          <>
+            <Box>
+              <label
+                class={
+                  theme === 'light'
+                    ? 'chakra-button css-r7xd4a'
+                    : 'chakra-button css-jut409'
+                }
+                for="file-input"
+                style={{ cursor: 'pointer' }}
+              >
+                {picture !== '' ? 'Change Picture' : 'Add Picture'}
+              </label>
+            </Box>
+            <input
+              type="file"
+              id="file-input"
+              onChange={handlePicture}
+              ref={fileInputRef}
+            />
+          </>
+        )}
+      </Flex>
       <FormErrorMessage>{errors[fieldName]}</FormErrorMessage>
     </FormControl>
   )

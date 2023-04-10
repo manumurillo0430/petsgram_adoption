@@ -6,7 +6,7 @@ export default function FullViewPets({ petsArray, usersLikes, viewTab }) {
   return (
     <Box w="80%">
       {petsArray?.length ? (
-        petsArray.map((pet) => {
+        petsArray?.map((pet) => {
           const userInfoLikes = usersLikes?.find(
             (like) => like[0] === pet.pet_id,
           )?.[1]

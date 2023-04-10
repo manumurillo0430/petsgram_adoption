@@ -16,9 +16,9 @@ import { Text, Spinner, useToast } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
 
 export default function LoginForm({ toggleModal }) {
-  const [isLogging, setIsLogging] = useState(false)
-  const { getCurrentUser } = useAuthContext()
+  const { getCurrentUser, setIsActiveSession } = useAuthContext()
   const { getUserLikes } = useSearchContext()
+  const [isLogging, setIsLogging] = useState(true)
   const [serverError, setServerError] = useState(false)
   const loginSchema = yup.object().shape({
     email: yup.string().required(requiredField).min(6, userNameTooShort),
@@ -44,22 +44,24 @@ export default function LoginForm({ toggleModal }) {
       validateOnChange={false}
       onSubmit={async (user) => {
         try {
-          setIsLogging(true)
+          setIsLogging(false)
           const res = await PostReq('/user/login/', user)
           console.log(res)
           if (res) {
+            setIsLogging(true)
+            setIsActiveSession(true)
             toggleModal()
             toast()
-            setIsLogging(false)
             localStorage.setItem(
               'userAuth',
-              JSON.stringify({ user_id: res.user_id, isActiveSession: true }),
+              JSON.stringify({ user_id: res.user_id }),
             )
             await getCurrentUser(res.user_id)
             await getUserLikes(res.user_likes)
           }
         } catch (error) {
-          setIsLogging(false)
+          setIsLogging(true)
+          setIsActiveSession(false)
           if (error.response) {
             setServerError(error.response.data)
           } else {
@@ -78,7 +80,7 @@ export default function LoginForm({ toggleModal }) {
           />
           <FormSubmitButtom
             mt={3}
-            buttonLabel={isLogging ? <Spinner /> : 'Log In'}
+            buttonLabel={isLogging ? 'Log in' : <Spinner />}
           />
 
           {serverError ? (

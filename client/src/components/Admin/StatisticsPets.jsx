@@ -28,7 +28,7 @@ export default function StatisticsPets({ pets }) {
   )
 
   const petTypesWithoutAny = petTypes.slice(1)
-  const petTypesLength = petTypesWithoutAny.map(
+  const petTypesLength = petTypesWithoutAny?.map(
     (type) => pets.filter((pet) => pet.type === type).length,
   )
   return (
