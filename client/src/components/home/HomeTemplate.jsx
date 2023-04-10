@@ -7,7 +7,7 @@ import Ourfeatures from './Ourfeatures'
 
 export default function HomeTemplate() {
   let navigate = useNavigate()
-  const { currentUser } = useAuthContext()
+  const { currentUser, isActiveSession } = useAuthContext()
   console.log(currentUser)
 
   return (
@@ -49,8 +49,16 @@ export default function HomeTemplate() {
             colorScheme="blue"
             type="submit"
           >
-            Start your journey...
+            {isActiveSession
+              ? `${currentUser.firstname} continue your journey...`
+              : 'Start your journey...'}
           </Button>
+          <Divider style={{ border: 'none', margin: '0.4rem' }} />
+          {isActiveSession && (
+            <Text fontSize="0.95rem">
+              We are really happy to see you again!
+            </Text>
+          )}
         </Container>
       </Flex>
     </Container>

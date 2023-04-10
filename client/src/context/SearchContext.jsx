@@ -136,6 +136,7 @@ function SearchProvider() {
   }
 
   const returnPet = async (user_id, pet_id, adoptionStatus) => {
+    console.log(user_id, pet_id, adoptionStatus)
     try {
       const res = await DeleteReq('/pet/return', {
         user_id: user_id,
