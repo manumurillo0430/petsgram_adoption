@@ -29,18 +29,13 @@ const uploadToCludinaryEditPet = (request, response, next) => {
     return
   }
   cloudinary.uploader.upload(request.file.path, (error, result) => {
-    console.log('fjaksjdflajkfjkad')
     if (error) {
       response.status(500).send(error)
       return
     }
     if (result) {
-      console.log(result.secure_url, 'kfjalksj')
-      console.log(request.body, request.file.path)
       request.body.pictureUrl = result.secure_url
-      console.log('hola')
       fs.unlinkSync(request.file.path)
-      console.log('hola')
       next()
     }
   })
@@ -52,20 +47,13 @@ const uploadToCludinary = (request, response, next) => {
     return
   }
   cloudinary.uploader.upload(request.file.path, (error, result) => {
-    console.log(result)
     if (error) {
       response.status(500).send(error)
       return
     }
-    console.log(result, 'result', 'sdlkfdls;kf;lsakd')
     if (result) {
-      console.log(result.secure_url, 'result', 'kfasldfklasjdfl')
-      console.log(result.secure_url, 'fasdklfjkladsj')
-
       request.body.pictureUrl = result.secure_url
-      console.log(request.body, 'faslkdkflasd')
       fs.unlinkSync(request.file.path)
-      console.log(request.body, 'faslkdkflasd')
       return next()
     }
   })
