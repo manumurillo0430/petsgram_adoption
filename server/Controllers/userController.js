@@ -79,8 +79,8 @@ const login = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const { user_id } = req.params
-    const userData = await getUserByIdModel(user_id)
+    const { id } = req.params
+    const userData = await getUserByIdModel(id)
     if (userData) {
       res.send({
         ok: true,
