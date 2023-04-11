@@ -24,8 +24,12 @@ export default function DashboardTabs({
     <>
       <Tabs isFitted colorScheme="blue" w="100%">
         <TabList>
-          <Tab onClick={() => setTab('pets')}>Pets</Tab>
-          <Tab onClick={() => setTab('users')}>Users</Tab>
+          <Tab fontWeight="500" onClick={() => setTab('pets')}>
+            Pets
+          </Tab>
+          <Tab fontWeight="500" onClick={() => setTab('users')}>
+            Users
+          </Tab>
         </TabList>
         <TabPanels>
           <TabPanel display="flex" flexFlow="column nowrap" alignItems="center">

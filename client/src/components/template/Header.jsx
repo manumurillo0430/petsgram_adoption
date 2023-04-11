@@ -18,12 +18,10 @@ import Logo from './Logo'
 
 export default function Header({ toggleCollapsed }) {
   const { isActiveSession, currentUser, isLoading } = useAuthContext()
-  console.log(currentUser)
   let navigate = useNavigate()
   const { isOpen, onToggle } = useDisclosure()
   const toggleModal = () => onToggle()
   const theme = useColorModeValue('dark', 'light')
-  console.log(isLoading)
 
   return (
     <>

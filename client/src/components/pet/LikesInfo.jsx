@@ -4,7 +4,6 @@ import { Flex } from '@chakra-ui/react'
 import UserInfo from './UserInfo'
 
 export default function LikesInfo({ userInfoLikes }) {
-  console.log(userInfoLikes)
   return (
     <>
       <Flex flexDirection="column">

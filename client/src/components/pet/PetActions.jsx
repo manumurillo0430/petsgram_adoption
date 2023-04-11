@@ -127,7 +127,6 @@ export default function PetActionsGrid({
   }
 
   const handleReturn = async () => {
-    console.log(pet.adoptionStatus)
     if (location !== 'search' && tab === 'adopted') {
       setTimeout(() => {
         setCleanOfList(true)

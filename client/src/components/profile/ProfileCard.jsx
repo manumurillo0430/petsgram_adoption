@@ -17,7 +17,6 @@ import { Divider } from 'antd'
 import './ProfileCard.css'
 
 export default function ProfileCard({ user }) {
-  console.log(user)
   return (
     <>
       <Card maxW="md">

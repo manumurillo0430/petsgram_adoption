@@ -4,7 +4,6 @@ import { Box, Flex, Avatar, Text, Button } from '@chakra-ui/react'
 import { Divider } from 'antd'
 import { minWidth } from '@mui/system'
 export default function UserInfo({ user }) {
-  console.log(user)
   let navigate = useNavigate()
   return (
     <>

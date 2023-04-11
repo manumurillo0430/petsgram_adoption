@@ -7,14 +7,12 @@ import PetForm from '../components/Admin/PetForm'
 export default function AddNewPet() {
   const userRole = localStorage.getItem('userRole')
   const location = userLocation(window.location.pathname)
-  console.log(location)
   const [pet, setPet] = useState(false)
   useEffect(() => {
     const getPetById = async () => {
       try {
         if (location !== 'new') {
           const res = await GetReq(`/pet/${location}`)
-          console.log(res)
           if (res.ok) {
             setPet(res.pet)
           }
@@ -25,7 +23,7 @@ export default function AddNewPet() {
     }
     getPetById()
   }, [location !== 'new'])
-  console.log(pet)
+
   return (
     <>
       <Box w="100%">
