@@ -64,7 +64,7 @@ router
     validateNewAddressEmail,
     userController.updateUserDataPlusPicture,
   )
-  .get('/:user_id', auth, userController.getUserById)
+  .get('/:id', auth, userController.getUserById)
   .put('/like/:user_id', auth, userController.userLikedPet)
   .delete('/unlike/:user_id', auth, userController.userLikedPet)
   .put('/save/:user_id', auth, userController.userSavedPet)

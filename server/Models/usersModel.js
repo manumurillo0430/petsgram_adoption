@@ -1,6 +1,4 @@
-const path = require('path')
 const dbConnection = require('../knex/knex')
-const pathUsersDB = path.resolve(__dirname, '../Database/usersDB.json')
 
 async function getAllUsersModel() {
   try {
@@ -34,31 +32,28 @@ async function loginModel(email) {
   }
 }
 
-async function getUserByIdModel(user_id) {
+async function getUserByIdModel(id) {
   try {
-    const user = await dbConnection
-      .from('users')
-      .first()
-      .where({ user_id: user_id })
+    const user = await dbConnection.from('users').first().where({ user_id: id })
     if (user) {
       const fosteredPets = await dbConnection
         .from('fostered_pets')
         .select('fostered')
-        .where({ user_id: user_id })
+        .where({ user_id: id })
       const savedPets = await dbConnection
         .from('saved_pets')
         .select('saved')
-        .where({ user_id: user_id })
+        .where({ user_id: id })
       const adoptedPets = await dbConnection
         .from('adopted_pets')
         .select('adopted')
-        .where({ user_id: user_id })
+        .where({ user_id: id })
       const petsUserLike = await dbConnection
         .from('liked_pets')
-        .where({ user_id: user_id })
+        .where({ user_id: id })
         .select('pet_id')
         .where({
-          user_id: user_id,
+          user_id: id,
         })
       const userLikedPetIds = petsUserLike.map((row) => row.pet_id)
       const adopted = adoptedPets.map((pet) => pet.adopted)
@@ -158,12 +153,12 @@ async function userLikedPetModel(user_id, pet_id) {
   }
 }
 
-async function getPetsUserLikesModel(user_id) {
+async function getPetsUserLikesModel(id) {
   try {
     const result = await dbConnection('liked_pets')
       .select('pet_id')
       .where({
-        user_id: user_id,
+        user_id: id,
       })
       .orderBy('id', 'asc')
 
@@ -194,11 +189,11 @@ async function userSavedPetModel(user_id, pet_id) {
   }
 }
 
-async function getSavedPetsModel(user_id) {
+async function getSavedPetsModel(id) {
   try {
     const petSavedByUser = await dbConnection
       .from('saved_pets')
-      .where({ user_id: user_id })
+      .where({ user_id: id })
     if (petSavedByUser.length !== 0) {
       const savedPetIds = petSavedByUser.map((row) => row.saved)
       return savedPetIds
@@ -223,6 +218,7 @@ const getUsersLikesPetModel = async () => {
         'users.lastname',
         'users.picture',
         'users.phonenumber',
+        'users.is_private',
       )
       .groupBy('liked_pets.pet_id', 'users.user_id')
 
@@ -234,6 +230,7 @@ const getUsersLikesPetModel = async () => {
         lastname,
         picture,
         phonenumber,
+        is_private,
       } = item
 
       // Find the index of the pet in the accumulator array
@@ -250,6 +247,7 @@ const getUsersLikesPetModel = async () => {
               lastname,
               picture,
               phonenumber,
+              is_private,
             },
           ],
         ])
@@ -261,12 +259,12 @@ const getUsersLikesPetModel = async () => {
           lastname,
           picture,
           phonenumber,
+          is_private,
         })
       }
 
       return acc
     }, [])
-
     // Update the total_likes property for each pet
     await Promise.all(
       petLikes.map(async (pet) => {
