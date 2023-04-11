@@ -80,7 +80,6 @@ export default function ProfileForm() {
       }}
       validationSchema={updateUserSchema}
       onSubmit={async (user) => {
-        console.log(user, picture)
         if (typeof picture === 'object') {
           try {
             const updatedUserData = new FormData()
@@ -107,7 +106,6 @@ export default function ProfileForm() {
           }
         }
         if (picture === '') {
-          console.log(picture, user, 'in second condition')
           try {
             const updatedUserData = {
               firstname: user.firstname,
@@ -118,13 +116,11 @@ export default function ProfileForm() {
               picture: '',
               is_private: isChecked,
             }
-            console.log(picture)
             setUpdatingUserData(true)
             const res = await PutReq(
               `/user/${currentUser.user_id}`,
               updatedUserData,
             )
-            console.log(res)
             if (res) {
               setUpdatingUserData(false)
               toast()

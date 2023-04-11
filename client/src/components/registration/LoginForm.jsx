@@ -46,7 +46,6 @@ export default function LoginForm({ toggleModal }) {
         try {
           setIsLogging(false)
           const res = await PostReq('/user/login/', user)
-          console.log(res)
           if (res) {
             setIsLogging(true)
             setIsActiveSession(true)

@@ -65,6 +65,18 @@ function App() {
                   />
                 </Route>
               </Route>
+              <Route path="/profile" element={<Outlet />}>
+                <Route element={<SearchProvider />}>
+                  <Route
+                    path=":id"
+                    element={
+                      <PrivateRouteUser>
+                        <ProfileDetails />
+                      </PrivateRouteUser>
+                    }
+                  />
+                </Route>
+              </Route>
 
               <Route path="/admin" element={<Outlet />}>
                 <Route

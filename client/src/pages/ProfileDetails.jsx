@@ -21,7 +21,6 @@ export default function ProfileDetails() {
         const userInfo = await getUserById(
           Number(userLocation(window.location.pathname)),
         )
-        console.log(userInfo, 'hola')
         if (userInfo) {
           setIsLoading(false)
           setUser(userInfo.user)

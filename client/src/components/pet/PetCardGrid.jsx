@@ -20,7 +20,6 @@ import { Divider } from 'antd'
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined'
 import PetActionsGrid from './PetActions'
-import PetForm from '../Admin/PetForm'
 import './PetCardGrid.css'
 import AddNewPet from '../../pages/AddNewPet'
 
@@ -45,7 +44,7 @@ export default function PetCardGrid({
     navigate(`/admin/editpet/${pet.pet_id}`)
     setShowPetForm(true)
   }
-  console.log(pet)
+
   return (
     <Card
       display={location !== 'search' && cleanOffList ? 'none' : ''}

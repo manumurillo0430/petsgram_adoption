@@ -20,17 +20,37 @@ export default function MyPets() {
   const [petsTabArray, setPetsTabArray] = useState([])
   const [tab, setTab] = useState('fostered')
 
+  const updatePetsTabArray = async (tabSelected) => {
+    try {
+      const allPets = await getAllPets()
+
+      if (tabSelected === 'liked') {
+        setPetsTabArray(
+          allPets?.filter((pet) => petsUserLiked.includes(pet.pet_id)),
+        )
+      } else if (tabSelected === 'saved') {
+        setPetsTabArray(
+          allPets?.filter((pet) => petsUserSaved.includes(pet.pet_id)),
+        )
+      } else if (tabSelected === 'fostered') {
+        setPetsTabArray(
+          allPets?.filter((pet) => petsUserFostered.includes(pet.pet_id)),
+        )
+      } else if (tabSelected === 'adopted') {
+        setPetsTabArray(
+          allPets?.filter((pet) => petsUserAdopted.includes(pet.pet_id)),
+        )
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     async function fetchPets() {
       try {
-        const allPets = await getAllPets()
         await getCurrentUser(user_id)
-        if (allPets && petsUserFostered) {
-          const filteredPets = allPets.filter((pet) =>
-            petsUserFostered.includes(pet.pet_id),
-          )
-          setPetsTabArray(filteredPets)
-        }
+        updatePetsTabArray('fostered')
       } catch (error) {
         console.log(error)
       }
@@ -39,35 +59,8 @@ export default function MyPets() {
   }, [])
 
   const handleTabChange = async (tabSelected) => {
-    try {
-      setTab(tabSelected)
-      if (tabSelected === 'liked') {
-        const allPets = await getAllPets()
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserLiked.includes(pet.pet_id)),
-        )
-      }
-      if (tabSelected === 'saved') {
-        const allPets = await getAllPets()
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserSaved.includes(pet.pet_id)),
-        )
-      }
-      if (tabSelected === 'fostered') {
-        const allPets = await getAllPets()
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserFostered.includes(pet.pet_id)),
-        )
-      }
-      if (tabSelected === 'adopted') {
-        const allPets = await getAllPets()
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserAdopted.includes(pet.pet_id)),
-        )
-      }
-    } catch (error) {
-      console.log(error)
-    }
+    setTab(tabSelected)
+    updatePetsTabArray(tabSelected)
   }
 
   return (
