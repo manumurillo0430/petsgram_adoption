@@ -7,7 +7,7 @@ import { userLocation } from '../utils/globals'
 import { Spinner } from '@chakra-ui/react'
 
 export default function ProfileDetails() {
-  const { isActiveSession, getUserById, getCurrentUser } = useAuthContext()
+  const { isActiveSession, getUserById } = useAuthContext()
 
   const [user, setUser] = useState(null)
   const [userPets, setUserPets] = useState(null)

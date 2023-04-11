@@ -7,6 +7,7 @@ import {
   Flex,
   Box,
   useColorModeValue,
+  Text,
 } from '@chakra-ui/react'
 import { useFormikContext } from 'formik'
 import { Divider } from 'antd'
@@ -19,6 +20,7 @@ export default function FormFileField({
   setPicture,
   picture,
   noPicture,
+  noImageAttached,
 }) {
   const { errors, setFieldValue } = useFormikContext()
   const [pictureView, setPictureView] = useState(
@@ -115,6 +117,11 @@ export default function FormFileField({
           </>
         )}
       </Flex>
+      <Divider style={{ border: 'none', margin: '0.5rem' }} />
+      <Text fontWeight="500" textAlign="center" color="#f76f6f">
+        {noImageAttached}
+      </Text>
+      <Divider style={{ border: 'none' }} />
       <FormErrorMessage>{errors[fieldName]}</FormErrorMessage>
     </FormControl>
   )

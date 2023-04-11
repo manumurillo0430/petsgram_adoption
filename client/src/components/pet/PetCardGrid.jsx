@@ -20,7 +20,9 @@ import { Divider } from 'antd'
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined'
 import PetActionsGrid from './PetActions'
+import PetForm from '../Admin/PetForm'
 import './PetCardGrid.css'
+import AddNewPet from '../../pages/AddNewPet'
 
 export default function PetCardGrid({
   pet,
@@ -37,6 +39,13 @@ export default function PetCardGrid({
     setAdoptionStatus(status)
   }, [status])
   const [cleanOffList, setCleanOfList] = useState(false)
+  const [showPetForm, setShowPetForm] = useState(false)
+
+  const handleEditButtonClick = () => {
+    navigate(`/admin/editpet/${pet.pet_id}`)
+    setShowPetForm(true)
+  }
+  console.log(pet)
   return (
     <Card
       display={location !== 'search' && cleanOffList ? 'none' : ''}
@@ -87,15 +96,15 @@ export default function PetCardGrid({
                 icon={<ModeEditOutlinedIcon />}
                 p="0.1rem"
                 fontSize="0.7rem"
-                pet={pet}
                 variant="ghost"
                 colorScheme="gray"
                 aria-label="See more"
                 userInfoLikes={userInfoLikes}
-                onClick={() => navigate(`/admin/editpet/${pet.pet_id}`)}
+                onClick={handleEditButtonClick}
               />
             </Tooltip>
           )}
+          {currentUser.role && showPetForm && pet && <AddNewPet />}
           <Tooltip label="See full information" placement="top">
             <IconButton
               p="0.1rem"
