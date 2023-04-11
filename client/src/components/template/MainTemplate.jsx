@@ -49,21 +49,21 @@ export default function MainTemplate({ children }) {
     getItem(
       `My Profile`,
       '3',
-      <Link as={NavLink} to={`/profile/${currentUser.user_id}`}>
+      <Link as={NavLink} to={`/myprofile/${currentUser.user_id}`}>
         <UserOutlined />
       </Link>,
     ),
     getItem(
       `My Pets`,
       '4',
-      <Link as={NavLink} to="/profile/mypets">
+      <Link as={NavLink} to="/myprofile/mypets">
         <PetsIcon style={{ fontSize: '1.1rem' }} />
       </Link>,
     ),
     getItem(
       `Profile Settings`,
       '5',
-      <Link as={NavLink} to="/profile/settings">
+      <Link as={NavLink} to="/myprofile/settings">
         <SettingFilled />
       </Link>,
     ),
@@ -94,11 +94,11 @@ export default function MainTemplate({ children }) {
       setSelectedKeys(['1'])
     } else if (location.pathname === '/search') {
       setSelectedKeys(['2'])
-    } else if (location.pathname === `/profile/${currentUser.user_id}`) {
+    } else if (location.pathname === `/myprofile/${currentUser.user_id}`) {
       setSelectedKeys(['3'])
-    } else if (location.pathname === '/profile/mypets') {
+    } else if (location.pathname === '/myprofile/mypets') {
       setSelectedKeys(['4'])
-    } else if (location.pathname === '/profile/settings') {
+    } else if (location.pathname === '/myprofile/settings') {
       setSelectedKeys(['5'])
     } else if (location.pathname === '/admin/new') {
       setSelectedKeys(['6'])

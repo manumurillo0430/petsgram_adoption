@@ -77,7 +77,7 @@ export default function ProfileCard({ user }) {
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
           <Text display="flex">
             <Text fontWeight="600">Role:&nbsp;&nbsp;</Text>
-            {user?.role === 1 ? 'Adminstrator' : 'User'}
+            {user?.role === true ? 'Adminstrator' : 'User'}
           </Text>
           <Divider style={{ border: 'none', margin: '0.5rem' }} />
           <Text display="flex">
