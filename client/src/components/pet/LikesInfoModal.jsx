@@ -5,8 +5,10 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
+  Heading,
   Flex,
 } from '@chakra-ui/react'
+import { Divider } from 'antd'
 import LikesInfo from './LikesInfo'
 
 export default function LikesInfoModal({ isOpen, toggleModal, userInfoLikes }) {
@@ -18,15 +20,20 @@ export default function LikesInfoModal({ isOpen, toggleModal, userInfoLikes }) {
         style={{ padding: 0, margin: 0 }}
       >
         <ModalOverlay />
-        <ModalContent maxW="45rem">
+        <ModalContent
+          maxW="45rem"
+          justifyContent="center"
+          alignContent="baseline"
+        >
           <ModalCloseButton />
-          <ModalBody style={{ padding: 0, margin: 0 }}>
-            <Flex m={0} p={0}>
-              <LikesInfo
-                toggleModal={toggleModal}
-                userInfoLikes={userInfoLikes}
-              />
-            </Flex>
+
+          <ModalBody>
+            <Heading size="md">Liked by</Heading>
+            <Divider style={{ border: 'none', margin: '0.6rem' }} />
+            <LikesInfo
+              toggleModal={toggleModal}
+              userInfoLikes={userInfoLikes}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
