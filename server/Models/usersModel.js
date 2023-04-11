@@ -77,7 +77,7 @@ async function getUserByIdModel(user_id) {
   }
 }
 
-async function updateUserDataPlusPictureModel(id, dataToUpdate, body) {
+async function updateUserDataPlusPictureModel(id, dataToUpdate) {
   try {
     const isUserUpdated = await dbConnection
       .from('users')
@@ -109,7 +109,7 @@ async function updateUserDataModel(id, dataToUpdate) {
         lastname: dataToUpdate.lastname,
         phonenumber: dataToUpdate.phonenumber,
         bio: dataToUpdate.bio,
-        picture: dataToUpdate.picuture,
+        picture: dataToUpdate.picture,
         is_private: dataToUpdate.is_private,
       })
     return isUserUpdated

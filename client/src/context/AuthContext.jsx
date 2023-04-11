@@ -10,6 +10,7 @@ const AuthContext = createContext({
   petsUserAdopted: [],
   petsUserFostered: [],
   petsUserLiked: [],
+  setIsActiveSession: () => {},
   setPetsUserAdopted: () => {},
   setPetsUserLiked: () => {},
   setPetsUserSaved: () => {},
@@ -88,6 +89,7 @@ function AuthProvider({ children }) {
     try {
       const res = await GetReq(`/user/${user_id}`)
       if (res) {
+        localStorage.setItem('userRole', res.user.role)
         setCurrentUser(res.user)
         setPetsUserAdopted(res.pets.adopted)
         setPetsUserFostered(res.pets.fostered)
@@ -95,6 +97,7 @@ function AuthProvider({ children }) {
         setPetsUserLiked(res.pets.liked)
         setIsActiveSession(true)
       }
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -175,6 +178,7 @@ function AuthProvider({ children }) {
         petsUserFostered,
         petsUserLiked,
         petsUserSaved,
+        setIsActiveSession,
         setPetsUserAdopted,
         setPetsUserLiked,
         setPetsUserSaved,

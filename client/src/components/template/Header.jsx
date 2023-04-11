@@ -5,6 +5,7 @@ import {
   useDisclosure,
   Button,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { brandLight, brandDark } from '../../utils/globals'
@@ -16,11 +17,13 @@ import ProfileMenu from './ProfileMenu'
 import Logo from './Logo'
 
 export default function Header({ toggleCollapsed }) {
-  const { isActiveSession, currentUser } = useAuthContext()
+  const { isActiveSession, currentUser, isLoading } = useAuthContext()
+  console.log(currentUser)
   let navigate = useNavigate()
   const { isOpen, onToggle } = useDisclosure()
   const toggleModal = () => onToggle()
   const theme = useColorModeValue('dark', 'light')
+  console.log(isLoading)
 
   return (
     <>
@@ -53,30 +56,33 @@ export default function Header({ toggleCollapsed }) {
             </>
             {!isActiveSession && (
               <>
-                <Link
-                  mr={6}
-                  color={theme === 'dark' ? 'black' : 'white'}
-                  onClick={() => navigate('/')}
-                  fontWeight="500"
-                >
-                  Home
-                </Link>
-                <Link
-                  mr={6}
-                  color={theme === 'dark' ? 'black' : 'white'}
-                  onClick={toggleModal}
-                  fontWeight="500"
-                >
-                  Log&nbsp;In&nbsp;/&nbsp;Sign&nbsp;Up
-                </Link>
-                <Link
-                  mr={6}
-                  color={theme === 'dark' ? 'black' : 'white'}
-                  onClick={() => navigate('/search')}
-                  fontWeight="500"
-                >
-                  Search
-                </Link>
+                <Box display={isActiveSession ? 'none' : ''}>
+                  <Link
+                    mr={6}
+                    color={theme === 'dark' ? 'black' : 'white'}
+                    onClick={() => navigate('/')}
+                    fontWeight="500"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    mr={6}
+                    color={theme === 'dark' ? 'black' : 'white'}
+                    onClick={toggleModal}
+                    fontWeight="500"
+                  >
+                    Log&nbsp;In&nbsp;/&nbsp;Sign&nbsp;Up
+                  </Link>
+                  <Link
+                    mr={6}
+                    color={theme === 'dark' ? 'black' : 'white'}
+                    onClick={() => navigate('/search')}
+                    fontWeight="500"
+                  >
+                    Search
+                  </Link>
+                </Box>
+                <Spinner display={isActiveSession && isLoading ? '' : 'none'} />
               </>
             )}
             <ModeSwitcher />

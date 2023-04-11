@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, Flex, Tooltip, Spinner, Button } from '@chakra-ui/react'
+import { Text, Flex, Tooltip, Spinner } from '@chakra-ui/react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import { useSearchContext } from '../../context/SearchContext'
@@ -33,7 +33,7 @@ export default function PetActionsGrid({
   } = useAuthContext()
 
   const {
-    deletePet,
+    // deletePet,
     updatingAdoptionStatus,
     addLike,
     returnPet,
@@ -48,7 +48,9 @@ export default function PetActionsGrid({
   const [save, setSave] = useState(petsUserSaved?.includes(pet.pet_id))
   const [justAdopted, setJustAdopted] = useState(false)
   const [justFostered, setJustFostered] = useState(false)
-  const [likesCounterText, setLikesCounterText] = useState(false)
+  const [adopting, setAdopting] = useState(false)
+  const [fostering, setFostering] = useState(false)
+  const [returning, setReturning] = useState(false)
 
   const isAdoptedByCurrentUser =
     status === 'Adopted' && petsUserAdopted.includes(pet.pet_id)
@@ -61,7 +63,6 @@ export default function PetActionsGrid({
   const isJustFoster = status === 'Fostered' && justFostered === true
 
   const handleLike = async () => {
-    setLikesCounterText(true)
     if (location !== 'search' && tab === 'liked') {
       setTimeout(() => {
         setCleanOfList(true)
@@ -73,9 +74,9 @@ export default function PetActionsGrid({
     await addLike(user_id, pet.pet_id)
   }
 
-  const handleDelete = async () => {
-    await deletePet(pet.pet_id, currentUser?.user?.user_id)
-  }
+  // const handleDelete = async () => {
+  //   await deletePet(pet.pet_id, currentUser?.user?.user_id)
+  // }
 
   const handleSave = async () => {
     setSave(!save)
@@ -99,28 +100,35 @@ export default function PetActionsGrid({
       }, 300)
     }
     if (e.target.textContent === 'Foster') {
+      setFostering(true)
+      await updatingAdoptionStatus(user_id, pet.pet_id, 'Fostered')
+      setFostering(false)
       setJustFostered(true)
       setAdoptionStatus('Fostered')
       setStatus('Fostered')
-      await updatingAdoptionStatus(user_id, pet.pet_id, 'Fostered')
     }
-    if (e.target.textContent == 'Adopt') {
+    if (e.target.textContent === 'Adopt') {
+      setAdopting(true)
+      await updatingAdoptionStatus(user_id, pet.pet_id, 'Adopted')
+      setAdopting(false)
       setJustAdopted(true)
       setAdoptionStatus('Adopted')
       setStatus('Adopted')
-      await updatingAdoptionStatus(user_id, pet.pet_id, 'Adopted')
     }
   }
 
   const handleReturn = async () => {
+    console.log(pet.adoptionStatus)
     if (location !== 'search' && tab === 'adopted') {
       setTimeout(() => {
         setCleanOfList(true)
       }, 300)
     }
+    setReturning(true)
+    await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
+    setReturning(false)
     setAdoptionStatus('Available')
     setStatus('Available')
-    await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
   }
   const [isLiked, setIsLiked] = useState(
     userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id),
@@ -151,25 +159,55 @@ export default function PetActionsGrid({
       <Flex w="100%">
         {status === 'Available' && (
           <>
-            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
-            <PetButtonStatus label="Foster" onClick={handleAdoptionStatus} />
+            <PetButtonStatus
+              label={!adopting ? 'Adopt' : <Spinner />}
+              mr={2}
+              onClick={handleAdoptionStatus}
+              isDisabled={!fostering ? false : true}
+            />
+            <PetButtonStatus
+              label={!fostering ? 'Foster' : <Spinner />}
+              ml={2}
+              onClick={handleAdoptionStatus}
+              isDisabled={!adopting ? false : true}
+            />
           </>
         )}
         {isFosteredByCurrentUser && (
           <>
-            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
-            <PetButtonStatus label="Return" onClick={handleReturn} />
+            <PetButtonStatus
+              label={!adopting ? 'Adopt' : <Spinner />}
+              mr={2}
+              onClick={handleAdoptionStatus}
+              isDisabled={!returning ? false : true}
+            />
+            <PetButtonStatus
+              label={!returning ? 'Return' : <Spinner />}
+              ml={2}
+              onClick={handleReturn}
+              isDisabled={!adopting ? false : true}
+            />
           </>
         )}
         {isAdoptedByCurrentUser && (
-          <PetButtonStatus label="Return" onClick={handleReturn} />
+          <PetButtonStatus
+            label={!returning ? 'Return' : <Spinner />}
+            onClick={handleReturn}
+          />
         )}
         {isFosteredByOthers && (
           <>
-            <PetButtonStatus label="Adopt" onClick={handleAdoptionStatus} />
+            <PetButtonStatus
+              label={!adopting ? 'Adopt' : <Spinner />}
+              isDisabled={!returning ? false : true}
+              mr={2}
+              onClick={handleAdoptionStatus}
+            />
             <PetButtonStatus
               display={isJustFoster ? '' : 'none'}
-              label="Return"
+              label={!returning ? 'Return' : <Spinner />}
+              isDisabled={!adopting ? false : true}
+              ml={2}
               onClick={handleReturn}
             />
           </>
@@ -177,19 +215,22 @@ export default function PetActionsGrid({
         {isAdoptedByOthers && (
           <>
             <PetButtonStatus
-              label="Adopt"
+              label={!adopting ? 'Adopt' : <Spinner />}
+              mr={2}
               onClick={handleAdoptionStatus}
               isDisabled={true}
               display={!isJustAdopted ? '' : 'none'}
             />
             <PetButtonStatus
-              label="Foster"
+              label={!fostering ? 'Foster' : <Spinner />}
+              ml={2}
               onClick={handleAdoptionStatus}
               isDisabled={true}
               display={!isJustAdopted ? '' : 'none'}
             />
             <PetButtonStatus
-              label="Return"
+              label={!returning ? 'Return' : <Spinner />}
+              ml={2}
               onClick={handleReturn}
               display={isJustAdopted ? '' : 'none'}
             />

@@ -126,7 +126,7 @@ export default function MainTemplate({ children }) {
       transition="grid-template-columns 0.2s"
       flex-direction="column"
       overflow="hidden"
-      h="100vh"
+      height="100vh"
     >
       <GridItem area={'header'}>
         <Header
@@ -138,7 +138,7 @@ export default function MainTemplate({ children }) {
 
       <GridItem
         area={isActiveSession ? 'nav' : 'main'}
-        css={{ display: 'flex', height: '100vh', overflow: 'hidden' }}
+        css={{ display: 'flex', overflow: 'hidden' }}
       >
         {isActiveSession ? (
           <Menu
@@ -160,7 +160,7 @@ export default function MainTemplate({ children }) {
           display: 'flex',
           width: '100%',
           justifyContent: 'center',
-          overflow: 'scroll',
+          overflowY: 'auto',
         }}
       >
         {children}

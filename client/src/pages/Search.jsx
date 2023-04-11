@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSearchContext } from '../context/SearchContext'
 import {
   Box,
@@ -15,7 +15,6 @@ import AdvancedSearchFilterCriteria from '../components/search/AdvancedSearchFil
 import GridViewPets from '../components/pet/GridViewPets'
 import FullViewPets from '../components/pet/FullViewPets'
 import SearchToggle from '../components/search/SearchToggle'
-import { useAuthContext } from '../context/AuthContext'
 import { userLocation } from '../utils/globals'
 
 export default function Search() {
@@ -26,8 +25,6 @@ export default function Search() {
     usersLikes,
     toggleAdvancedSearch,
   } = useSearchContext()
-
-  console.log(userLocation(window.location.pathname))
 
   const [viewTab, setViewTab] = useState('grid')
 

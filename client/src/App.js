@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
   Outlet,
+  Navigate,
 } from 'react-router-dom'
 
 import MainTemplate from './components/template/MainTemplate'
@@ -20,7 +21,7 @@ import PrivateRouteUser from './private_routes/PrivateRouteUser'
 import PrivateRouteAdmin from './private_routes/PrivateRouteAdmin'
 import PetDetailsPage from './components/pet/PetDetailsPage'
 import AddNewPet from './pages/AddNewPet'
-import PetForm from './components/admin/PetForm'
+import PetForm from './components/Admin/PetForm'
 import ProfileDetails from './pages/ProfileDetails'
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
                   }
                 />
               </Route>
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </MainTemplate>
         </Router>

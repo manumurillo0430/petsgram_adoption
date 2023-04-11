@@ -69,6 +69,7 @@ export default function ProfileForm() {
 
   return (
     <Formik
+      key={currentUser.user_id}
       initialValues={{
         firstname: currentUser.firstname,
         lastname: currentUser.lastname,
@@ -79,6 +80,7 @@ export default function ProfileForm() {
       }}
       validationSchema={updateUserSchema}
       onSubmit={async (user) => {
+        console.log(user, picture)
         if (typeof picture === 'object') {
           try {
             const updatedUserData = new FormData()
@@ -104,7 +106,8 @@ export default function ProfileForm() {
             setServerMessage(error.response)
           }
         }
-        if (typeof picture === 'string') {
+        if (picture === '') {
+          console.log(picture, user, 'in second condition')
           try {
             const updatedUserData = {
               firstname: user.firstname,
@@ -112,14 +115,16 @@ export default function ProfileForm() {
               email: user.email,
               phonenumber: user.phonenumber,
               bio: user.bio,
-              picture: picture,
+              picture: '',
               is_private: isChecked,
             }
+            console.log(picture)
             setUpdatingUserData(true)
             const res = await PutReq(
               `/user/${currentUser.user_id}`,
               updatedUserData,
             )
+            console.log(res)
             if (res) {
               setUpdatingUserData(false)
               toast()
