@@ -36,7 +36,7 @@ function App() {
                 <Route path="/search" element={<Search />} />
                 <Route path="/pet/:id" element={<PetDetailsPage />} />
               </Route>
-              <Route path="/profile" element={<Outlet />}>
+              <Route path="/myprofile" element={<Outlet />}>
                 <Route element={<SearchProvider />}>
                   <Route
                     path="settings"
@@ -69,6 +69,14 @@ function App() {
               <Route path="/admin" element={<Outlet />}>
                 <Route
                   path="new"
+                  element={
+                    <PrivateRouteAdmin>
+                      <AddNewPet />
+                    </PrivateRouteAdmin>
+                  }
+                />{' '}
+                <Route
+                  path="editpet/:id"
                   element={
                     <PrivateRouteAdmin>
                       <AddNewPet />

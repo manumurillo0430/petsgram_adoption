@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Text, Flex, Tooltip, Spinner } from '@chakra-ui/react'
+import {
+  Text,
+  Flex,
+  Tooltip,
+  Spinner,
+  useDisclosure,
+  useColorModeValue,
+  Link,
+} from '@chakra-ui/react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import { useSearchContext } from '../../context/SearchContext'
@@ -8,9 +16,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import { userNames } from '../../utils/globals'
 import PetButtonStatus from './PetButtonStatus'
-import './PetCardGrid.css'
 import PetButtonsSaveLike from './PetButtonsSaveLike'
+import LikesInfoModal from './LikesInfoModal'
 import PetLikesText from './PetLikesText'
+import './PetCardGrid.css'
 
 export default function PetActionsGrid({
   setCleanOfList,
@@ -133,6 +142,10 @@ export default function PetActionsGrid({
   const [isLiked, setIsLiked] = useState(
     userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id),
   )
+  const { isOpen, onToggle } = useDisclosure()
+  const toggleModal = () => onToggle()
+
+  const theme = useColorModeValue('dark', 'light')
 
   return (
     <Flex flexDir="column" width="100%">
@@ -150,11 +163,21 @@ export default function PetActionsGrid({
       </Flex>
       <Flex>
         <Tooltip hasArrow label={userNames({ users: userInfoLikes })}>
-          <Text>
-            <PetLikesText isLiked={heart} userInfoLikes={userInfoLikes} />
-          </Text>
+          <Link
+            color={theme === 'dark' ? 'black' : 'white'}
+            onClick={toggleModal}
+          >
+            <Text>
+              <PetLikesText isLiked={heart} userInfoLikes={userInfoLikes} />
+            </Text>
+          </Link>
         </Tooltip>
       </Flex>
+      <LikesInfoModal
+        isOpen={isOpen}
+        toggleModal={toggleModal}
+        userInfoLikes={userInfoLikes}
+      />
 
       <Flex w="100%">
         {status === 'Available' && (

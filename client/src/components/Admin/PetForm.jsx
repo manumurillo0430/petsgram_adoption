@@ -29,29 +29,9 @@ import { Divider } from 'antd'
 import { PostReq } from '../../utils/api'
 import { GetReq } from '../../utils/api'
 
-export default function PetForm() {
-  const [pet, setPet] = useState(false)
-  useEffect(() => {
-    const getPetById = async () => {
-      try {
-        if (userLocation(window.location.pathname) !== 'new') {
-          const res = await GetReq(
-            `/pet/${userLocation(window.location.pathname)}`,
-          )
-          if (res) {
-            setPet(res)
-          }
-        } else return
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getPetById()
-  }, [])
-
+export default function PetForm({ pet, location }) {
   const theme = useColorModeValue('dark', 'light')
-  const [serverError, setServerError] = useState('')
-  const [picture, setPicture] = useState('')
+  const [picture, setPicture] = useState()
   const [serverMessage, setServerMessage] = useState('')
   const [updatingPetData, setUpdatingPetData] = useState(false)
   const toast = useToast({
@@ -75,48 +55,52 @@ export default function PetForm() {
     breed: yup.string().required(requiredField),
     bio: yup.string().max(250, bioeExcdedText),
   })
-
   return (
     <Formik
       initialValues={{
-        name: pet.name || '',
-        type: pet.type || '',
-        adoptionStatus: pet.adoptionStatus || '',
-        height: '',
-        weight: '',
-        color: '',
-        hypoallergenic: '',
-        dietary: '',
-        breed: '',
-        bio: '',
+        name: pet.name,
+        type: pet.type,
+        adoptionStatus: pet.adoptionStatus,
+        height: pet.height,
+        weight: pet.weight,
+        color: pet.color,
+        hypoallergenic: pet.hypoallergenic === 1 || pet.hypoallergenic === true,
+        dietary: pet.dietary,
+        breed: pet.breed,
+        bio: pet.bio,
       }}
       validationSchema={petSchema}
       onSubmit={async (values, { resetForm }) => {
-        try {
-          if (values.hypoallergenic === false) {
-            values.hypoallergenic = 0
-          }
-          if (values.hypoallergenic === true) {
-            values.hypoallergenic = 1
-          }
-          const updatedPetData = new FormData()
-          for (let key in values) {
-            updatedPetData.append(`${key}`, `${values[key]}`)
-          }
-          updatedPetData.append('picture', picture)
+        if (location === 'new') {
+          try {
+            if (values.hypoallergenic === false) {
+              values.hypoallergenic = 0
+            }
+            if (values.hypoallergenic === true) {
+              values.hypoallergenic = 1
+            }
+            const updatedPetData = new FormData()
+            for (let key in values) {
+              updatedPetData.append(`${key}`, `${values[key]}`)
+            }
+            updatedPetData.append('picture', picture)
 
-          setUpdatingPetData(true)
-          const res = await PostReq('/pet', updatedPetData)
-          if (res) {
-            setPicture('')
+            setUpdatingPetData(true)
+            const res = await PostReq('/pet', updatedPetData)
+            if (res) {
+              setPicture('')
+              setServerMessage('')
+              setUpdatingPetData(false)
+              toast()
+              resetForm()
+            }
+          } catch (error) {
             setUpdatingPetData(false)
-            toast()
-            resetForm()
+            setServerMessage(error.response.data.error)
           }
-        } catch (error) {
-          console.log(error.response.data)
-          setServerMessage(error.response.data.error)
+        } else {
         }
+
         //   if(typeof picture === 'string'){
         //     try {
         //       const updatedUserData = {
@@ -151,9 +135,10 @@ export default function PetForm() {
                   theme === 'dark' ? noProfilePetDark : noProfilePetLight
                 }
                 fieldLabel={!picture === '' ? 'Pet Picture' : 'Add Pet Picture'}
-                req={false}
+                req={true}
                 setPicture={setPicture}
-                picture={picture}
+                picture={location !== 'new' ? pet.picture : ''}
+                noImageAttached={serverMessage !== '' ? 'Image require' : ''}
               />
             </Box>
             <Center ml={6} w="50%" flexDirection="column">
@@ -198,17 +183,21 @@ export default function PetForm() {
                 isChecked={false}
               />
               <FormTextAreaField fieldName="bio" fieldLabel="Bio" req={false} />
-              {serverError ? (
+              {serverMessage ? (
                 <Text color="red" mt={4} textAlign="center">
                   Server Error:
                 </Text>
               ) : null}
-              <FormSubmitButtom
-                mt={2}
-                buttonLabel={!updatingPetData ? 'Update' : <Spinner />}
-              />
+              <Divider style={{ border: 'none', margin: '0.5rem' }} />
+              {location === 'new' && (
+                <FormSubmitButtom
+                  mt={2}
+                  buttonLabel={!updatingPetData ? 'Upload' : <Spinner />}
+                />
+              )}
             </Center>
           </Center>
+          <Divider style={{ border: 'none', margin: '0.5rem' }} />
           <Text>{serverMessage}</Text>
         </form>
       )}
