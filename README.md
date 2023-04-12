@@ -11,15 +11,15 @@ The application is hosted on Netlify for the front-end and Render for the back-e
 
 ### Features
 
-• Comprehensive search functionality to find the perfect pet
-• User experience inspired by social media, including liking pets and viewing user profiles
-• User authentication and management 
-• Pet profile creation and management by site admins
-• Admin dashboard with insightful statistics on pet adoption, fostering, and availability, as well as pet types (dogs, cats, rabbits, and birds)
+- Comprehensive search functionality to find the perfect pet
+- User experience inspired by social media, including liking pets and viewing user profiles
+- User authentication and management 
+- Pet profile creation and management by site admins
+- Admin dashboard with insightful statistics on pet adoption, fostering, and availability, as well as pet types (dogs, cats, rabbits, and birds)
 
 ### Tech Stack
-• Front-end: React, Chakra UI, Ant Design, Material UI
-• Back-end: Node.js, Express, MySQL, Sequelize
+- Front-end: React, Chakra UI, Ant Design, Material UI
+- Back-end: Node.js, Express, MySQL, Sequelize
 
 ### Getting Started
 To run the project locally, follow these steps:
