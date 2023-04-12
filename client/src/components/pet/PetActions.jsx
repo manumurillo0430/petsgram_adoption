@@ -8,13 +8,13 @@ import {
   useColorModeValue,
   Link,
 } from '@chakra-ui/react'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import { useSearchContext } from '../../context/SearchContext'
 import { useAuthContext } from '../../context/AuthContext'
+import { userNames } from '../../utils/globals'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
-import { userNames } from '../../utils/globals'
 import PetButtonStatus from './PetButtonStatus'
 import PetButtonsSaveLike from './PetButtonsSaveLike'
 import LikesInfoModal from './LikesInfoModal'

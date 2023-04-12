@@ -12,16 +12,23 @@ import {
   CardBody,
   Center,
   useMediaQuery,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { useAuthContext } from '../../context/AuthContext'
 import { petStatusBgColor } from '../../utils/globals'
 import PetTag from './PetTag'
 import PetActionsGrid from './PetActions'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
+import PetButtonsSaveLike from './PetButtonsSaveLike'
+import RegistrationModal from '../registration/RegistrationModal'
 import './PetCardGrid.css'
 import '../search/search.css'
 
 export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
   const [adoptionStatus, setAdoptionStatus] = useState(status)
+  const { isOpen, onToggle } = useDisclosure()
+  const toggleModal = () => onToggle()
   useEffect(() => {
     setAdoptionStatus(status)
   }, [status])
@@ -104,7 +111,7 @@ export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
           <Text>{pet?.adoptionStatus}</Text>
         </CardBody>
         <CardFooter>
-          {currentUser?.user_id && (
+          {currentUser?.user_id ? (
             <PetActionsGrid
               setAdoptionStatus={setAdoptionStatus}
               pet={pet}
@@ -112,8 +119,22 @@ export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
               tab={tab}
               userInfoLikes={userInfoLikes}
             />
+          ) : (
+            <Flex w="100%" wrap="wrap" justify="start" gap={2} px={2} py={1}>
+              <PetButtonsSaveLike
+                label="Like"
+                icon={<FavoriteBorderIcon />}
+                action={toggleModal}
+              />
+              <PetButtonsSaveLike
+                label="Save"
+                icon={<TurnedInNotIcon />}
+                action={toggleModal}
+              />
+            </Flex>
           )}
         </CardFooter>
+        <RegistrationModal isOpen={isOpen} toggleModal={toggleModal} />
       </Stack>
     </Card>
   )

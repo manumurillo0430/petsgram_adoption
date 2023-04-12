@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { brandLight, brandDark } from '../../utils/globals'
 import { useAuthContext } from '../../context/AuthContext'
 import ModeSwitcher from '../../ModeSwitcher'
-import ResgistrationModal from '../registration/RegistrationModal'
+import RegistrationModal from '../registration/RegistrationModal'
 import MenuIcon from '@mui/icons-material/Menu'
 import ProfileMenu from './ProfileMenu'
 import Logo from './Logo'
@@ -87,7 +87,7 @@ export default function Header({ toggleCollapsed }) {
           </Flex>
         </Flex>
       </Box>
-      <ResgistrationModal isOpen={isOpen} toggleModal={toggleModal} />
+      <RegistrationModal isOpen={isOpen} toggleModal={toggleModal} />
     </>
   )
 }

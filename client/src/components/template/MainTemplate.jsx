@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, GridItem, Link, useColorModeValue } from '@chakra-ui/react'
+import {
+  Grid,
+  GridItem,
+  Link,
+  useColorModeValue,
+  Image,
+} from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import { Menu } from 'antd'
 import { HomeFilled, SettingFilled, UserOutlined } from '@ant-design/icons'
@@ -11,6 +17,7 @@ import AddReactionIcon from '@mui/icons-material/AddReaction'
 import PetsIcon from '@mui/icons-material/Pets'
 import { useLocation } from 'react-router-dom'
 import './MainTemplate.css'
+import { footerLogo } from '../../utils/globals'
 
 export default function MainTemplate({ children }) {
   const { isActiveSession, currentUser } = useAuthContext()
