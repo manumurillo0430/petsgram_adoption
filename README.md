@@ -24,8 +24,14 @@ The application is hosted on Netlify for the front-end and Render for the back-e
 ### Getting Started
 To run the project locally, follow these steps:
 1. Clone the repository
-2. Install dependencies for both client and server with npm run install:both
-3. Start both client and server with npm run start:both
+2. Install dependencies for both client and server with:
+```
+  npm run install:both
+```
+3. Start both client and server with:
+```
+  npm run start:both
+```
 Now you should be able to access the application at http://localhost:3000. 
 
 Enjoy!
