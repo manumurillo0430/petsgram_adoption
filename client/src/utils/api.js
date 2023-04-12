@@ -1,8 +1,5 @@
 import axios from 'axios'
-<<<<<<< HEAD
-=======
 
->>>>>>> cd1729fdf897053278de24b90902eb1f98ad693b
 const BASE_URL =
   process.env.NODE_ENV !== 'development'
     ? 'https://petsgram-adoption-server.onrender.com'
