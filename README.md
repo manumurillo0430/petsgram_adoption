@@ -35,5 +35,5 @@ To run the project locally, follow these steps:
 Now you should be able to access the application at http://localhost:3000. 
 
 Enjoy!
-#
+
 [^1]:Please note that there may be a delay of up to 30 seconds in our response time due to restrictions imposed by our free tier.
