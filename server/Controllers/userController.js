@@ -52,8 +52,6 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const user = await loginModel(req.body.email)
-    console.log(user)
-
     if (user) {
       const token = jwt.sign(
         { user_id: user.user_id },
@@ -96,24 +94,15 @@ const getUserById = async (req, res) => {
 const updateUserData = async (req, res) => {
   try {
     const { id } = req.params
-    const {
-      email,
-      firstname,
-      lastname,
-      phonenumber,
-      bio,
-      is_private,
-    } = req.body
     const dataToUpdate = {
-      email: email,
-      firstname: firstname,
-      lastname: lastname,
-      phonenumber: phonenumber,
-      bio: bio,
-      picture: '',
-      is_private: is_private,
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      phonenumber: req.body.phonenumber,
+      bio: req.body.bio,
+      picture: req.body.picture,
+      is_private: req.body.is_private,
     }
-    console.log(dataToUpdate)
     const isUserUpdated = await updateUserDataModel(id, dataToUpdate)
     if (isUserUpdated) {
       res.status(200).send({
@@ -129,29 +118,16 @@ const updateUserData = async (req, res) => {
 const updateUserDataPlusPicture = async (req, res) => {
   try {
     const { id } = req.params
-    const {
-      email,
-      firstname,
-      lastname,
-      phonenumber,
-      bio,
-      pictureUrl,
-      is_private,
-    } = req.body
     const dataToUpdate = {
-      email: email,
-      firstname: firstname,
-      lastname: lastname,
-      phonenumber: phonenumber,
-      bio: bio,
-      picture: pictureUrl,
-      is_private: is_private,
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      phonenumber: req.body.phonenumber,
+      bio: req.body.bio,
+      picture: req.body.pictureUrl,
+      is_private: req.body.is_private,
     }
-    const isUserUpdated = await updateUserDataPlusPictureModel(
-      id,
-      dataToUpdate,
-      req.body,
-    )
+    const isUserUpdated = await updateUserDataPlusPictureModel(id, dataToUpdate)
     if (isUserUpdated) {
       res.status(200).send({
         ok: true,

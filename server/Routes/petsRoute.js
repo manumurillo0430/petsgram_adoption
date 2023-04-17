@@ -21,6 +21,13 @@ router
     uploadToCludinary,
     petController.addANewPet,
   )
+  .post(
+    '/save_a_life',
+    auth,
+    upload.single('picture'),
+    uploadToCludinary,
+    petController.userPetRequest,
+  )
 
   .post('/adoptionStatus', auth, petController.adoptPet)
   .delete('/return', auth, petController.returnPet)
@@ -30,7 +37,7 @@ router
     auth,
     isAdmin,
     upload.single('picture'),
-    uploadToCludinaryEditPet,
+    uploadToCludinary,
     petController.updatePet,
   )
   .delete('/delete', auth, petController.deletePet) //IMPORTANT THIS ROUTE WILL DELETE A PET FROM THE DATA BASE
