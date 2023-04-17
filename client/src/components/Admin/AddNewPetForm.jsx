@@ -30,7 +30,7 @@ import { PostReq } from '../../utils/api'
 import { useAuthContext } from '../../context/AuthContext'
 
 export default function PetForm({ pet, location }) {
-  const { currentUser } = useAuthContext()
+  const { currentUser, petsRequested, setPetsRequested } = useAuthContext()
   const theme = useColorModeValue('dark', 'light')
   const [picture, setPicture] = useState('')
   const [serverMessage, setServerMessage] = useState('')
@@ -93,13 +93,14 @@ export default function PetForm({ pet, location }) {
 
             setUpdatingPetData(true)
 
-            let res
+            let res = false
             if (location === 'new') {
               res = await PostReq('/pet', updatedPetData)
             } else if (location === 'savealife') {
               updatedPetData.append('user_id', currentUser.user_id)
               res = await PostReq('/pet/save_a_life', updatedPetData)
               resetForm()
+              setPetsRequested({ ...petsRequested, res })
             }
             if (res !== undefined) {
               setPicture('')
