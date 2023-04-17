@@ -84,7 +84,7 @@ export default function MainTemplate({ children }) {
     ),
   ]
   const filteredItems = items.filter((item) => {
-    if (item.key === '6' || item.key === '7') {
+    if (item.key === '7' || item.key === '8' || item.key === '9') {
       return currentUser.role
     }
     return true

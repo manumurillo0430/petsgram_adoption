@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { Text, Container, Flex, Button } from '@chakra-ui/react'
 import { Divider } from 'antd'
 import { useAuthContext } from '../../context/AuthContext'
-import Ourfeatures from './Ourfeatures'
 
 export default function HomeTemplate() {
   let navigate = useNavigate()
@@ -13,7 +12,7 @@ export default function HomeTemplate() {
     <Container w="100%" h="100vh" display="flex">
       <Flex justifyContent="space-around">
         <Container w="100%" display="flex" flexDirection="column">
-          <Text w="100%" fontSize="3xl" fontWeight="semibold">
+          <Text w="100%" fontSize="4xl" fontWeight="semibold">
             Save a life and expand your family...
           </Text>
           <Divider style={{ border: 'none', margin: '0.3rem' }} />
