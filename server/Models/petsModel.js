@@ -126,7 +126,6 @@ async function updateLikeCounterModel(user_id, pet_id) {
 
 async function adoptPetModel(user_id, pet_id, adoptionStatus) {
   try {
-    // If the user is fostering a pet already
     const isUserFosteringPet = await dbConnection('fostered_pets')
       .where({ user_id: user_id, fostered: pet_id })
       .first()
@@ -270,6 +269,16 @@ async function deletePetModel(pet_id) {
     throw error
   }
 }
+async function userPetRequestModel(pet) {
+  try {
+    const petRequest = await dbConnection('pet_requests')
+      .insert(pet)
+      .returning('*')
+    return petRequest
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 module.exports = {
   getAllPetsModel,
@@ -282,4 +291,5 @@ module.exports = {
   userLikedPetModel,
   updateLikeCounterModel,
   getAllPetsModel,
+  userPetRequestModel,
 }

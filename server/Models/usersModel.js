@@ -55,15 +55,20 @@ async function getUserByIdModel(id) {
         .where({
           user_id: id,
         })
+      const petsRequested = await dbConnection
+        .from('pet_requests')
+        .where({ user_id: id })
       const userLikedPetIds = petsUserLike.map((row) => row.pet_id)
       const adopted = adoptedPets.map((pet) => pet.adopted)
       const fostered = fosteredPets.map((pet) => pet.fostered)
       const saved = savedPets.map((pet) => pet.saved)
+
       const pets = {
         adopted: adopted,
         fostered: fostered,
         saved: saved,
         liked: userLikedPetIds,
+        requested: petsRequested,
       }
       return { user, pets: pets }
     }

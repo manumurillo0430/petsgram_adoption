@@ -215,6 +215,37 @@ const updatePet = async (req, res) => {
   }
 }
 
+const userPetRequest = async (req, res) => {
+  try {
+    const pet = {
+      user_id: Number(req.body.user_id),
+      adoptionStatus: req.body.adoptionStatus,
+      bio: req.body.bio,
+      breed: req.body.breed,
+      color: req.body.color,
+      dietary: req.body.dietary,
+      height: Number(req.body.height),
+      hypoallergenic: Number(req.body.hypoallergenic),
+      name: req.body.name,
+      request: 'Pending',
+      picture: req.body.pictureUrl,
+      type: req.body.type,
+      weight: Number(req.body.weight),
+    }
+
+    const isPetRequestSaved = await petModel.userPetRequestModel(pet)
+    if (isPetRequestSaved) {
+      res.send({
+        ok: true,
+        message:
+          "Pet saved in our database. You will be notified about your pet's status.",
+      })
+    }
+  } catch (error) {
+    res.status(500).send({ ok: false, message: 'Internal server error' })
+  }
+}
+
 module.exports = {
   addANewPet,
   advancedSearch,
@@ -225,4 +256,5 @@ module.exports = {
   returnPet,
   updatePet,
   updateLikeCounter,
+  userPetRequest,
 }
