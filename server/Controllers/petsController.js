@@ -232,13 +232,10 @@ const userPetRequest = async (req, res) => {
       type: req.body.type,
       weight: Number(req.body.weight),
     }
-
     const isPetRequestSaved = await petModel.userPetRequestModel(pet)
     if (isPetRequestSaved) {
-      res.send({
-        ok: true,
-        message:
-          "Pet saved in our database. You will be notified about your pet's status.",
+      res.status(200).send({
+        isPetRequestSaved,
       })
     }
   } catch (error) {

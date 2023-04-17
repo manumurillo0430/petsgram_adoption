@@ -274,7 +274,12 @@ async function userPetRequestModel(pet) {
     const petRequest = await dbConnection('pet_requests')
       .insert(pet)
       .returning('*')
-    return petRequest
+    if (petRequest) {
+      const petAdded = await dbConnection('pet_requests')
+        .where({ name: pet.name })
+        .returning('*')
+      return petAdded
+    }
   } catch (error) {
     console.log(error)
   }
