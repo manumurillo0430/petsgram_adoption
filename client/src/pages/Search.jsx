@@ -9,6 +9,7 @@ import {
   TabPanel,
   Tabs,
   TabPanels,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Divider } from 'antd'
 import AdvancedSearchFilterCriteria from '../components/search/AdvancedSearchFilterCriteria'
@@ -25,15 +26,17 @@ export default function Search() {
     usersLikes,
     toggleAdvancedSearch,
   } = useSearchContext()
+  const theme = useColorModeValue('dark', 'light')
 
   const [viewTab, setViewTab] = useState('grid')
-
   return (
-    <Box w="100%">
-      <Divider style={{ border: 'none', margin: '1rem' }} />
-      <Divider style={{ border: 'none', margin: '1rem' }} />
+    <Box w="100%" p={0} m={0}>
       <Flex flexDirection="column">
-        <Center flexDirection="column">
+        <Center
+          flexDirection="column"
+          backgroundColor={theme === 'light' ? '#1c1f2bc7' : '#ffffff96'}
+        >
+          <Divider style={{ border: 'none', margin: '0.4rem' }} />
           <AdvancedSearchFilterCriteria
             advancedSearch={advancedSearch}
             searchResults={petsArray}

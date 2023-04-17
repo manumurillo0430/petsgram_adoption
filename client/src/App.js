@@ -21,8 +21,9 @@ import PrivateRouteUser from './private_routes/PrivateRouteUser'
 import PrivateRouteAdmin from './private_routes/PrivateRouteAdmin'
 import PetDetailsPage from './components/pet/PetDetailsPage'
 import AddNewPet from './pages/AddNewPet'
-import PetForm from './components/Admin/PetForm'
+import PetForm from './components/admin/AddNewPetForm'
 import ProfileDetails from './pages/ProfileDetails'
+import SaveALife from './pages/SaveALife'
 
 function App() {
   return (
@@ -38,6 +39,14 @@ function App() {
               </Route>
               <Route path="/myprofile" element={<Outlet />}>
                 <Route element={<SearchProvider />}>
+                  <Route
+                    path="savealife"
+                    element={
+                      <PrivateRouteUser>
+                        <SaveALife />
+                      </PrivateRouteUser>
+                    }
+                  />
                   <Route
                     path="settings"
                     element={
@@ -86,7 +95,7 @@ function App() {
                       <AddNewPet />
                     </PrivateRouteAdmin>
                   }
-                />{' '}
+                />
                 <Route
                   path="editpet/:id"
                   element={

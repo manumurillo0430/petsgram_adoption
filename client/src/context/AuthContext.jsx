@@ -10,6 +10,7 @@ const AuthContext = createContext({
   petsUserAdopted: [],
   petsUserFostered: [],
   petsUserLiked: [],
+  petsRequested: [],
   setIsActiveSession: () => {},
   setPetsUserAdopted: () => {},
   setPetsUserLiked: () => {},
@@ -30,6 +31,7 @@ function AuthProvider({ children }) {
   const [petsUserFostered, setPetsUserFostered] = useState([])
   const [petsUserLiked, setPetsUserLiked] = useState([])
   const [petsUserSaved, setPetsUserSaved] = useState([])
+  const [petsRequested, setPetsRequested] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isActiveSession, setIsActiveSession] = useState(false)
   const [user_id, setUser_id] = useState()
@@ -47,6 +49,7 @@ function AuthProvider({ children }) {
           setPetsUserFostered(res.pets.fostered)
           setPetsUserSaved(res.pets.saved)
           setPetsUserLiked(res.pets.liked)
+          setPetsRequested(res.pets.requested)
         }
       } catch (error) {
         console.log(error)
@@ -95,6 +98,7 @@ function AuthProvider({ children }) {
         setPetsUserFostered(res.pets.fostered)
         setPetsUserSaved(res.pets.saved)
         setPetsUserLiked(res.pets.liked)
+        setPetsRequested(res.pets.requested)
         setIsActiveSession(true)
       }
       setIsLoading(false)
@@ -178,6 +182,7 @@ function AuthProvider({ children }) {
         petsUserFostered,
         petsUserLiked,
         petsUserSaved,
+        petsRequested,
         setIsActiveSession,
         setPetsUserAdopted,
         setPetsUserLiked,

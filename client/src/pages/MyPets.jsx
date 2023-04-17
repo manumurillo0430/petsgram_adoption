@@ -6,6 +6,7 @@ import { Divider } from 'antd'
 import '../components/search/search.css'
 import { useAuthContext } from '../context/AuthContext'
 import { userLocation } from '../utils/globals'
+import PetSubmissions from '../components/pet/PetSubmissions'
 
 export default function MyPets() {
   const {
@@ -15,6 +16,7 @@ export default function MyPets() {
     petsUserFostered,
     petsUserLiked,
     petsUserSaved,
+    petsRequested,
   } = useAuthContext()
   const { getAllPets } = useSearchContext()
   const [petsTabArray, setPetsTabArray] = useState([])
@@ -68,11 +70,8 @@ export default function MyPets() {
       <Tabs isFitted>
         <Divider style={{ border: 'none', margin: '0.3rem' }} />
         <TabList>
-          <Tab
-            onClick={() => handleTabChange('fostered')}
-            fontWeight="semibold"
-          >
-            My Fostered Pets
+          <Tab onClick={() => handleTabChange('request')} fontWeight="semibold">
+            My Submitted Pets
           </Tab>
           <Tab onClick={() => handleTabChange('saved')} fontWeight="semibold">
             Saved Pets
@@ -83,9 +82,24 @@ export default function MyPets() {
           <Tab onClick={() => handleTabChange('adopted')} fontWeight="semibold">
             My Adopted Pets
           </Tab>
+
+          <Tab
+            onClick={() => handleTabChange('fostered')}
+            fontWeight="semibold"
+          >
+            My Fostered Pets
+          </Tab>
         </TabList>
 
         <TabPanels>
+          <TabPanel textAlign="-webkit-center">
+            <PetSubmissions
+              location={userLocation(window.location.pathname)}
+              tab={tab}
+              petsRequested={petsRequested}
+            />
+          </TabPanel>
+
           <TabPanel>
             <GridViewPets
               cardSize={25}

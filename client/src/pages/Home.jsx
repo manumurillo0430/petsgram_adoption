@@ -1,38 +1,29 @@
-import { Box, useMediaQuery, useColorModeValue } from '@chakra-ui/react'
+import { Box, Image, useColorModeValue } from '@chakra-ui/react'
 import HomeTemplate from '../components/home/HomeTemplate'
+import { instructionsDay, instructionsNight } from '../utils/globals'
 
 export default function Home() {
-  const role = localStorage.getItem('userRole')
-  const userAuth = localStorage.getItem('userAuth')
-  const [isSmallerThan900] = useMediaQuery('(max-height: 900px)')
-  const [isSmallerThan1700] = useMediaQuery('(max-weight: 1700px)')
   const theme = useColorModeValue('dark', 'light')
-  const homeBg = {
-    width: '100%',
-    backgroundImage:
-      theme === 'dark'
-        ? `url('https://res.cloudinary.com/dugudxkyu/image/upload/v1679142182/bg-light_suizg2.jpg')`
-        : `url('https://res.cloudinary.com/dugudxkyu/image/upload/v1679143179/bg-dark_zeu6bk.png')`,
-    backgroundSize: theme === 'dark' ? '20rem' : '18rem',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition:
-      isSmallerThan900 || isSmallerThan1700
-        ? 'bottom 40% right 20%'
-        : 'top 60% left 75%',
-    display: 'flex',
-    justifyContent: 'space-around',
-    height: '100vh',
-  }
 
   return (
     <Box
       w="100%"
+      display="flex"
       p={5}
-      justifyContent="space-around"
-      style={homeBg}
+      justifyContent="center"
       overflow="hidden"
+      h="100vh"
     >
-      <HomeTemplate />
+      <Box w="50%">
+        <HomeTemplate />
+      </Box>
+      <Box w="40%" m={0} p={0}>
+        <Image
+          position="relative"
+          bottom="4rem"
+          src={theme === 'dark' ? instructionsDay : instructionsNight}
+        />
+      </Box>
     </Box>
   )
 }

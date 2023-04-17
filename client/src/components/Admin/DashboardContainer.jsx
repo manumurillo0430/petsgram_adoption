@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardTabs from './DashboardTabs'
+import DashboardTabs from './DashboardLayout'
 import { useState, useEffect } from 'react'
 import { GetReq } from '../../utils/api'
 

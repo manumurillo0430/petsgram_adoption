@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardTemplate from '../components/Admin/DashboardTemplate'
+import DashboardTemplate from '../components/admin/DashboardContainer'
 export default function AdminDashboard() {
   return (
     <>

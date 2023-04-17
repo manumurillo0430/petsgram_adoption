@@ -14,10 +14,13 @@ import { NavLink } from 'react-router-dom'
 import Header from './Header'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import AddReactionIcon from '@mui/icons-material/AddReaction'
+import PublishIcon from '@mui/icons-material/Publish'
 import PetsIcon from '@mui/icons-material/Pets'
 import { useLocation } from 'react-router-dom'
 import './MainTemplate.css'
+import { backgroundDay, backgroundNight, saveALife } from '../../utils/globals'
 import { footerLogo } from '../../utils/globals'
+import { bannerDay, bannerNight } from '../../utils/globals'
 
 export default function MainTemplate({ children }) {
   const { isActiveSession, currentUser } = useAuthContext()
@@ -74,24 +77,38 @@ export default function MainTemplate({ children }) {
         <SettingFilled />
       </Link>,
     ),
+    getItem(
+      `Save a life`,
+      '6',
+      <Link as={NavLink} to="myprofile/savealife">
+        <AddReactionIcon style={{ fontSize: '1.1rem' }} />
+      </Link>,
+    ),
     { type: 'divider' },
     getItem(
+      `Pet Submissions`,
+      '7',
+      <Link as={NavLink} to="admin/dashboard">
+        <PublishIcon style={{ fontSize: '1.1rem' }} />
+      </Link>,
+    ),
+    getItem(
       `Add New Pet`,
-      '6',
+      '8',
       <Link as={NavLink} to="/admin/new">
         <AddReactionIcon style={{ fontSize: '1.1rem' }} />
       </Link>,
     ),
     getItem(
       `Dashboard`,
-      '7',
+      '9',
       <Link as={NavLink} to="admin/dashboard">
         <DashboardIcon style={{ fontSize: '1.1rem' }} />
       </Link>,
     ),
   ]
   const filteredItems = items.filter((item) => {
-    if (item.key === '6' || item.key === '7') {
+    if (item.key === '7' || item.key === '8') {
       return currentUser.role
     }
     return true
@@ -107,10 +124,12 @@ export default function MainTemplate({ children }) {
       setSelectedKeys(['4'])
     } else if (location.pathname === '/myprofile/settings') {
       setSelectedKeys(['5'])
-    } else if (location.pathname === '/admin/new') {
+    } else if (location.pathname === '/myprofile/savealife') {
       setSelectedKeys(['6'])
     } else if (location.pathname === '/admin/dashboard') {
       setSelectedKeys(['7'])
+    } else if (location.pathname === '/admin/dashboard') {
+      setSelectedKeys(['8'])
     }
   }, [location.pathname])
   const toggleCollapsed = () => {
@@ -144,7 +163,7 @@ export default function MainTemplate({ children }) {
       </GridItem>
 
       <GridItem
-        area={isActiveSession ? 'nav' : 'main'}
+        area={isActiveSession ? 'nav' : ''}
         css={{ display: 'flex', overflow: 'hidden' }}
       >
         {isActiveSession ? (
@@ -162,13 +181,18 @@ export default function MainTemplate({ children }) {
 
       <GridItem
         area={'main'}
-        css={{
-          flex: 1,
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'center',
-          overflowY: 'auto',
-        }}
+        overflowY="auto"
+        display="flex"
+        flex={1}
+        justifyContent="center"
+        position="relative"
+        backgroundImage={
+          theme === 'light'
+            ? `url(${backgroundNight})`
+            : `url(${backgroundDay})`
+        }
+        backgroundPosition="center"
+        backgroundSize="cover"
       >
         {children}
       </GridItem>

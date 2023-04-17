@@ -104,8 +104,7 @@ export default function ProfileForm() {
           } catch (error) {
             setServerMessage(error.response)
           }
-        }
-        if (picture === '') {
+        } else if (typeof picture !== 'object') {
           try {
             const updatedUserData = {
               firstname: user.firstname,
@@ -113,7 +112,7 @@ export default function ProfileForm() {
               email: user.email,
               phonenumber: user.phonenumber,
               bio: user.bio,
-              picture: '',
+              picture: picture,
               is_private: isChecked,
             }
             setUpdatingUserData(true)

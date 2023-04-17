@@ -1,6 +1,11 @@
 import React from 'react'
 import { FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react'
-import { Text, NumberInput, NumberInputField } from '@chakra-ui/react'
+import {
+  Text,
+  NumberInput,
+  NumberInputField,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useFormikContext } from 'formik'
 
 export default function FormNumberField({
@@ -14,6 +19,7 @@ export default function FormNumberField({
   mrfu,
   mr,
 }) {
+  const theme = useColorModeValue('dark', 'light')
   const {
     values,
     errors,
@@ -40,6 +46,7 @@ export default function FormNumberField({
       </FormLabel>
       <NumberInput>
         <NumberInputField
+          backgroundColor={theme === 'light' ? '#1c1f2bc7' : '#fefefecc'}
           w={fieldSize ? fieldSize : '100%'}
           value={values[fieldName]}
           onChange={handleChange}

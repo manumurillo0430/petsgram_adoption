@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   petTypes,
   petStatus,
@@ -6,7 +6,6 @@ import {
   requiredField,
   noProfilePetDark,
   noProfilePetLight,
-  userLocation,
 } from '../../utils/globals'
 import {
   Box,
@@ -16,6 +15,7 @@ import {
   useColorModeValue,
   Spinner,
 } from '@chakra-ui/react'
+
 import FormTextAreaField from '../form/FormTextAreaField'
 import FormInputField from '../form/FormInputField'
 import FormSubmitButtom from '../form/FormSubmitButtom'
@@ -27,13 +27,15 @@ import * as yup from 'yup'
 import { Formik } from 'formik'
 import { Divider } from 'antd'
 import { PostReq } from '../../utils/api'
-import { GetReq } from '../../utils/api'
+import { useAuthContext } from '../../context/AuthContext'
 
 export default function PetForm({ pet, location }) {
+  const { currentUser } = useAuthContext()
   const theme = useColorModeValue('dark', 'light')
-  const [picture, setPicture] = useState()
+  const [picture, setPicture] = useState('')
   const [serverMessage, setServerMessage] = useState('')
   const [updatingPetData, setUpdatingPetData] = useState(false)
+
   const toast = useToast({
     title: 'Pet saved.',
     description: "We've saved a pet",
@@ -58,20 +60,23 @@ export default function PetForm({ pet, location }) {
   return (
     <Formik
       initialValues={{
-        name: pet.name,
-        type: pet.type,
-        adoptionStatus: pet.adoptionStatus,
-        height: pet.height,
-        weight: pet.weight,
-        color: pet.color,
-        hypoallergenic: pet.hypoallergenic === 1 || pet.hypoallergenic === true,
-        dietary: pet.dietary,
-        breed: pet.breed,
-        bio: pet.bio,
+        name: pet?.name,
+        type: pet?.type,
+        adoptionStatus: pet?.adoptionStatus,
+        height: pet?.height,
+        weight: pet?.weight,
+        color: pet?.color,
+        hypoallergenic:
+          pet?.hypoallergenic === 1 || pet?.hypoallergenic === true,
+        dietary: pet?.dietary,
+        breed: pet?.breed,
+        bio: pet?.bio,
       }}
       validationSchema={petSchema}
       onSubmit={async (values, { resetForm }) => {
-        if (location === 'new') {
+        console.log(values, picture)
+        console.log('Picture:', picture)
+        if (location === 'new' || location === 'savealife') {
           try {
             if (values.hypoallergenic === false) {
               values.hypoallergenic = 0
@@ -83,47 +88,30 @@ export default function PetForm({ pet, location }) {
             for (let key in values) {
               updatedPetData.append(`${key}`, `${values[key]}`)
             }
+
             updatedPetData.append('picture', picture)
 
             setUpdatingPetData(true)
-            const res = await PostReq('/pet', updatedPetData)
-            if (res) {
+
+            let res
+            if (location === 'new') {
+              res = await PostReq('/pet', updatedPetData)
+            } else if (location === 'savealife') {
+              updatedPetData.append('user_id', currentUser.user_id)
+              res = await PostReq('/pet/save_a_life', updatedPetData)
+              resetForm()
+            }
+            if (res !== undefined) {
               setPicture('')
               setServerMessage('')
               setUpdatingPetData(false)
               toast()
-              resetForm()
             }
           } catch (error) {
             setUpdatingPetData(false)
             setServerMessage(error.response.data.error)
           }
-        } else {
         }
-
-        //   if(typeof picture === 'string'){
-        //     try {
-        //       const updatedUserData = {
-        //         firstname: user.firstname,
-        //         lastname: user.lastname,
-        //         email: user.email,
-        //         phonenumber: user.phonenumber,
-        //         bio: user.bio,
-        //         profilepicture: picture
-        //       }
-        //       console.log(updatedUserData)
-        //       setUpdatingUserData(true)
-        //       const res = await PutReq(`/user/${userId}`, updatedUserData)
-        //       if(res){
-        //         setUpdatingUserData(false)
-        //         toast()
-        //         await getCurrentUser(userId)
-        //       }
-        //   } catch (error) {
-        //     console.log(error.response.data.error)
-        //     setServerMessage(error.response.data.error)
-        //   }
-        // }
       }}
     >
       {({ handleSubmit }) => (
@@ -137,7 +125,7 @@ export default function PetForm({ pet, location }) {
                 fieldLabel={!picture === '' ? 'Pet Picture' : 'Add Pet Picture'}
                 req={true}
                 setPicture={setPicture}
-                picture={location !== 'new' ? pet.picture : ''}
+                picture={picture}
                 noImageAttached={serverMessage !== '' ? 'Image require' : ''}
               />
             </Box>
@@ -189,12 +177,11 @@ export default function PetForm({ pet, location }) {
                 </Text>
               ) : null}
               <Divider style={{ border: 'none', margin: '0.5rem' }} />
-              {location === 'new' && (
-                <FormSubmitButtom
-                  mt={2}
-                  buttonLabel={!updatingPetData ? 'Upload' : <Spinner />}
-                />
-              )}
+
+              <FormSubmitButtom
+                mt={2}
+                buttonLabel={!updatingPetData ? 'Upload' : <Spinner />}
+              />
             </Center>
           </Center>
           <Divider style={{ border: 'none', margin: '0.5rem' }} />

@@ -1,4 +1,4 @@
-import { Box, Divider } from '@chakra-ui/react'
+import { Center, Divider } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import MyPetsCard from '../components/profile/MyPetsCard'
 import ProfileCard from '../components/profile/ProfileCard'
@@ -37,21 +37,17 @@ export default function ProfileDetails() {
   return (
     <>
       {isActiveSession && (
-        <Box pb={6}>
-          <Box display="Flex" m={6}>
-            {isLoading ? (
-              <Spinner />
-            ) : user ? (
-              <ProfileCard user={user} />
-            ) : null}
-            <Divider m={6} orientation="vertical" />
-            {isLoading ? (
-              <Spinner />
-            ) : user ? (
-              <MyPetsCard userPets={userPets} />
-            ) : null}
-          </Box>
-        </Box>
+        <Center>
+          {/* <Box textAlign="center" display="Flex" m={6}> */}
+          {isLoading ? <Spinner /> : user ? <ProfileCard user={user} /> : null}
+          <Divider m={6} orientation="vertical" />
+          {isLoading ? (
+            <Spinner />
+          ) : user ? (
+            <MyPetsCard userPets={userPets} />
+          ) : null}
+          {/* </Box>   */}
+        </Center>
       )}
     </>
   )

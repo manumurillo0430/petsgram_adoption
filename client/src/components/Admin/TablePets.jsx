@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Link, Avatar } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
-import DashboardTable from './DashboardTable'
+import DashboardTable from './DashboardTabled'
 import { petStatusColor } from '../../utils/globals'
 
 export default function TableDataPets({ pets }) {

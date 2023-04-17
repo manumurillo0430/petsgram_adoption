@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardBody, Text, Divider } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
-import { useAuthContext } from '../../context/AuthContext'
+
 import PetAvatar from './PetAvatar'
 import './ProfileCard.css'
 

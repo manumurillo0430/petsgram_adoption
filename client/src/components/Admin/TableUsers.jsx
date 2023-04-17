@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import DashboardTable from './DashboardTable'
+import DashboardTable from './DashboardTabled'
 import { NavLink } from 'react-router-dom'
 import { Link, Avatar } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
@@ -49,7 +49,7 @@ export default function TableDataUsers({ users }) {
         Header: 'Role',
         accessor: 'role',
         Cell: (e) => {
-          if (e.value == true) {
+          if (e.value === true) {
             return (
               <span style={userRoleColor(e.value)} className="small-caps">
                 Admin

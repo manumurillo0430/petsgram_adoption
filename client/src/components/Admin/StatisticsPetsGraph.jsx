@@ -6,7 +6,7 @@ import {
   bgColorChart,
   borderColorChart,
 } from '../../utils/globals'
-import PieChart from './PieChart'
+import PieChart from './PieChartGraph'
 import BarChart from './BarChart'
 import './Graphs.css'
 

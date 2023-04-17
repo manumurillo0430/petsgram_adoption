@@ -12,34 +12,15 @@ import {
   CardBody,
   Center,
   useMediaQuery,
-  useDisclosure,
 } from '@chakra-ui/react'
-import { useAuthContext } from '../../context/AuthContext'
 import { petStatusBgColor } from '../../utils/globals'
 import PetTag from './PetTag'
-import PetActionsGrid from './PetActions'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
-import PetButtonsSaveLike from './PetButtonsSaveLike'
-import RegistrationModal from '../registration/RegistrationModal'
 import './PetCardGrid.css'
 import '../search/search.css'
-
-export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
-  const [adoptionStatus, setAdoptionStatus] = useState(status)
-  const { isOpen, onToggle } = useDisclosure()
-  const toggleModal = () => onToggle()
-  useEffect(() => {
-    setAdoptionStatus(status)
-  }, [status])
-  const { currentUser } = useAuthContext()
+export default function PetsubmissionCard({ pet }) {
   const theme = useColorMode('dark', 'light')
   const [isSmallerThan1400] = useMediaQuery('(max-width: 1500px)')
   const [isSmallerThan980] = useMediaQuery('(max-width: 980px)')
-  useEffect(() => {
-    setAdoptionStatus(status)
-  }, [status])
-
   return (
     <Card
       direction={
@@ -62,7 +43,7 @@ export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
       />
 
       <Stack w={isSmallerThan1400 ? '100%' : { base: '100%', md: '70%' }} p={4}>
-        <CardBody>
+        <CardBody textAlign="initial">
           <Center placeContent="start" mb={4}>
             <Avatar
               color="#121212"
@@ -108,33 +89,9 @@ export default function PetCardFull({ pet, status, userInfoLikes, tab }) {
           <Text mt={2}>
             <b>Adoption Status:</b>
           </Text>
-          <Text>{pet?.adoptionStatus}</Text>
+          <Text>{pet?.request}</Text>
         </CardBody>
-        <CardFooter>
-          {currentUser?.user_id ? (
-            <PetActionsGrid
-              setAdoptionStatus={setAdoptionStatus}
-              pet={pet}
-              status={status}
-              tab={tab}
-              userInfoLikes={userInfoLikes}
-            />
-          ) : (
-            <Flex w="100%" wrap="wrap" justify="start" gap={2} px={2} py={1}>
-              <PetButtonsSaveLike
-                label="Like"
-                icon={<FavoriteBorderIcon />}
-                action={toggleModal}
-              />
-              <PetButtonsSaveLike
-                label="Save"
-                icon={<TurnedInNotIcon />}
-                action={toggleModal}
-              />
-            </Flex>
-          )}
-        </CardFooter>
-        <RegistrationModal isOpen={isOpen} toggleModal={toggleModal} />
+        <CardFooter></CardFooter>
       </Stack>
     </Card>
   )

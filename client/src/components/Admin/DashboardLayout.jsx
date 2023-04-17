@@ -8,10 +8,10 @@ import {
   Spinner,
   Button,
 } from '@chakra-ui/react'
-import TableDataPets from './TableDataPets'
-import TableDataUsers from './TableDataUsers'
+import TableDataPets from './TablePets'
+import TableDataUsers from './TableUsers'
 import { AddIcon } from '@chakra-ui/icons'
-import StatisticsPets from './StatisticsPets'
+import StatisticsPets from './StatisticsPetsGraph'
 
 export default function DashboardTabs({
   users,

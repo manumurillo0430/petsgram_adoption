@@ -6,7 +6,7 @@ export const passwordTooShort = 'Password too short.'
 
 export const telRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
-export const petTypes = ['Any', 'Dog', 'Cat', 'Rabbit', 'Bird']
+export const petTypes = ['Any', 'Dog', 'Cat', 'Rabbit', 'Bird', 'Pig']
 
 export const footerLogo =
   'https://res.cloudinary.com/dugudxkyu/image/upload/v1681307279/pata_5_geyezh.png'
@@ -40,6 +40,20 @@ export const brandDark =
 
 export const logoWithBrandLight =
   'https://res.cloudinary.com/dugudxkyu/image/upload/v1676923781/blanco_wlbvex.png'
+
+export const saveALife =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1681643109/perro_4_bdre67.png'
+
+export const backgroundNight =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1681638097/banner_huellitas_2-01_zchq42.jpg'
+
+export const backgroundDay =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1681715971/40_gozrak.png'
+
+export const instructionsDay =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1681717471/banner_huellitas-06_ka3fct.png'
+export const instructionsNight =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1681717474/banner_huellitas-07_himd2i.png'
 
 export const petStatus = ['Adopted', 'Fostered', 'Available']
 export const userRoleColor = (role) => {

@@ -8,6 +8,7 @@ import {
   InputRightElement,
   Button,
   FormErrorMessage,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Field, useFormikContext } from 'formik'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
@@ -17,6 +18,7 @@ export default function FormPasswordField({ fieldName, fieldLabel, req }) {
   const { values, errors, touched, handleChange } = useFormikContext()
   const [seePassword, setSeePassword] = useState(false)
   const handleClick = () => setSeePassword(!seePassword)
+  const theme = useColorModeValue('dark', 'light')
 
   return (
     <FormControl
@@ -31,6 +33,7 @@ export default function FormPasswordField({ fieldName, fieldLabel, req }) {
       <FormLabel>{fieldLabel}</FormLabel>
       <InputGroup>
         <Field
+          backgroundColor={theme === 'light' ? '#1c1f2bc7' : '#fefefecc'}
           as={Input}
           type={seePassword ? 'text' : 'password'}
           name={fieldName}

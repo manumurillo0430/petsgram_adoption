@@ -3,6 +3,7 @@ import {
   FormLabel,
   Select,
   FormErrorMessage,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { useFormikContext, Field } from 'formik'
 
@@ -15,8 +16,10 @@ export default function FormSelectField({
   fieldArray,
   fieldSize,
   mx,
+  location,
 }) {
   const { errors, touched, handleChange } = useFormikContext()
+  const theme = useColorModeValue('dark', 'light')
 
   return (
     <FormControl
@@ -28,6 +31,7 @@ export default function FormSelectField({
       <FormLabel mb={2}>{fieldLabel}</FormLabel>
       <Field
         w={fieldSize}
+        backgroundColor={theme === 'light' ? '#1c1f2bc7' : '#fefefecc'}
         as={Select}
         name={fieldName}
         onChange={handleChange}
