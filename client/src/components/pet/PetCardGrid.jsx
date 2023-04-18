@@ -32,7 +32,7 @@ export default function PetCardGrid({
 }) {
   let navigate = useNavigate()
   const { currentUser } = useAuthContext()
-  const [adoptionStatus, setAdoptionStatus] = useState(pet.pet_id)
+  const [adoptionStatus, setAdoptionStatus] = useState(pet?.pet_id)
 
   useEffect(() => {
     setAdoptionStatus(status)
@@ -41,7 +41,7 @@ export default function PetCardGrid({
   const [showPetForm, setShowPetForm] = useState(false)
 
   const handleEditButtonClick = () => {
-    navigate(`/admin/editpet/${pet.pet_id}`)
+    navigate(`/admin/editpet/${pet?.pet_id}`)
     setShowPetForm(true)
   }
 
@@ -61,10 +61,10 @@ export default function PetCardGrid({
                   ? petStatusBgColor(status)
                   : petStatusBgColor(adoptionStatus)
               }
-              name={pet.name}
+              name={pet?.name}
             />
             <Box>
-              <Heading size="md">{pet.name}</Heading>
+              <Heading size="md">{pet?.name}</Heading>
               <Divider style={{ border: 'none', margin: '0.3rem' }} />
               <Text
                 whiteSpace="nowrap"
@@ -120,8 +120,8 @@ export default function PetCardGrid({
         </Flex>
       </CardHeader>
       <Image
-        src={pet.picture}
-        alt={pet.name}
+        src={pet?.picture}
+        alt={pet?.name}
         h="15rem"
         objectFit="cover"
         objectPosition="top"

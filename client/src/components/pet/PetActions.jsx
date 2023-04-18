@@ -48,13 +48,13 @@ export default function PetActionsGrid({
     returnPet,
   } = useSearchContext()
 
-  const [status, setStatus] = useState(pet.adoptionStatus)
+  const [status, setStatus] = useState(pet?.adoptionStatus)
   useEffect(() => {
-    setStatus(pet.adoptionStatus)
-  }, [pet.adoptionStatus])
+    setStatus(pet?.adoptionStatus)
+  }, [pet?.adoptionStatus])
 
-  const [heart, setHeart] = useState(petsUserLiked?.includes(pet.pet_id))
-  const [save, setSave] = useState(petsUserSaved?.includes(pet.pet_id))
+  const [heart, setHeart] = useState(petsUserLiked?.includes(pet?.pet_id))
+  const [save, setSave] = useState(petsUserSaved?.includes(pet?.pet_id))
   const [justAdopted, setJustAdopted] = useState(false)
   const [justFostered, setJustFostered] = useState(false)
   const [adopting, setAdopting] = useState(false)
@@ -62,11 +62,11 @@ export default function PetActionsGrid({
   const [returning, setReturning] = useState(false)
 
   const isAdoptedByCurrentUser =
-    status === 'Adopted' && petsUserAdopted.includes(pet.pet_id)
+    status === 'Adopted' && petsUserAdopted.includes(pet?.pet_id)
   const isFosteredByCurrentUser =
-    status === 'Fostered' && petsUserFostered.includes(pet.pet_id)
+    status === 'Fostered' && petsUserFostered.includes(pet?.pet_id)
   const isFosteredByOthers =
-    status === 'Fostered' && !petsUserFostered.includes(pet.pet_id)
+    status === 'Fostered' && !petsUserFostered.includes(pet?.pet_id)
   const isAdoptedByOthers = status === 'Adopted' && !isAdoptedByCurrentUser
   const isJustAdopted = status === 'Adopted' && justAdopted === true
   const isJustFoster = status === 'Fostered' && justFostered === true
@@ -79,8 +79,8 @@ export default function PetActionsGrid({
     }
     setIsLiked(!isLiked)
     setHeart(!heart)
-    await userLikedPet(pet.pet_id, currentUser?.user?.user_id, location)
-    await addLike(user_id, pet.pet_id)
+    await userLikedPet(pet?.pet_id, currentUser?.user?.user_id, location)
+    await addLike(user_id, pet?.pet_id)
   }
 
   // const handleDelete = async () => {
@@ -89,7 +89,7 @@ export default function PetActionsGrid({
 
   const handleSave = async () => {
     setSave(!save)
-    await userSavedPet(user_id, pet.pet_id)
+    await userSavedPet(user_id, pet?.pet_id)
   }
 
   const handleUnsave = async () => {
@@ -99,7 +99,7 @@ export default function PetActionsGrid({
       }, 300)
     }
     setSave(!save)
-    await userUnsavedPet(user_id, pet.pet_id)
+    await userUnsavedPet(user_id, pet?.pet_id)
   }
 
   const handleAdoptionStatus = async (e) => {
@@ -110,7 +110,7 @@ export default function PetActionsGrid({
     }
     if (e.target.textContent === 'Foster') {
       setFostering(true)
-      await updatingAdoptionStatus(user_id, pet.pet_id, 'Fostered')
+      await updatingAdoptionStatus(user_id, pet?.pet_id, 'Fostered')
       setFostering(false)
       setJustFostered(true)
       setAdoptionStatus('Fostered')
@@ -118,7 +118,7 @@ export default function PetActionsGrid({
     }
     if (e.target.textContent === 'Adopt') {
       setAdopting(true)
-      await updatingAdoptionStatus(user_id, pet.pet_id, 'Adopted')
+      await updatingAdoptionStatus(user_id, pet?.pet_id, 'Adopted')
       setAdopting(false)
       setJustAdopted(true)
       setAdoptionStatus('Adopted')
@@ -133,13 +133,13 @@ export default function PetActionsGrid({
       }, 300)
     }
     setReturning(true)
-    await returnPet(user_id, pet.pet_id, pet.adoptionStatus)
+    await returnPet(user_id, pet?.pet_id, pet?.adoptionStatus)
     setReturning(false)
     setAdoptionStatus('Available')
     setStatus('Available')
   }
   const [isLiked, setIsLiked] = useState(
-    userInfoLikes && userInfoLikes.some((users) => users.user_id === user_id),
+    userInfoLikes && userInfoLikes?.some((users) => users?.user_id === user_id),
   )
   const { isOpen, onToggle } = useDisclosure()
   const toggleModal = () => onToggle()

@@ -1,4 +1,4 @@
-import { Box, Divider } from '@chakra-ui/react'
+import { Center, Divider } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import MyPetsCard from '../components/profile/MyPetsCard'
 import ProfileCard from '../components/profile/ProfileCard'
@@ -8,7 +8,6 @@ import { Spinner } from '@chakra-ui/react'
 
 export default function ProfileDetails() {
   const { isActiveSession, getUserById } = useAuthContext()
-
   const [user, setUser] = useState(null)
   const [userPets, setUserPets] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -21,7 +20,7 @@ export default function ProfileDetails() {
         const userInfo = await getUserById(
           Number(userLocation(window.location.pathname)),
         )
-        if (userInfo) {
+        if (userInfo.ok) {
           setIsLoading(false)
           setUser(userInfo.user)
           setUserPets(userInfo.pets)
@@ -37,21 +36,15 @@ export default function ProfileDetails() {
   return (
     <>
       {isActiveSession && (
-        <Box pb={6}>
-          <Box display="Flex" m={6}>
-            {isLoading ? (
-              <Spinner />
-            ) : user ? (
-              <ProfileCard user={user} />
-            ) : null}
-            <Divider m={6} orientation="vertical" />
-            {isLoading ? (
-              <Spinner />
-            ) : user ? (
-              <MyPetsCard userPets={userPets} />
-            ) : null}
-          </Box>
-        </Box>
+        <Center>
+          {isLoading ? <Spinner /> : user ? <ProfileCard user={user} /> : null}
+          <Divider m={6} orientation="vertical" />
+          {isLoading ? (
+            <Spinner />
+          ) : user ? (
+            <MyPetsCard userPets={userPets} />
+          ) : null}
+        </Center>
       )}
     </>
   )

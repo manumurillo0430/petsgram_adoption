@@ -7,6 +7,12 @@ export const passwordTooShort = 'Password too short.'
 export const telRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 export const petTypes = ['Any', 'Dog', 'Cat', 'Rabbit', 'Bird']
 
+export const homePictureNight =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1679143179/bg-dark_zeu6bk.png'
+
+export const homePictureDay =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1681803923/bg-light_suizg2-removebg-preview_xabjxr.png'
+
 export const logInPictureLight =
   'https://res.cloudinary.com/dugudxkyu/image/upload/v1676643038/7fbac6523f58c558f3f2329469aa5594_hmabe1.jpg'
 
