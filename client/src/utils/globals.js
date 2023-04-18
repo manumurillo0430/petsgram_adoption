@@ -13,6 +13,12 @@ export const homePictureNight =
 export const homePictureDay =
   'https://res.cloudinary.com/dugudxkyu/image/upload/v1681803923/bg-light_suizg2-removebg-preview_xabjxr.png'
 
+export const homePictureNight =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1679143179/bg-dark_zeu6bk.png'
+
+export const homePictureDay =
+  'https://res.cloudinary.com/dugudxkyu/image/upload/v1681803923/bg-light_suizg2-removebg-preview_xabjxr.png'
+
 export const logInPictureLight =
   'https://res.cloudinary.com/dugudxkyu/image/upload/v1676643038/7fbac6523f58c558f3f2329469aa5594_hmabe1.jpg'
 
