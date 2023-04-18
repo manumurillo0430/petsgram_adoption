@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Box, Tab, TabList, TabPanel, Tabs, TabPanels } from '@chakra-ui/react'
 import GridViewPets from '../components/pet/GridViewPets'
-import { useSearchContext } from '../context/SearchContext'
 import { Divider } from 'antd'
 import '../components/search/search.css'
 import { useAuthContext } from '../context/AuthContext'
