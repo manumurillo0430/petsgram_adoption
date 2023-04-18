@@ -70,66 +70,66 @@ export default function MyPets() {
       <Tabs isFitted>
         <Divider style={{ border: 'none', margin: '0.3rem' }} />
         <TabList>
-          <Tab onClick={() => handleTabChange('request')} fontWeight="semibold">
-            My Submitted Pets
-          </Tab>
           <Tab onClick={() => handleTabChange('saved')} fontWeight="semibold">
             Saved Pets
           </Tab>
           <Tab onClick={() => handleTabChange('liked')} fontWeight="semibold">
             Liked Pets
           </Tab>
-          <Tab onClick={() => handleTabChange('adopted')} fontWeight="semibold">
-            My Adopted Pets
-          </Tab>
-
           <Tab
             onClick={() => handleTabChange('fostered')}
             fontWeight="semibold"
           >
             My Fostered Pets
           </Tab>
+          <Tab onClick={() => handleTabChange('adopted')} fontWeight="semibold">
+            My Adopted Pets
+          </Tab>
+
+          <Tab onClick={() => handleTabChange('request')} fontWeight="semibold">
+            My Uploaded Pets
+          </Tab>
         </TabList>
 
         <TabPanels>
+          <TabPanel>
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
+          </TabPanel>
+          <TabPanel>
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
+          </TabPanel>
+          <TabPanel>
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
+          </TabPanel>
+          <TabPanel>
+            <GridViewPets
+              cardSize={25}
+              petsArray={petsTabArray}
+              tab={tab}
+              location={userLocation(window.location.pathname)}
+            />
+          </TabPanel>
+
           <TabPanel textAlign="-webkit-center">
             <PetSubmissions
               location={userLocation(window.location.pathname)}
               tab={tab}
               petsRequested={petsRequested}
-            />
-          </TabPanel>
-
-          <TabPanel>
-            <GridViewPets
-              cardSize={25}
-              petsArray={petsTabArray}
-              tab={tab}
-              location={userLocation(window.location.pathname)}
-            />
-          </TabPanel>
-          <TabPanel>
-            <GridViewPets
-              cardSize={25}
-              petsArray={petsTabArray}
-              tab={tab}
-              location={userLocation(window.location.pathname)}
-            />
-          </TabPanel>
-          <TabPanel>
-            <GridViewPets
-              cardSize={25}
-              petsArray={petsTabArray}
-              tab={tab}
-              location={userLocation(window.location.pathname)}
-            />
-          </TabPanel>
-          <TabPanel>
-            <GridViewPets
-              cardSize={25}
-              petsArray={petsTabArray}
-              tab={tab}
-              location={userLocation(window.location.pathname)}
             />
           </TabPanel>
         </TabPanels>

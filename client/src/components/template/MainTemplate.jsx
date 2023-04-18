@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Grid,
-  GridItem,
-  Link,
-  useColorModeValue,
-  Image,
-} from '@chakra-ui/react'
+import { Grid, GridItem, Link, useColorModeValue } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import { Menu } from 'antd'
 import { HomeFilled, SettingFilled, UserOutlined } from '@ant-design/icons'
@@ -18,13 +12,11 @@ import PublishIcon from '@mui/icons-material/Publish'
 import PetsIcon from '@mui/icons-material/Pets'
 import { useLocation } from 'react-router-dom'
 import './MainTemplate.css'
-import { backgroundDay, backgroundNight, saveALife } from '../../utils/globals'
-import { footerLogo } from '../../utils/globals'
-import { bannerDay, bannerNight } from '../../utils/globals'
+import { backgroundDay, backgroundNight } from '../../utils/globals'
 
 export default function MainTemplate({ children }) {
   const { isActiveSession, currentUser } = useAuthContext()
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true)
   const location = useLocation()
   const [selectedKeys, setSelectedKeys] = useState(['1'])
   const theme = useColorModeValue('dark', 'light')
@@ -196,9 +188,6 @@ export default function MainTemplate({ children }) {
       >
         {children}
       </GridItem>
-
-      {/* Footer */}
-      {/* <GridItem area={'footer'}>Footer</GridItem> */}
     </Grid>
   )
 }

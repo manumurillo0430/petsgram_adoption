@@ -8,7 +8,6 @@ import { Spinner } from '@chakra-ui/react'
 
 export default function ProfileDetails() {
   const { isActiveSession, getUserById } = useAuthContext()
-
   const [user, setUser] = useState(null)
   const [userPets, setUserPets] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -38,7 +37,6 @@ export default function ProfileDetails() {
     <>
       {isActiveSession && (
         <Center>
-          {/* <Box textAlign="center" display="Flex" m={6}> */}
           {isLoading ? <Spinner /> : user ? <ProfileCard user={user} /> : null}
           <Divider m={6} orientation="vertical" />
           {isLoading ? (
@@ -46,7 +44,6 @@ export default function ProfileDetails() {
           ) : user ? (
             <MyPetsCard userPets={userPets} />
           ) : null}
-          {/* </Box>   */}
         </Center>
       )}
     </>

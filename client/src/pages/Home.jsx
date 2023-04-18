@@ -1,6 +1,6 @@
-import { Box, Image, useColorModeValue } from '@chakra-ui/react'
+import { Box, Center, Image, useColorModeValue } from '@chakra-ui/react'
 import HomeTemplate from '../components/home/HomeTemplate'
-import { instructionsDay, instructionsNight } from '../utils/globals'
+import { homePictureNight, homePictureDay } from '../utils/globals'
 
 export default function Home() {
   const theme = useColorModeValue('dark', 'light')
@@ -13,16 +13,21 @@ export default function Home() {
       justifyContent="center"
       overflow="hidden"
       h="100vh"
+      backgroundColor={theme === 'light' ? '#1a1f2bde' : ''}
     >
       <Box w="50%">
-        <HomeTemplate />
+        <Center>
+          <HomeTemplate />
+        </Center>
       </Box>
       <Box w="40%" m={0} p={0}>
-        <Image
-          position="relative"
-          bottom="4rem"
-          src={theme === 'dark' ? instructionsDay : instructionsNight}
-        />
+        <Center>
+          <Image
+            w={theme === 'light' ? '50%' : '70%'}
+            bottom="4rem"
+            src={theme === 'dark' ? homePictureDay : homePictureNight}
+          />
+        </Center>
       </Box>
     </Box>
   )
