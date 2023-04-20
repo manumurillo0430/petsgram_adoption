@@ -1,0 +1,36 @@
+.picturePreview {
+    width: 17rem;
+    height: 17rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    border: 1px solid #474a54;
+    padding: 0.3rem;
+    border-radius: 6px;
+     background-color: #1c1f2bc7; 
+    
+  }
+  .picturePreview.dark{
+    border: 1.5px solid #ebedef;
+    background-color: #fefefecc; 
+    
+   
+  }
+  .picturePreview.dark:hover{
+    border: 1.5px solid #dfdfdf;
+   
+  }
+  
+  .picturePreview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color:'#fefefecc'; 
+  }
+
+
+  input[type="file"] {
+    display: none;
+}
+

@@ -1,0 +1,4 @@
+.chakra-ui-dark .css-zkaa13:not([data-theme]), [data-theme=dark] .css-zkaa13:not([data-theme]), .css-zkaa13[data-theme=dark] {
+    --card-bg: var(--chakra-colors-gray-700);
+    background-color: #011529 ;
+}
