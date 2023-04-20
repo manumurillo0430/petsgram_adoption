@@ -3,7 +3,7 @@ import { userLocation } from '../utils/globals'
 import { Box } from '@chakra-ui/react'
 import { GetReq } from '../utils/api'
 import PetForm from '../components/admin/AddPetForm'
-// import PetForm from '../components/admin/AddNewPetForm'
+
 
 export default function AddNewPet() {
   const userRole = localStorage.getItem('userRole')
