@@ -40,14 +40,17 @@ async function getUserByIdModel(id) {
         .from('fostered_pets')
         .select('fostered')
         .where({ user_id: id })
+      const fosteredPetsIds = fosteredPets.map((pet) => pet.fostered)
       const savedPets = await dbConnection
         .from('saved_pets')
         .select('saved')
         .where({ user_id: id })
+      const savedPetsIds = savedPets.map((pet) => pet.saved)
       const adoptedPets = await dbConnection
         .from('adopted_pets')
         .select('adopted')
         .where({ user_id: id })
+      const adoptedPetIds = adoptedPets.map((pet) => pet.adopted)
       const petsUserLike = await dbConnection
         .from('liked_pets')
         .where({ user_id: id })
@@ -55,19 +58,28 @@ async function getUserByIdModel(id) {
         .where({
           user_id: id,
         })
+      const userLikedPetIds = petsUserLike.map((row) => row.pet_id)
       const petsRequested = await dbConnection
         .from('pet_requests')
         .where({ user_id: id })
-      const userLikedPetIds = petsUserLike.map((row) => row.pet_id)
-      const adopted = adoptedPets.map((pet) => pet.adopted)
-      const fostered = fosteredPets.map((pet) => pet.fostered)
-      const saved = savedPets.map((pet) => pet.saved)
 
+      const allPets = await dbConnection('pets').select('*')
+      const adopted = allPets.filter((pet) =>
+        adoptedPetIds.includes(pet.pet_id),
+      )
+      const fostered = allPets.filter((pet) => {
+        return fosteredPetsIds.includes(pet.pet_id)
+      })
+
+      const saved = allPets.filter((pet) => savedPetsIds.includes(pet.pet_id))
+      const liked = allPets.filter((pet) =>
+        userLikedPetIds.includes(pet.pet_id),
+      )
       const pets = {
         adopted: adopted,
         fostered: fostered,
         saved: saved,
-        liked: userLikedPetIds,
+        liked: liked,
         requested: petsRequested,
       }
       return { user, pets: pets }
