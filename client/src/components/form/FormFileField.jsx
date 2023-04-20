@@ -31,7 +31,9 @@ export default function FormFileField({
 
   const handlePicture = (e) => {
     setPictureView(URL.createObjectURL(e.target.files[0]))
+    console.log(pictureView)
     setPicture(e.target.files[0])
+    console.log(picture)
   }
 
   const handleDeletePicture = () => {

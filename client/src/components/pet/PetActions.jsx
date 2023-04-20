@@ -8,13 +8,13 @@ import {
   useColorModeValue,
   Link,
 } from '@chakra-ui/react'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import { useSearchContext } from '../../context/SearchContext'
 import { useAuthContext } from '../../context/AuthContext'
+import { userNames } from '../../utils/globals'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
-import { userNames } from '../../utils/globals'
 import PetButtonStatus from './PetButtonStatus'
 import PetButtonsSaveLike from './PetButtonsSaveLike'
 import LikesInfoModal from './LikesInfoModal'
@@ -36,6 +36,10 @@ export default function PetActionsGrid({
     petsUserFostered,
     petsUserLiked,
     petsUserSaved,
+    setPetsUserAdopted,
+    setPetsUserSaved,
+    setPetsUserLiked,
+    setPetsUserFostered,
     userLikedPet,
     userSavedPet,
     userUnsavedPet,
@@ -53,8 +57,12 @@ export default function PetActionsGrid({
     setStatus(pet?.adoptionStatus)
   }, [pet?.adoptionStatus])
 
-  const [heart, setHeart] = useState(petsUserLiked?.includes(pet?.pet_id))
-  const [save, setSave] = useState(petsUserSaved?.includes(pet?.pet_id))
+  const [heart, setHeart] = useState(
+    petsUserLiked?.some((likedPet) => likedPet.pet_id === pet?.pet_id),
+  )
+  const [save, setSave] = useState(
+    petsUserSaved?.some((savedPet) => savedPet.pet_id === pet?.pet_id),
+  )
   const [justAdopted, setJustAdopted] = useState(false)
   const [justFostered, setJustFostered] = useState(false)
   const [adopting, setAdopting] = useState(false)
@@ -62,11 +70,16 @@ export default function PetActionsGrid({
   const [returning, setReturning] = useState(false)
 
   const isAdoptedByCurrentUser =
-    status === 'Adopted' && petsUserAdopted.includes(pet?.pet_id)
+    status === 'Adopted' &&
+    petsUserAdopted.some((adoptedPet) => adoptedPet.pet_id === pet?.pet_id)
   const isFosteredByCurrentUser =
-    status === 'Fostered' && petsUserFostered.includes(pet?.pet_id)
+    status === 'Fostered' &&
+    petsUserFostered.some((fosteredPet) => fosteredPet.pet_id === pet?.pet_id)
+
   const isFosteredByOthers =
-    status === 'Fostered' && !petsUserFostered.includes(pet?.pet_id)
+    status === 'Fostered' &&
+    !petsUserFostered.some((fosteredPet) => fosteredPet.pet_id === pet?.pet_id)
+
   const isAdoptedByOthers = status === 'Adopted' && !isAdoptedByCurrentUser
   const isJustAdopted = status === 'Adopted' && justAdopted === true
   const isJustFoster = status === 'Fostered' && justFostered === true
@@ -79,6 +92,9 @@ export default function PetActionsGrid({
     }
     setIsLiked(!isLiked)
     setHeart(!heart)
+    if (!heart) {
+      setPetsUserLiked([...petsUserLiked, pet])
+    }
     await userLikedPet(pet?.pet_id, currentUser?.user?.user_id, location)
     await addLike(user_id, pet?.pet_id)
   }
@@ -90,6 +106,7 @@ export default function PetActionsGrid({
   const handleSave = async () => {
     setSave(!save)
     await userSavedPet(user_id, pet?.pet_id)
+    setPetsUserSaved([...petsUserSaved, pet])
   }
 
   const handleUnsave = async () => {
@@ -100,6 +117,10 @@ export default function PetActionsGrid({
     }
     setSave(!save)
     await userUnsavedPet(user_id, pet?.pet_id)
+    const updatedPetsUserFostered = petsUserSaved.filter(
+      (savedPet) => savedPet.pet_id !== pet?.pet_id,
+    )
+    setPetsUserSaved(updatedPetsUserFostered)
   }
 
   const handleAdoptionStatus = async (e) => {
@@ -110,19 +131,29 @@ export default function PetActionsGrid({
     }
     if (e.target.textContent === 'Foster') {
       setFostering(true)
-      await updatingAdoptionStatus(user_id, pet?.pet_id, 'Fostered')
+      const fostering = await updatingAdoptionStatus(
+        user_id,
+        pet?.pet_id,
+        'Fostered',
+      )
       setFostering(false)
       setJustFostered(true)
       setAdoptionStatus('Fostered')
       setStatus('Fostered')
+      setPetsUserFostered([...petsUserFostered, fostering?.pet])
     }
     if (e.target.textContent === 'Adopt') {
       setAdopting(true)
-      await updatingAdoptionStatus(user_id, pet?.pet_id, 'Adopted')
+      const adopting = await updatingAdoptionStatus(
+        user_id,
+        pet?.pet_id,
+        'Adopted',
+      )
       setAdopting(false)
       setJustAdopted(true)
       setAdoptionStatus('Adopted')
       setStatus('Adopted')
+      setPetsUserAdopted([...petsUserAdopted, adopting?.pet])
     }
   }
 
@@ -133,10 +164,21 @@ export default function PetActionsGrid({
       }, 300)
     }
     setReturning(true)
-    await returnPet(user_id, pet?.pet_id, pet?.adoptionStatus)
+    await returnPet(user_id, pet?.pet_id, status)
     setReturning(false)
     setAdoptionStatus('Available')
     setStatus('Available')
+    if (status === 'Adopted') {
+      const updatedPetsUserAdopted = petsUserAdopted.filter(
+        (adoptedPet) => adoptedPet.pet_id !== pet?.pet_id,
+      )
+      setPetsUserAdopted(updatedPetsUserAdopted)
+    } else if (status === 'Fostered') {
+      const updatedPetsUserFostered = petsUserFostered.filter(
+        (fosteredPet) => fosteredPet.pet_id !== pet?.pet_id,
+      )
+      setPetsUserFostered(updatedPetsUserFostered)
+    }
   }
   const [isLiked, setIsLiked] = useState(
     userInfoLikes && userInfoLikes?.some((users) => users?.user_id === user_id),

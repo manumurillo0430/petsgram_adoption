@@ -11,17 +11,22 @@ import {
   Heading,
   Tooltip,
   IconButton,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { useAuthContext } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { petStatusColor } from '../../utils/globals'
 import { petStatusBgColor } from '../../utils/globals'
 import { Divider } from 'antd'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import TurnedInNotIcon from '@mui/icons-material/TurnedInNot'
+import PetButtonsSaveLike from './PetButtonsSaveLike'
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined'
 import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined'
+import AddNewPet from '../../pages/AddNewPet'
+import RegistrationModal from '../registration/RegistrationModal'
 import PetActionsGrid from './PetActions'
 import './PetCardGrid.css'
-import AddNewPet from '../../pages/AddNewPet'
 
 export default function PetCardGrid({
   pet,
@@ -31,6 +36,8 @@ export default function PetCardGrid({
   location,
 }) {
   let navigate = useNavigate()
+  const { isOpen, onToggle } = useDisclosure()
+  const toggleModal = () => onToggle()
   const { currentUser } = useAuthContext()
   const [adoptionStatus, setAdoptionStatus] = useState(pet?.pet_id)
 
@@ -127,7 +134,7 @@ export default function PetCardGrid({
         objectPosition="top"
         w="100%"
       />
-      {currentUser.user_id && (
+      {currentUser.user_id ? (
         <CardFooter
           // justify="start"
           alignItems="center"
@@ -149,7 +156,21 @@ export default function PetCardGrid({
             userInfoLikes={userInfoLikes}
           />
         </CardFooter>
+      ) : (
+        <Flex w="100%" wrap="wrap" justify="start" gap={2} px={2} py={1}>
+          <PetButtonsSaveLike
+            label="Like"
+            icon={<FavoriteBorderIcon />}
+            action={toggleModal}
+          />
+          <PetButtonsSaveLike
+            label="Save"
+            icon={<TurnedInNotIcon />}
+            action={toggleModal}
+          />
+        </Flex>
       )}
+      <RegistrationModal isOpen={isOpen} toggleModal={toggleModal} />
     </Card>
   )
 }

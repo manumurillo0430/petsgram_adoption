@@ -4,11 +4,15 @@ import {
   FormLabel,
   FormErrorMessage,
   Textarea,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Field, useFormikContext } from 'formik'
 
 export default function FormTextAreaField({ fieldLabel, fieldName, req }) {
+  const theme = useColorModeValue('dark', 'light')
+
   const { values, errors, touched, handleChange } = useFormikContext()
+
   return (
     <FormControl
       display="flex"
@@ -19,6 +23,7 @@ export default function FormTextAreaField({ fieldLabel, fieldName, req }) {
     >
       <FormLabel marginLeft="0">{fieldLabel}</FormLabel>
       <Field
+        backgroundColor={theme === 'light' ? '#1c1f2bc7' : '#fefefecc'}
         as={Textarea}
         name={fieldName}
         resize="vertical"

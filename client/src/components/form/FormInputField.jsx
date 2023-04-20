@@ -5,6 +5,7 @@ import {
   Input,
   FormErrorMessage,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Field, useFormikContext } from 'formik'
 
@@ -28,7 +29,7 @@ export default function FormInputField({
   const handleBlur = () => {
     setFieldTouched(fieldName, true)
   }
-
+  const theme = useColorModeValue('dark', 'light')
   return (
     <FormControl
       display="flex"
@@ -43,6 +44,7 @@ export default function FormInputField({
         {fieldLabel}
       </FormLabel>
       <Field
+        backgroundColor={theme === 'light' ? '#1c1f2bc7' : '#fefefecc'}
         as={Input}
         name={fieldName}
         w={fieldSize ? fieldSize : '100%'}

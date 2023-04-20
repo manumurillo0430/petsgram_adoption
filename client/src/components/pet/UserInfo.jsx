@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Box, Flex, Avatar, Text, Button } from '@chakra-ui/react'
+import { Flex, Avatar, Text, Button } from '@chakra-ui/react'
 import { Divider } from 'antd'
-import { minWidth } from '@mui/system'
+
 export default function UserInfo({ user }) {
   let navigate = useNavigate()
   return (

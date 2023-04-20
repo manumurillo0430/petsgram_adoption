@@ -1,9 +1,9 @@
 import React from 'react'
-import DashboardTabs from './DashboardTabs'
+import DashboardTabs from './DashboardLayout'
 import { useState, useEffect } from 'react'
 import { GetReq } from '../../utils/api'
 
-export default function DashboardTemple() {
+export default function DashboardTemplate() {
   const [pets, setPets] = useState([])
   const [users, setUsers] = useState()
   const [areListsLoading, setAreListsLoading] = useState(true)

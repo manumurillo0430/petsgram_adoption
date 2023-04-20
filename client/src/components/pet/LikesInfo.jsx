@@ -12,7 +12,6 @@ export default function LikesInfo({ userInfoLikes }) {
             <>
               <Flex flexDirection="column">
                 <UserInfo user={user} />
-                {/* <ModalCloseButton /> */}
               </Flex>
             </>
           )

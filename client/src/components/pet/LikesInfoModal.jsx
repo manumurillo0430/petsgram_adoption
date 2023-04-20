@@ -6,7 +6,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Heading,
-  Flex,
 } from '@chakra-ui/react'
 import { Divider } from 'antd'
 import LikesInfo from './LikesInfo'

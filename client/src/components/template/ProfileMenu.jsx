@@ -52,19 +52,19 @@ export default function ProfileMenu() {
       >
         <MenuItem
           sx={menuItemSx(theme)}
-          onClick={() => navigate(`/profile/${currentUser.user_id}`)}
+          onClick={() => navigate(`/myprofile/${currentUser.user_id}`)}
         >
           My Profile
         </MenuItem>
         <MenuItem
           sx={menuItemSx(theme)}
-          onClick={() => navigate('/profile/mypets')}
+          onClick={() => navigate('/myprofile/mypets')}
         >
           My Pets
         </MenuItem>
         <MenuItem
           sx={menuItemSx(theme)}
-          onClick={() => navigate('/profile/settings')}
+          onClick={() => navigate('/myprofile/settings')}
         >
           Settings
         </MenuItem>

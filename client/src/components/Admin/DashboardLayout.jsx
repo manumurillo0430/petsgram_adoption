@@ -8,7 +8,7 @@ import {
   Spinner,
   Button,
 } from '@chakra-ui/react'
-import TableDataPets from './TableDataPets'
+import TableDataPets from './TablePets'
 import TableDataUsers from './TableDataUsers'
 import { AddIcon } from '@chakra-ui/icons'
 import StatisticsPets from './StatisticsPets'
