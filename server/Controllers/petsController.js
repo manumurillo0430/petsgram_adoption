@@ -136,6 +136,7 @@ const returnPet = async (req, res) => {
       return res.status(200).send({ ok: true, message: 'Pet returned' })
     }
   } catch (error) {
+    console.error('Controller error:', error)
     res.status(500).send('Internal Server Error')
     return
   }

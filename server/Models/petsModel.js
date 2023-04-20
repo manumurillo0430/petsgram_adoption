@@ -141,14 +141,14 @@ async function adoptPetModel(user_id, pet_id, adoptionStatus) {
         await dbConnection('pets').where({ pet_id: pet_id }).update({
           adoptionStatus: adoptionStatus,
         })
-        const myAdoptedPets = await dbConnection('adopted_pets').where({
-          user_id: user_id,
-        })
-        const myAdoptedPetsIds = myAdoptedPets.map((row) => row.adopted)
+        const myNewPet = await dbConnection('pets')
+          .where({
+            pet_id: pet_id,
+          })
+          .first()
         const adoptionStatusUpdated = {
-          message:
-            "You have made the wonderful decision to adopt your pet. Let's continue to be friends!",
-          myAdoptedPetsIds: myAdoptedPetsIds,
+          message: 'You have adopted a new friend',
+          myNewAdoptedPet: myNewPet,
         }
         return adoptionStatusUpdated
       }
@@ -171,13 +171,14 @@ async function adoptPetModel(user_id, pet_id, adoptionStatus) {
           adopted: pet_id,
         })
       }
-      const myAdoptedPets = await dbConnection('adopted_pets').where({
-        user_id: user_id,
-      })
-      const myAdoptedPetsIds = myAdoptedPets.map((row) => row.adopted)
+      const myNewPet = await dbConnection('pets')
+        .where({
+          pet_id: pet_id,
+        })
+        .first()
       const adoptionStatusUpdated = {
         message: 'You have adopted a new friend',
-        myAdoptedPetsIds: myAdoptedPetsIds,
+        myNewAdoptedPet: myNewPet,
       }
       return adoptionStatusUpdated
     }
@@ -196,13 +197,14 @@ async function adoptPetModel(user_id, pet_id, adoptionStatus) {
           fostered: pet_id,
         })
       }
-      const myFosteredPets = await dbConnection('fostered_pets').where({
-        user_id: user_id,
-      })
-      const myFosteredPetsIds = myFosteredPets.map((row) => row.adopted)
+      const myNewPet = await dbConnection('pets')
+        .where({
+          pet_id: pet_id,
+        })
+        .first()
       const adoptionStatusUpdated = {
-        message: 'You have fostered a new friend',
-        myFosteredPetsIds: myFosteredPetsIds,
+        message: 'You have adopted a new friend',
+        myNewFosteredPet: myNewPet,
       }
       return adoptionStatusUpdated
     }
@@ -217,12 +219,13 @@ async function returnPetModel(user_id, pet_id, adoptionStatus) {
       const isUserAdoptingThisPet = await dbConnection('adopted_pets')
         .where({ user_id: user_id, adopted: pet_id })
         .first()
+
       if (isUserAdoptingThisPet) {
-        const deleteFosterStatus = await dbConnection('adopted_pets')
+        const deleteAdoptStatus = await dbConnection('adopted_pets')
           .where({ user_id: user_id, adopted: pet_id })
           .delete()
 
-        if (deleteFosterStatus) {
+        if (deleteAdoptStatus) {
           const updatedPet = await dbConnection('pets')
             .where({ pet_id: pet_id })
             .update({ adoptionStatus: 'Available' })
@@ -237,7 +240,6 @@ async function returnPetModel(user_id, pet_id, adoptionStatus) {
       const isUserFosteringThisPet = await dbConnection('fostered_pets')
         .where({ user_id: user_id, fostered: pet_id })
         .first()
-
       if (isUserFosteringThisPet) {
         await dbConnection('fostered_pets')
           .where({ user_id: user_id, fostered: pet_id })
@@ -252,7 +254,7 @@ async function returnPetModel(user_id, pet_id, adoptionStatus) {
       }
     }
   } catch (error) {
-    console.log(error)
+    console.log('Model error:', error)
   }
 }
 
