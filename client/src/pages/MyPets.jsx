@@ -10,59 +10,17 @@ import PetSubmissions from '../components/pet/PetSubmissions'
 
 export default function MyPets() {
   const {
-    user_id,
-    getCurrentUser,
     petsUserAdopted,
     petsUserFostered,
     petsUserLiked,
     petsUserSaved,
     petsRequested,
   } = useAuthContext()
-  const { getAllPets } = useSearchContext()
-  const [petsTabArray, setPetsTabArray] = useState([])
+
   const [tab, setTab] = useState('fostered')
-
-  const updatePetsTabArray = async (tabSelected) => {
-    try {
-      const allPets = await getAllPets()
-
-      if (tabSelected === 'liked') {
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserLiked.includes(pet.pet_id)),
-        )
-      } else if (tabSelected === 'saved') {
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserSaved.includes(pet.pet_id)),
-        )
-      } else if (tabSelected === 'fostered') {
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserFostered.includes(pet.pet_id)),
-        )
-      } else if (tabSelected === 'adopted') {
-        setPetsTabArray(
-          allPets?.filter((pet) => petsUserAdopted.includes(pet.pet_id)),
-        )
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    async function fetchPets() {
-      try {
-        await getCurrentUser(user_id)
-        updatePetsTabArray('fostered')
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchPets()
-  }, [])
 
   const handleTabChange = async (tabSelected) => {
     setTab(tabSelected)
-    updatePetsTabArray(tabSelected)
   }
 
   return (
@@ -95,7 +53,7 @@ export default function MyPets() {
           <TabPanel>
             <GridViewPets
               cardSize={25}
-              petsArray={petsTabArray}
+              petsArray={petsUserSaved}
               tab={tab}
               location={userLocation(window.location.pathname)}
             />
@@ -103,7 +61,7 @@ export default function MyPets() {
           <TabPanel>
             <GridViewPets
               cardSize={25}
-              petsArray={petsTabArray}
+              petsArray={petsUserLiked}
               tab={tab}
               location={userLocation(window.location.pathname)}
             />
@@ -111,7 +69,7 @@ export default function MyPets() {
           <TabPanel>
             <GridViewPets
               cardSize={25}
-              petsArray={petsTabArray}
+              petsArray={petsUserFostered}
               tab={tab}
               location={userLocation(window.location.pathname)}
             />
@@ -119,7 +77,7 @@ export default function MyPets() {
           <TabPanel>
             <GridViewPets
               cardSize={25}
-              petsArray={petsTabArray}
+              petsArray={petsUserAdopted}
               tab={tab}
               location={userLocation(window.location.pathname)}
             />

@@ -1,5 +1,4 @@
-import { Grid, Spinner, Text, Flex } from '@chakra-ui/react'
-import { useState } from 'react'
+import { Grid, Text, Flex } from '@chakra-ui/react'
 import PetCardGrid from './PetCardGrid'
 
 export default function GridViewPets({
@@ -36,12 +35,12 @@ export default function GridViewPets({
         })
       ) : (
         <Flex justifyContent="center" alignItems="center">
+          {location === 'search' &&
+            'Sorry, there are no results that match your criteria.'}
           <Text>
-            {location === 'mypets' ? (
-              <Spinner />
-            ) : (
-              'Sorry, there are no results that match your criteria.'
-            )}
+            {petsArray?.length === 0 &&
+              location === 'mypets' &&
+              'Sorry, there are no pets in this list.'}
           </Text>
         </Flex>
       )}

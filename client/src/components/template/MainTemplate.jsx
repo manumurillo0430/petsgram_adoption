@@ -178,13 +178,6 @@ export default function MainTemplate({ children }) {
         flex={1}
         justifyContent="center"
         position="relative"
-        backgroundImage={
-          theme === 'light'
-            ? `url(${backgroundNight})`
-            : `url(${backgroundDay})`
-        }
-        backgroundPosition="center"
-        backgroundSize="cover"
       >
         {children}
       </GridItem>

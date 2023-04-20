@@ -20,7 +20,7 @@ export default function ProfileDetails() {
         const userInfo = await getUserById(
           Number(userLocation(window.location.pathname)),
         )
-        if (userInfo) {
+        if (userInfo.ok) {
           setIsLoading(false)
           setUser(userInfo.user)
           setUserPets(userInfo.pets)

@@ -126,10 +126,10 @@ function SearchProvider() {
       })
       if (res.ok) {
         if (adoptionStatus === 'Fostered') {
-          currentUser.pets.fostered = res.myFosteredPetsIds
+          return { message: res.pet.message, pet: res.pet.myNewFosteredPet }
         }
         if (adoptionStatus === 'Adopted') {
-          currentUser.pets.adopted = res.myAdoptedPetsIds
+          return { message: res.pet.message, pet: res.pet.myNewAdoptedPet }
         }
       }
     } catch (error) {}

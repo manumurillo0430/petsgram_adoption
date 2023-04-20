@@ -16,6 +16,7 @@ const AuthContext = createContext({
   setPetsUserAdopted: () => {},
   setPetsUserLiked: () => {},
   setPetsUserSaved: () => {},
+  setPetsUserFostered: () => {},
   verifyUser: () => {},
   getCurrentUser: () => {},
   userLikedPet: () => {},
@@ -111,7 +112,7 @@ function AuthProvider({ children }) {
     try {
       const res = await GetReq(`/user/${user_id}`)
       if (res.ok) {
-        return { user: res.user, pets: res.pets }
+        return res
       }
     } catch (error) {
       console.log(error)
@@ -189,6 +190,7 @@ function AuthProvider({ children }) {
         setPetsUserAdopted,
         setPetsUserLiked,
         setPetsUserSaved,
+        setPetsUserFostered,
         verifyUser,
         clearCurrentUser,
         getCurrentUser,
