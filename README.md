@@ -31,7 +31,7 @@ To run the project locally, follow these steps:
 ```
   npm run install:both
 ```
-3. Create a `.env` <u>__file in the root folder of the server__</u> with the following content (replace the `***************` with your own secret keys):
+3. Create a `.env` __file in the root FOLDER OF THE SERVER__ with the following content (replace the `***************` with your own secret keys):
 
 ACCESS_TOKEN_SECRET = ***************
 
