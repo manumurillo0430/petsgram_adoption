@@ -37,7 +37,7 @@ ACCESS_TOKEN_SECRET = ***************
 
 REFRESH_TOKEN_SECRET = ***************
 
-These keys should be strong and unique strings,ideally generated using a tool like [Random.org](https://www.random.org/strings/) or [Online UUID Generator Tool](https://www.uuidgenerator.net/).
+These keys should be strong and unique strings, ideally generated using a tool like [Random.org](https://www.random.org/strings/) or [Online UUID Generator Tool](https://www.uuidgenerator.net/).
 
 4. Start both client and server with:
 ```
