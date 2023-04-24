@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { userLocation } from '../utils/globals'
 import { Box } from '@chakra-ui/react'
 import { GetReq } from '../utils/api'
-import PetForm from '../components/admin/AddNewPetForm'
+import AddNewPetForm from '../components/Admin/AddNewPetForm'
 
 export default function AddNewPet() {
   const userRole = localStorage.getItem('userRole')
@@ -27,7 +27,7 @@ export default function AddNewPet() {
   return (
     <>
       <Box w="100%">
-        {userRole && <PetForm pet={pet} location={location} />}
+        {userRole && <AddNewPetForm pet={pet} location={location} />}
       </Box>
     </>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { userLocation } from '../utils/globals'
 import { Box, Heading } from '@chakra-ui/react'
-import PetForm from '../components/admin/AddNewPetForm'
+import AddNewPetForm from '../components/Admin/AddNewPetForm'
 
 export default function SaveALife() {
   const userRole = localStorage.getItem('userRole')
@@ -16,7 +16,7 @@ export default function SaveALife() {
             Fill this form and save a life
           </Heading>
         )}
-        {userRole && <PetForm location={location} />}
+        {userRole && <AddNewPetForm location={location} />}
       </Box>
     </>
   )

@@ -8,7 +8,6 @@ import {
   Outlet,
   Navigate,
 } from 'react-router-dom'
-
 import MainTemplate from './components/template/MainTemplate'
 import AdminDasboard from './pages/AdminDashboard'
 import Home from './pages/Home'
@@ -21,9 +20,9 @@ import PrivateRouteUser from './private_routes/PrivateRouteUser'
 import PrivateRouteAdmin from './private_routes/PrivateRouteAdmin'
 import PetDetailsPage from './components/pet/PetDetailsPage'
 import AddNewPet from './pages/AddNewPet'
-import PetForm from './components/admin/AddNewPetForm'
+import AddNewPetForm from './components/Admin/AddNewPetForm'
 import ProfileDetails from './pages/ProfileDetails'
-import SaveALife from './pages/SaveALife'
+import SaveALife from '../../client/src/pages/SaveALife'
 
 function App() {
   return (
@@ -92,7 +91,7 @@ function App() {
                   path="new"
                   element={
                     <PrivateRouteAdmin>
-                      <AddNewPet />
+                      <AddNewPetForm />
                     </PrivateRouteAdmin>
                   }
                 />
@@ -116,7 +115,7 @@ function App() {
                   path="editpet/:id"
                   element={
                     <PrivateRouteAdmin>
-                      <PetForm />
+                      <AddNewPetForm />
                     </PrivateRouteAdmin>
                   }
                 />
