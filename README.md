@@ -34,6 +34,7 @@ To run the project locally, follow these steps:
 3. Create a `.env` file in the root folder of the server with the following content (replace the `***************` with your own secret keys):
 
 ACCESS_TOKEN_SECRET = ***************
+
 REFRESH_TOKEN_SECRET = ***************
 
 These keys should be strong and unique strings,ideally generated using a tool like [Random.org](https://www.random.org/strings/) or [Online UUID Generator Tool](https://www.uuidgenerator.net/).
