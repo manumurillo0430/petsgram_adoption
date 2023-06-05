@@ -19,7 +19,7 @@ The application is hosted on Netlify for the front-end and Render for the back-e
 ### Tech Stack
 
 - Front-end: React, Chakra UI, Ant Design, Material UI
-- Back-end: Node.js, Express, MySQL, Sequelize
+- Back-end: Node.js, Express, PostgreSQL, Sequelize
 
 ### Getting Started
 
