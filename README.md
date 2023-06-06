@@ -1,6 +1,6 @@
 # PetsGram Adoption
 
-This project was developed as a final project for the Full-Stack Development program at Israel Tech Challenge (ITC). My goal was to create a user-friendly, intuitive, and visually appealing platform for both pet seekers and pet lovers who want to foster them temporarily.
+This project was developed as a personal challenge. My goal was to create a user-friendly, intuitive, and visually appealing platform for both pet seekers and pet lovers who want to foster them temporarily.
 
 PetsGram Adoption is a full-featured web application for pet adoption, attempting to establish a community of pet lovers. Users can search for their perfect pet, save or like their favorite pets, and view other users' profiles (if their accounts are public). The platform offers advanced search, user preferences and pet management, making it a one-stop solution for all your pet adoption needs. In addition, the website has advanced admin functionalities for site managers.
 
