@@ -5,9 +5,12 @@ import { GetReq } from '../utils/api'
 import AddNewPetForm from '../components/Admin/AddNewPetForm'
 
 export default function AddNewPet() {
+  console.log("his")
   const userRole = localStorage.getItem('userRole')
   const location = userLocation(window.location.pathname)
+
   const [pet, setPet] = useState(false)
+
   useEffect(() => {
     const getPetById = async () => {
       try {

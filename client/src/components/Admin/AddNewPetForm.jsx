@@ -74,10 +74,10 @@ export default function PetForm({ pet, location }) {
       }}
       validationSchema={petSchema}
       onSubmit={async (values, { resetForm }) => {
-        console.log(values, picture)
-        console.log('Picture:', picture)
         if (location === 'new' || location === 'savealife') {
           try {
+            console.log(values, picture)
+            console.log('Picture:', picture)
             if (values.hypoallergenic === false) {
               values.hypoallergenic = 0
             }
@@ -88,12 +88,13 @@ export default function PetForm({ pet, location }) {
             for (let key in values) {
               updatedPetData.append(`${key}`, `${values[key]}`)
             }
-
+            console.log(updatedPetData, "here")
             updatedPetData.append('picture', picture)
 
             setUpdatingPetData(true)
 
             let res = false
+            
             if (location === 'new') {
               res = await PostReq('/pet', updatedPetData)
             } else if (location === 'savealife') {

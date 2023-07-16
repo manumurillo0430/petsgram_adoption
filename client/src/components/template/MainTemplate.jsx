@@ -118,10 +118,12 @@ export default function MainTemplate({ children }) {
       setSelectedKeys(['5'])
     } else if (location.pathname === '/myprofile/savealife') {
       setSelectedKeys(['6'])
-    } else if (location.pathname === '/admin/dashboard') {
+    } else if (location.pathname === '/admin/submissions') {
       setSelectedKeys(['7'])
-    } else if (location.pathname === '/admin/dashboard') {
+    } else if (location.pathname === '/admin/new') {
       setSelectedKeys(['8'])
+    } else if (location.pathname === '/admin/dashboard') {
+      setSelectedKeys(['9'])
     }
   }, [location.pathname])
   const toggleCollapsed = () => {

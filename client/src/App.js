@@ -91,7 +91,15 @@ function App() {
                   path="new"
                   element={
                     <PrivateRouteAdmin>
-                      <AddNewPetForm />
+                      <AddNewPet />
+                    </PrivateRouteAdmin>
+                  }
+                />
+                 <Route
+                  path="submissions"
+                  element={
+                    <PrivateRouteAdmin>
+                      <AddNewPet />
                     </PrivateRouteAdmin>
                   }
                 />

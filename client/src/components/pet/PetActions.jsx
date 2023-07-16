@@ -9,6 +9,7 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { useSearchContext } from '../../context/SearchContext'
+import {DeleteReq} from '/Users/manumurillo/Documents/petsgram_adoption/client/src/utils/api.js'
 import { useAuthContext } from '../../context/AuthContext'
 import { userNames } from '../../utils/globals'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -44,9 +45,14 @@ export default function PetActionsGrid({
     userSavedPet,
     userUnsavedPet,
   } = useAuthContext()
-
+  const deletePet = async (pet_id) => {
+    try {
+      const res = await DeleteReq(`/pet/delete`, { pet_id: pet_id })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const {
-    // deletePet,
     updatingAdoptionStatus,
     addLike,
     returnPet,
@@ -99,9 +105,9 @@ export default function PetActionsGrid({
     await addLike(user_id, pet?.pet_id)
   }
 
-  // const handleDelete = async () => {
-  //   await deletePet(pet.pet_id, currentUser?.user?.user_id)
-  // }
+  const handleDelete = async () => {
+    await deletePet(pet.pet_id, currentUser?.user?.user_id)
+  }
 
   const handleSave = async () => {
     setSave(!save)
@@ -235,8 +241,10 @@ export default function PetActionsGrid({
               onClick={handleAdoptionStatus}
               isDisabled={!adopting ? false : true}
             />
+            
           </>
         )}
+        
         {isFosteredByCurrentUser && (
           <>
             <PetButtonStatus
@@ -298,6 +306,7 @@ export default function PetActionsGrid({
               onClick={handleReturn}
               display={isJustAdopted ? '' : 'none'}
             />
+            
           </>
         )}
       </Flex>
