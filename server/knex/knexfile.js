@@ -4,7 +4,7 @@ module.exports = {
   client: "pg",
   connection: {
     connectionString:
-      "postgres://pestgramdatabase_s9kd_user:JOzPb2HmprdX7qJKN24UXRpcBC8LdRip@dpg-ciq2ujt9aq0dcpqbsiag-a.oregon-postgres.render.com/pestgramdatabase_s9kd",
+            "postgresql://neondb_owner:npg_GhEfCqjo0c7M@ep-plain-frog-ae5odfhh-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
     ssl: {
       rejectUnauthorized: false,
     },
